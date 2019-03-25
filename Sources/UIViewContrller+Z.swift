@@ -52,6 +52,12 @@ extension UIViewController {
 		self.present(alertController, animated: true, completion: nil)
 	}
 
+	func alert(title: String? = nil, message: String, completion: (()->())? = nil) {
+		self.alert(title: title, message: message, actions: [
+			UIAlertAction(title: "OK", style: .default, handler: { action in completion?() })
+		])
+	}
+
 	func presentPopover(_ viewController: UIViewController, animated flag: Bool, completion: (()->())? = nil, sourceView: UIView?, sourceRect: CGRect, preferredContentSize: CGSize? = nil) {
 		viewController.modalPresentationStyle = .popover
 		if let popoverController = viewController.popoverPresentationController {

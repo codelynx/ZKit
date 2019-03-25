@@ -147,6 +147,23 @@ class SoundManager: NSObject {
 		}
 	}
 	
+	func remove(playerItems: [AVPlayerItem]) {
+		queue.removeAll { (playable) -> Bool in
+			if case let PlayableItem.sound(playerItem, _) = playable {
+				return playerItems.contains(playerItem)
+			}
+			else { return false }
+		}
+	}
+	
+	func abortPlaying() {
+		queuePlayer.pause()
+		self.queue.removeAll()
+		queuePlayer.replaceCurrentItem(with: nil)
+		queuePlayer.removeAllItems()
+		isPlaying = false
+	}
+	
 	@objc func playerItemDidFinishPlaying(_ notification: Notification) {
 		if let playerItem = notification.object as? AVPlayerItem {
 			if let index = queue.index(where: { (playableItem) -> Bool in
