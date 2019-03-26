@@ -166,7 +166,7 @@ class SoundManager: NSObject {
 	
 	@objc func playerItemDidFinishPlaying(_ notification: Notification) {
 		if let playerItem = notification.object as? AVPlayerItem {
-			if let index = queue.index(where: { (playableItem) -> Bool in
+			if let index = queue.firstIndex(where: { (playableItem) -> Bool in
 				if case .sound(let soundItem) = playableItem, soundItem.item == playerItem { return true }
 				else { return false }
 			}) {
@@ -199,7 +199,7 @@ extension SoundManager: AVSpeechSynthesizerDelegate {
 	}
 	
 	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-		if let index = queue.index(where: { (playableItem) -> Bool in
+		if let index = queue.firstIndex(where: { (playableItem) -> Bool in
 			if case .speech(let speechItem) = playableItem, speechItem.item == utterance { return true }
 			else { return false }
 		}) {

@@ -35,9 +35,10 @@ fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 		self.object = object
 	}
 	
-	public var hashValue: Int {
-		if let object = self.object { return ObjectIdentifier(object).hashValue }
-		else { return 0 }
+	func hash(into hasher: inout Hasher) {
+		if let object = self.object {
+			hasher.combine(ObjectIdentifier(object))
+		}
 	}
 
 	public static func == <T> (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
