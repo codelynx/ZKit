@@ -91,7 +91,7 @@ extension String {
 	}
 
 	var stringByDecodingNonLossyASCII: String {
-		return String(cString: self.cString(using: .utf8)!, encoding: .nonLossyASCII)!
+		return self.cString(using: .utf8).flatMap({ String(cString: $0, encoding: .nonLossyASCII) }) ?? "???"
 	}
 
 	// MARK: -
