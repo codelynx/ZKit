@@ -30,15 +30,16 @@ import Foundation
 fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 
 	weak var object: T?
+	private let _hashHint: Int
 
 	init(_ object: T) {
 		self.object = object
+		_hashHint = ObjectIdentifier(object).hashValue
 	}
 	
-	public var hashValue: Int {
-		if let object = self.object { return ObjectIdentifier(object).hashValue }
-		else { return 0 }
-	}
+	 func hash(into hasher: inout Hasher) {
+	 	hasher.combine(_hashHint)
+	 }
 
 	public static func == <T> (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
 		return lhs.object === rhs.object

@@ -9,7 +9,7 @@
 import UIKit
 
 
-extension UIView {
+public extension UIView {
 
 	func transform(to view: UIView) -> CGAffineTransform {
 		let targetRect = self.convert(self.bounds, to: view)
