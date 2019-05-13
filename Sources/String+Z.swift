@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 //
 //	String
@@ -90,9 +91,30 @@ extension String {
 	}
 
 	var stringByDecodingNonLossyASCII: String {
-		return String(cString: self.cString(using: .utf8)!, encoding: .nonLossyASCII)!
+		return self.cString(using: .utf8).flatMap({ String(cString: $0, encoding: .nonLossyASCII) }) ?? "???"
 	}
 
+	// MARK: -
+	
+	func draw(at point: CGPoint, withAttributes: [NSAttributedString.Key : Any]? = nil) {
+		(self as NSString).draw(at: point, withAttributes: withAttributes)
+	}
+	
+	func draw(in rect: CGRect, withAttributes: [NSAttributedString.Key : Any]? = nil) {
+		(self as NSString).draw(in: rect, withAttributes: withAttributes)
+	}
+	
+	func draw(with rect: CGRect, options: NSStringDrawingOptions = [], attributes: [NSAttributedString.Key : Any]? = nil, context: NSStringDrawingContext?) {
+		(self as NSString).draw(with: rect, options: options, attributes: attributes, context: context)
+	}
+	
+	func boundingRect(with size: CGSize, options: NSStringDrawingOptions = [], attributes: [NSAttributedString.Key : Any]? = nil, context: NSStringDrawingContext?) -> CGRect {
+		return (self as NSString).boundingRect(with: size, options: options, attributes: attributes, context: context)
+	}
+	
+	func size(withAttributes: [NSAttributedString.Key : Any]? = nil) -> CGSize {
+		return (self as NSString).size(withAttributes: withAttributes)
+	}
 }
 
 
