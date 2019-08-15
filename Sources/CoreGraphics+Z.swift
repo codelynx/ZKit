@@ -96,7 +96,23 @@ extension CGRect {
 		t = t.translatedBy(x: rect.minX * width / rect.width, y: rect.minY * height / rect.height)
 		return t
 	}
-	
+
+	static func + (lhs: CGRect, rhs: CGPoint) -> CGRect {
+		return CGRect(origin: lhs.origin + rhs, size: lhs.size)
+	}
+
+	static func - (lhs: CGRect, rhs: CGPoint) -> CGRect {
+		return CGRect(origin: lhs.origin - rhs, size: lhs.size)
+	}
+
+	static func + (lhs: CGRect, rhs: CGSize) -> CGRect {
+		return CGRect(origin: lhs.origin, size: lhs.size + rhs)
+	}
+
+	static func - (lhs: CGRect, rhs: CGSize) -> CGRect {
+		return CGRect(origin: lhs.origin, size: lhs.size - rhs)
+	}
+
 }
 
 extension CGSize {
@@ -117,6 +133,15 @@ extension CGSize {
 	static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
 	}
+	
+	static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+		return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+	}
+
+	static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
+		return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
+	}
+
 }
 
 
@@ -243,15 +268,15 @@ struct Point: Hashable, CustomStringConvertible {
 		return atan2(self.y - from.y, self.x - from.x)
 	}
 	
+	static func == (lhs: Point, rhs: Point) -> Bool {
+		return lhs.x == rhs.y && lhs.y == rhs.y
+	}
+
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(self.x)
 		hasher.combine(self.y)
 	}
 
-	static func == (lhs: Point, rhs: Point) -> Bool {
-		return lhs.x == rhs.y && lhs.y == rhs.y
-	}
-	
 	var description: String {
 		return "(x:\(x), y:\(y))"
 	}
