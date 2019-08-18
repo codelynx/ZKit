@@ -78,11 +78,9 @@ extension NSDictionary {
 	}
 }
 
-/*
 extension JSContext {
-subscript(key: String) -> Any? {
-get { return self.objectForKeyedSubscript(key as NSString) }
-set { self.setObject(newValue, forKeyedSubscript: key as NSString) }
+	subscript(key: String) -> Any? {
+		get { return self.objectForKeyedSubscript(key as NSString) }
+		set { self.setObject(newValue, forKeyedSubscript: key as NSString) }
+	}
 }
-}
-*/
