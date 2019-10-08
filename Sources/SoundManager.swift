@@ -158,6 +158,7 @@ class SoundManager: NSObject {
 	
 	func abortPlaying() {
 		queuePlayer.pause()
+		self.speechSynthesizer.stopSpeaking(at: .immediate)
 		self.queue.removeAll()
 		queuePlayer.replaceCurrentItem(with: nil)
 		queuePlayer.removeAllItems()
