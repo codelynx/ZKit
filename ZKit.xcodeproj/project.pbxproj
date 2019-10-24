@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0926C7236231FB00F9B1B7 /* Geometric32.swift */; };
 		CCCBEACE22403500002BE9F5 /* ZKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */; };
 		CCCBEAD322403500002BE9F5 /* ZKit_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */; };
 		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC0926C7236231FB00F9B1B7 /* Geometric32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometric32.swift; sourceTree = "<group>"; };
 		CCCBEA6B224033A3002BE9F5 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+additions.swift"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */,
 				CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */,
 				CCCBEA82224033A6002BE9F5 /* FramedButton.swift */,
+				CC0926C7236231FB00F9B1B7 /* Geometric32.swift */,
 				CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */,
 				CCCBEA7C224033A6002BE9F5 /* JSValue+Z.swift */,
 				CCCBEA79224033A6002BE9F5 /* NSDictionary+Z.swift */,
@@ -279,6 +282,7 @@
 				CCCBEADD2240350E002BE9F5 /* Foundation+additions.swift in Sources */,
 				CCCBEAE82240350E002BE9F5 /* String+Z.swift in Sources */,
 				CCCBEAE72240350E002BE9F5 /* String+Color.swift in Sources */,
+				CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */,
 				CCCBEAE12240350E002BE9F5 /* NSDictionary+Z.swift in Sources */,
 				CCCBEAF22240350E002BE9F5 /* ZGlossButton.swift in Sources */,
 				CCCBEAE32240350E002BE9F5 /* NSSet+Z.swift in Sources */,
