@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0926C7236231FB00F9B1B7 /* Geometric32.swift */; };
 		CCCBEACE22403500002BE9F5 /* ZKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */; };
 		CCCBEAD322403500002BE9F5 /* ZKit_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */; };
 		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,7 +27,6 @@
 		CCCBEAE92240350E002BE9F5 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA71224033A6002BE9F5 /* UIAlertController.swift */; };
 		CCCBEAEA2240350E002BE9F5 /* UIColor+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA75224033A6002BE9F5 /* UIColor+Z.swift */; };
 		CCCBEAEB2240350E002BE9F5 /* UIImage+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA72224033A6002BE9F5 /* UIImage+Z.swift */; };
-		CCCBEAEC2240350E002BE9F5 /* UINavigationController+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA80224033A6002BE9F5 /* UINavigationController+Z.swift */; };
 		CCCBEAED2240350E002BE9F5 /* UIView+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA73224033A6002BE9F5 /* UIView+Z.swift */; };
 		CCCBEAEE2240350E002BE9F5 /* UIViewContrller+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA7F224033A6002BE9F5 /* UIViewContrller+Z.swift */; };
 		CCCBEAEF2240350E002BE9F5 /* URL+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA77224033A6002BE9F5 /* URL+Z.swift */; };
@@ -47,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC0926C7236231FB00F9B1B7 /* Geometric32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometric32.swift; sourceTree = "<group>"; };
 		CCCBEA6B224033A3002BE9F5 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+additions.swift"; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		CCCBEA7D224033A6002BE9F5 /* NSNumber+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNumber+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA7E224033A6002BE9F5 /* ZGlossButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZGlossButton.swift; sourceTree = "<group>"; };
 		CCCBEA7F224033A6002BE9F5 /* UIViewContrller+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewContrller+Z.swift"; sourceTree = "<group>"; };
-		CCCBEA80224033A6002BE9F5 /* UINavigationController+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA81224033A6002BE9F5 /* ZCalendarDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCalendarDate.swift; sourceTree = "<group>"; };
 		CCCBEA82224033A6002BE9F5 /* FramedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FramedButton.swift; sourceTree = "<group>"; };
 		CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +123,7 @@
 				CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */,
 				CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */,
 				CCCBEA82224033A6002BE9F5 /* FramedButton.swift */,
+				CC0926C7236231FB00F9B1B7 /* Geometric32.swift */,
 				CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */,
 				CCCBEA7C224033A6002BE9F5 /* JSValue+Z.swift */,
 				CCCBEA79224033A6002BE9F5 /* NSDictionary+Z.swift */,
@@ -136,7 +137,6 @@
 				CCCBEA71224033A6002BE9F5 /* UIAlertController.swift */,
 				CCCBEA75224033A6002BE9F5 /* UIColor+Z.swift */,
 				CCCBEA72224033A6002BE9F5 /* UIImage+Z.swift */,
-				CCCBEA80224033A6002BE9F5 /* UINavigationController+Z.swift */,
 				CCCBEA73224033A6002BE9F5 /* UIView+Z.swift */,
 				CCCBEA7F224033A6002BE9F5 /* UIViewContrller+Z.swift */,
 				CCCBEA77224033A6002BE9F5 /* URL+Z.swift */,
@@ -282,6 +282,7 @@
 				CCCBEADD2240350E002BE9F5 /* Foundation+additions.swift in Sources */,
 				CCCBEAE82240350E002BE9F5 /* String+Z.swift in Sources */,
 				CCCBEAE72240350E002BE9F5 /* String+Color.swift in Sources */,
+				CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */,
 				CCCBEAE12240350E002BE9F5 /* NSDictionary+Z.swift in Sources */,
 				CCCBEAF22240350E002BE9F5 /* ZGlossButton.swift in Sources */,
 				CCCBEAE32240350E002BE9F5 /* NSSet+Z.swift in Sources */,
@@ -291,7 +292,6 @@
 				CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */,
 				CCCBEADF2240350E002BE9F5 /* Int+Z.swift in Sources */,
 				CCCBEAED2240350E002BE9F5 /* UIView+Z.swift in Sources */,
-				CCCBEAEC2240350E002BE9F5 /* UINavigationController+Z.swift in Sources */,
 				CCCBEAE92240350E002BE9F5 /* UIAlertController.swift in Sources */,
 				CCCBEAEA2240350E002BE9F5 /* UIColor+Z.swift in Sources */,
 				CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */,
