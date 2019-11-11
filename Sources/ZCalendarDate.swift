@@ -340,7 +340,7 @@ public func == (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
 }
 
 public func < (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
-	return lhs.year < rhs.year && lhs.month < rhs.month && lhs.day < rhs.day
+	return lhs.integerValue < rhs.integerValue
 }
 
 public func - (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Int {
