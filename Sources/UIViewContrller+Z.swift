@@ -69,4 +69,9 @@ extension UIViewController {
 		}
 		self.present(viewController, animated: true, completion: completion)
 	}
+
+	func makeFirstResponderToResign() {
+		UIApplication.shared.sendAction(#selector(UIView.resignFirstResponder), to: nil, from: nil, for: nil)
+	}
+
 }

@@ -158,6 +158,7 @@ class SoundManager: NSObject {
 	
 	func abortPlaying() {
 		queuePlayer.pause()
+		self.speechSynthesizer.stopSpeaking(at: .immediate)
 		self.queue.removeAll()
 		queuePlayer.replaceCurrentItem(with: nil)
 		queuePlayer.removeAllItems()
@@ -181,16 +182,6 @@ class SoundManager: NSObject {
 		}
 	}
 	
-	lazy var voice1: AVSpeechSynthesisVoice = {
-		//		return AVSpeechSynthesisVoice(language: "ja-JP")! // TODO: hard-coded
-		//		return AVSpeechSynthesisVoice(language: "en-GB")! // TODO: hard-coded
-		return AVSpeechSynthesisVoice(language: "en-AU")! // TODO: hard-coded
-		//		return AVSpeechSynthesisVoice(language: "en-US")! // TODO: hard-coded
-	}()
-	
-	lazy var voice2: AVSpeechSynthesisVoice = {
-		return AVSpeechSynthesisVoice(language: "en-GB")!
-	}()
 }
 
 extension SoundManager: AVSpeechSynthesizerDelegate {
