@@ -90,10 +90,10 @@ extension CGRect {
 	
 	func transform(to rect: CGRect) -> CGAffineTransform {
 		var t = CGAffineTransform.identity
-		t = t.translatedBy(x: -minX, y: -minY)
-		t = t.scaledBy(x: 1 / width, y: 1 / height)
+		t = t.translatedBy(x: -self.minX, y: -self.minY)
+		t = t.translatedBy(x: rect.minX, y: rect.minY)
+		t = t.scaledBy(x: 1 / self.width, y: 1 / self.height)
 		t = t.scaledBy(x: rect.width, y: rect.height)
-		t = t.translatedBy(x: rect.minX * width / rect.width, y: rect.minY * height / rect.height)
 		return t
 	}
 
