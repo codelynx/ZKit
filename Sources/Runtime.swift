@@ -1,6 +1,6 @@
 //
 //	Runtime.swift
-//	Swift Runtime [Swift 4]
+//	Swift Runtime
 //
 //	The MIT License (MIT)
 //
