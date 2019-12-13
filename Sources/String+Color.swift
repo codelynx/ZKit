@@ -48,7 +48,7 @@ fileprivate extension String {
 }
 
 
-extension UIColor {
+public extension UIColor {
 	
 	convenience init?(hexadecimalString: String) {
 		if let components = hexadecimalString.hexadecimalColorComponents {

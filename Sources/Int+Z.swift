@@ -25,14 +25,15 @@ import Foundation
 
 extension Int {
 
-	init?(any: Any?) {
-		if let value = ((any as? Int) ?? (any as? NSNumber).flatMap { $0.intValue }) {
-			self.init(value)
+	public init?(any: Any?) {
+		switch any {
+		case let value as Int: self.init(value)
+		case let value as NSNumber: self.init(value.intValue)
+		case let string as String:
+			if let value = Int(string) { self.init(value) }
+			else { return nil }
+		default: return nil
 		}
- 		else if let value = ((any as? String).flatMap { Int($0) }) {
-			self.init(value)
-		}
-		else { return nil }
 	}
 
 }

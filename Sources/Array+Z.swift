@@ -10,25 +10,25 @@ import Foundation
 
 extension Array {
 
-	mutating func rearrange(from fromIndex: Int, to toIndex: Int) {
+	mutating public func rearrange(from fromIndex: Int, to toIndex: Int) {
 		let item = self.remove(at: fromIndex)
 		self.insert(item, at: toIndex)
 	}
 
-	func rearranged(from fromIndex: Int, to toIndex: Int) -> Array {
+	public func rearranged(from fromIndex: Int, to toIndex: Int) -> Array {
 		var array = self
 		let item = array.remove(at: fromIndex)
 		array.insert(item, at: toIndex)
 		return array
 	}
 
-	func appending(_ elements: [Element]) -> Array {
+	public func appending(_ elements: [Element]) -> Array {
 		var array = self
 		array += elements
 		return array
 	}
 
-	func appending(_ element: Element) -> Array {
+	public func appending(_ element: Element) -> Array {
 		var array = self
 		array += [element]
 		return array
@@ -38,7 +38,7 @@ extension Array {
 
 extension Array where Element: Equatable {
 
-	func removingDuplicates() -> Array {
+	public func removingDuplicates() -> Array {
 		return reduce(into: []) { result, element in
 			if !result.contains(element) {
 				result.append(element)
@@ -46,7 +46,7 @@ extension Array where Element: Equatable {
 		}
 	}
 	
-	mutating func removingDuplicates() {
+	mutating public func removeDuplicates() {
 		self = self.removingDuplicates()
 	}
 }

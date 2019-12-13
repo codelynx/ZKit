@@ -9,31 +9,31 @@
 import Foundation
 import JavaScriptCore
 
-extension Int {
+public extension Int {
 	init(_ value: JSValue) {
 		self.init(value.toInt32())
 	}
 }
 
-extension Bool {
+public extension Bool {
 	init(_ value: JSValue) {
 		self.init(value.toBool())
 	}
 }
 
-extension Double {
+public extension Double {
 	init(_ value: JSValue) {
 		self.init(value.toDouble())
 	}
 }
 
-extension Int32 {
+public extension Int32 {
 	init(_ value: JSValue) {
 		self.init(value.toInt32())
 	}
 }
 
-extension UInt32 {
+public extension UInt32 {
 	init(_ value: JSValue) {
 		self.init(value.toUInt32())
 	}
@@ -51,7 +51,7 @@ return nil
 }
 */
 
-extension Date {
+public extension Date {
 	init?(_ value: JSValue) {
 		if let date = value.toDate() {
 			self.init(timeInterval: 0, since: date)
@@ -60,7 +60,7 @@ extension Date {
 	}
 }
 
-extension NSArray {
+public extension NSArray {
 	convenience init?(_ value: JSValue) {
 		if let array = value.toArray() as NSArray? {
 			self.init(array: array)
@@ -69,7 +69,7 @@ extension NSArray {
 	}
 }
 
-extension NSDictionary {
+public extension NSDictionary {
 	convenience init?(_ value: JSValue) {
 		if let dictionary = value.toDictionary() as NSDictionary? {
 			self.init(dictionary: dictionary)
@@ -78,7 +78,7 @@ extension NSDictionary {
 	}
 }
 
-extension JSContext {
+public extension JSContext {
 	subscript(key: String) -> Any? {
 		get { return self.objectForKeyedSubscript(key as NSString) }
 		set { self.setObject(newValue, forKeyedSubscript: key as NSString) }

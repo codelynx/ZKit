@@ -41,7 +41,7 @@ fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 	 	hasher.combine(_hashHint)
 	 }
 
-	public static func == <T> (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
+	static func == <T> (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
 		return lhs.object === rhs.object
 	}
 }

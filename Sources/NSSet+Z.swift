@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension NSSet {
+public extension NSSet {
 	
 	static func + (lhs: NSSet, rhs: NSSet) -> NSSet {
 		let objects = NSMutableSet()

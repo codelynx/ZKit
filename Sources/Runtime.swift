@@ -59,7 +59,7 @@
 
 import Foundation
 
-class Runtime {
+public class Runtime {
 	
 	public static func allClasses() -> [AnyClass] {
 		let numberOfClasses = Int(objc_getClassList(nil, 0))

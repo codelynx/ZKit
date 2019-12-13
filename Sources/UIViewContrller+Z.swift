@@ -28,7 +28,7 @@
 import UIKit
 
 
-extension UIViewController {
+public extension UIViewController {
 
 	func addViewController(viewController: UIViewController, intoView view: UIView) {
 		viewController.view.frame = view.bounds

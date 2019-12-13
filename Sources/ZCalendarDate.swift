@@ -103,15 +103,14 @@ public struct ZCalendarYear: ZCalendarYearType {
 	public var lastCalendarMonthOfYear: ZCalendarMonth {
 		return ZCalendarMonth(year: self.year, month: 12)
 	}
+	public static func == (lhs: ZCalendarYear, rhs: ZCalendarYear) -> Bool {
+		return lhs.year == rhs.year
+	}
+	public static func < (lhs: ZCalendarYear, rhs: ZCalendarYear) -> Bool {
+		return lhs.year < rhs.year
+	}
 }
 
-public func == (lhs:ZCalendarYear, rhs:ZCalendarYear) -> Bool {
-	return lhs.year == rhs.year
-}
-
-public func < (lhs: ZCalendarYear, rhs: ZCalendarYear) -> Bool {
-	return lhs.year < rhs.year
-}
 
 //
 //	ZCalendarMonth
@@ -197,30 +196,30 @@ public struct ZCalendarMonth: ZCalendarMonthType {
 		return ZCalendarDate(year: self.calendarYear.year, month: self.month, day: day)
 	}
 	
-	var firstCalendarMonthOfYear: ZCalendarMonth { return self.calendarYear.firstCalendarMonthOfYear }
-	var lastCalendarMonthOfYear: ZCalendarMonth { return self.calendarYear.lastCalendarMonthOfYear }
+	public var firstCalendarMonthOfYear: ZCalendarMonth { return self.calendarYear.firstCalendarMonthOfYear }
+	public var lastCalendarMonthOfYear: ZCalendarMonth { return self.calendarYear.lastCalendarMonthOfYear }
 	
+	public static func == (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Bool {
+		return lhs.year == rhs.year && lhs.month == rhs.month
+	}
+
+	public static func < (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Bool {
+		return lhs.integerValue < rhs.integerValue
+	}
+
+	public static func + (lhs: ZCalendarMonth, rhs: Int) -> ZCalendarMonth {
+		return lhs.calendarMonth(offsetByMonths: rhs)
+	}
+
+	public static func - (lhs: ZCalendarMonth, rhs: Int) -> ZCalendarMonth {
+		return lhs.calendarMonth(offsetByMonths: -rhs)
+	}
+
+	public static func - (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Int {
+		return lhs.offsetMonths(rhs)
+	}
 }
 
-public func == (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Bool {
-	return lhs.year == rhs.year && lhs.month == rhs.month
-}
-
-public func < (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Bool {
-	return lhs.year < rhs.year && lhs.month < rhs.month
-}
-
-public func + (lhs: ZCalendarMonth, rhs: Int) -> ZCalendarMonth {
-	return lhs.calendarMonth(offsetByMonths: rhs)
-}
-
-public func - (lhs: ZCalendarMonth, rhs: Int) -> ZCalendarMonth {
-	return lhs.calendarMonth(offsetByMonths: -rhs)
-}
-
-public func - (lhs: ZCalendarMonth, rhs: ZCalendarMonth) -> Int {
-	return lhs.offsetMonths(rhs)
-}
 
 //
 //	ZCalendarDate
@@ -322,41 +321,42 @@ public struct ZCalendarDate: ZCalendarDateType {
 		return Int(floor((t2 - t1) / secondsInDay))
 	}
 	
-	var firstCalendarMonthOfYear: ZCalendarMonth { return self.calendarMonth.firstCalendarMonthOfYear }
-	var lastCalendarMonthOfYear: ZCalendarMonth { return self.calendarMonth.lastCalendarMonthOfYear }
+	public var firstCalendarMonthOfYear: ZCalendarMonth { return self.calendarMonth.firstCalendarMonthOfYear }
+	public var lastCalendarMonthOfYear: ZCalendarMonth { return self.calendarMonth.lastCalendarMonthOfYear }
 	
-	var firstCalendarDateOfMonth: ZCalendarDate { return self.calendarMonth.firstCalendarDateOfMonth }
-	var lastCalendarDateOfMonth: ZCalendarDate { return self.calendarMonth.lastCalendarDateOfMonth }
-	func calendarMonth(offsetByMonths months: Int) -> ZCalendarMonth { return self.calendarMonth.calendarMonth(offsetByMonths: months) }
-	func offsetMonths(_ calendarMonth: ZCalendarMonth) -> Int { return self.calendarMonth.offsetMonths(calendarMonth) }
-	var previousCalendarMonth: ZCalendarMonth { return self.calendarMonth.previousCalendarMonth }
-	var nextCalendarMonth: ZCalendarMonth { return self.calendarMonth.nextCalendarMonth }
+	public var firstCalendarDateOfMonth: ZCalendarDate { return self.calendarMonth.firstCalendarDateOfMonth }
+	public var lastCalendarDateOfMonth: ZCalendarDate { return self.calendarMonth.lastCalendarDateOfMonth }
+	public func calendarMonth(offsetByMonths months: Int) -> ZCalendarMonth { return self.calendarMonth.calendarMonth(offsetByMonths: months) }
+	public func offsetMonths(_ calendarMonth: ZCalendarMonth) -> Int { return self.calendarMonth.offsetMonths(calendarMonth) }
+	public var previousCalendarMonth: ZCalendarMonth { return self.calendarMonth.previousCalendarMonth }
+	public var nextCalendarMonth: ZCalendarMonth { return self.calendarMonth.nextCalendarMonth }
 	
-	static var today: ZCalendarDate { return ZCalendarDate(date: Date()) }
+	public static var today: ZCalendarDate { return ZCalendarDate(date: Date()) }
+
+	public static func == (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
+		return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
+	}
+
+	public static func < (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
+		return lhs.integerValue < rhs.integerValue
+	}
+
+	public static func - (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Int {
+		let d1 = lhs.date
+		let d2 = rhs.date
+		let t = d1.timeIntervalSinceReferenceDate - d2.timeIntervalSinceReferenceDate
+		let days = ceil(t / _secondsADay)
+		return Int(days)
+	}
+
+	public static func + (lhs: ZCalendarDate, rhs: Int) -> ZCalendarDate {
+		let interval = _secondsADay * Double(rhs)
+		return ZCalendarDate(date: lhs.date.addingTimeInterval(interval))
+	}
+
+	public static func - (lhs: ZCalendarDate, rhs: Int) -> ZCalendarDate {
+		let interval = _secondsADay * Double(rhs)
+		return ZCalendarDate(date: lhs.date.addingTimeInterval(-interval))
+	}
 }
 
-public func == (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
-	return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
-}
-
-public func < (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Bool {
-	return lhs.integerValue < rhs.integerValue
-}
-
-public func - (lhs: ZCalendarDate, rhs: ZCalendarDate) -> Int {
-	let d1 = lhs.date
-	let d2 = rhs.date
-	let t = d1.timeIntervalSinceReferenceDate - d2.timeIntervalSinceReferenceDate
-	let days = ceil(t / _secondsADay)
-	return Int(days)
-}
-
-public func + (lhs: ZCalendarDate, rhs: Int) -> ZCalendarDate {
-	let interval = _secondsADay * Double(rhs)
-	return ZCalendarDate(date: lhs.date.addingTimeInterval(interval))
-}
-
-public func - (lhs: ZCalendarDate, rhs: Int) -> ZCalendarDate {
-	let interval = _secondsADay * Double(rhs)
-	return ZCalendarDate(date: lhs.date.addingTimeInterval(-interval))
-}

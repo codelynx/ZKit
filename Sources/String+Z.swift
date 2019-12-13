@@ -13,7 +13,7 @@ import UIKit
 //	String
 //
 
-extension String {
+public extension String {
 	
 	func appendingPathExtension(_ str: String) -> String? {
 		return (self as NSString).appendingPathExtension(str)
@@ -118,6 +118,6 @@ extension String {
 }
 
 
-extension CustomStringConvertible {
+public extension CustomStringConvertible {
 	var xdescription: String { return self.description.stringByDecodingNonLossyASCII }
 }

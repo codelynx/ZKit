@@ -8,18 +8,18 @@
 
 import UIKit
 
-@IBDesignable class ZGlossButton: UIButton {
+@IBDesignable public class ZGlossButton: UIButton {
 	
 	@IBInspectable var buttonColor: UIColor = UIColor.blue
 	@IBInspectable var gloss: CGFloat = 0.5
 	
-	override var isHighlighted: Bool {
+	override public var isHighlighted: Bool {
 		didSet {
 			self.setNeedsDisplay()
 		}
 	}
 	
-	override func draw(_ rect: CGRect) {
+	override public func draw(_ rect: CGRect) {
 		super.draw(rect)
 		
 		guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -110,17 +110,17 @@ import UIKit
 		return {}
 	}()
 	
-	override func layoutSubviews() {
+	override public func layoutSubviews() {
 		super.layoutSubviews()
 		self.contentMode = .redraw
 		self.setup()
 	}
 	
-	override func setTitle(_ title: String?, for state: UIControl.State) {
+	override public func setTitle(_ title: String?, for state: UIControl.State) {
 		super.setTitle(title, for: state)
 	}
 	
-	override var intrinsicContentSize: CGSize {
+	override public var intrinsicContentSize: CGSize {
 		return super.intrinsicContentSize + CGSize(width: 100, height: 4)
 	}
 }

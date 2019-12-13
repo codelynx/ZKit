@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0926C7236231FB00F9B1B7 /* Geometric32.swift */; };
+		CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DD5A523A31B0E00950368 /* Array+Z.swift */; };
 		CCCBEACE22403500002BE9F5 /* ZKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */; };
 		CCCBEAD322403500002BE9F5 /* ZKit_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */; };
 		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */; };
-		CCCBEADD2240350E002BE9F5 /* Foundation+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */; };
+		CCCBEADD2240350E002BE9F5 /* NSDecimalNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */; };
 		CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA82224033A6002BE9F5 /* FramedButton.swift */; };
 		CCCBEADF2240350E002BE9F5 /* Int+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */; };
 		CCCBEAE02240350E002BE9F5 /* JSValue+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA7C224033A6002BE9F5 /* JSValue+Z.swift */; };
@@ -33,7 +34,6 @@
 		CCCBEAF12240350E002BE9F5 /* ZCalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA81224033A6002BE9F5 /* ZCalendarDate.swift */; };
 		CCCBEAF22240350E002BE9F5 /* ZGlossButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA7E224033A6002BE9F5 /* ZGlossButton.swift */; };
 		CCCBEAF32240350E002BE9F5 /* ZWeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA78224033A6002BE9F5 /* ZWeakObjectSet.swift */; };
-		CCE773C3238674490066542E /* cacheOrMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE773C1238674490066542E /* cacheOrMake.swift */; };
 		CCE773C4238674490066542E /* NSMutableParagraphStyle+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE773C2238674490066542E /* NSMutableParagraphStyle+Z.swift */; };
 		CCE773C6238674840066542E /* Sequence+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE773C5238674840066542E /* Sequence+Z.swift */; };
 /* End PBXBuildFile section */
@@ -50,9 +50,10 @@
 
 /* Begin PBXFileReference section */
 		CC0926C7236231FB00F9B1B7 /* Geometric32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometric32.swift; sourceTree = "<group>"; };
+		CC0DD5A523A31B0E00950368 /* Array+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6B224033A3002BE9F5 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Z.swift"; sourceTree = "<group>"; };
-		CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+additions.swift"; sourceTree = "<group>"; };
+		CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA70224033A5002BE9F5 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		CCCBEA71224033A6002BE9F5 /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		CCCBEACD22403500002BE9F5 /* ZKit-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZKit-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZKit_iosTests.swift; sourceTree = "<group>"; };
 		CCCBEAD422403500002BE9F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CCE773C1238674490066542E /* cacheOrMake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cacheOrMake.swift; sourceTree = "<group>"; };
 		CCE773C2238674490066542E /* NSMutableParagraphStyle+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableParagraphStyle+Z.swift"; sourceTree = "<group>"; };
 		CCE773C5238674840066542E /* Sequence+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+Z.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,9 +124,9 @@
 		CCCBEA6A22403339002BE9F5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CCE773C1238674490066542E /* cacheOrMake.swift */,
+				CC0DD5A523A31B0E00950368 /* Array+Z.swift */,
 				CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */,
-				CCCBEA6D224033A4002BE9F5 /* Foundation+additions.swift */,
+				CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */,
 				CCCBEA82224033A6002BE9F5 /* FramedButton.swift */,
 				CC0926C7236231FB00F9B1B7 /* Geometric32.swift */,
 				CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */,
@@ -284,13 +284,13 @@
 				CCCBEAF02240350E002BE9F5 /* with.swift in Sources */,
 				CCCBEAEB2240350E002BE9F5 /* UIImage+Z.swift in Sources */,
 				CCCBEAEF2240350E002BE9F5 /* URL+Z.swift in Sources */,
-				CCCBEADD2240350E002BE9F5 /* Foundation+additions.swift in Sources */,
+				CCCBEADD2240350E002BE9F5 /* NSDecimalNumber+Z.swift in Sources */,
 				CCCBEAE82240350E002BE9F5 /* String+Z.swift in Sources */,
 				CCCBEAE72240350E002BE9F5 /* String+Color.swift in Sources */,
-				CCE773C3238674490066542E /* cacheOrMake.swift in Sources */,
 				CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */,
 				CCCBEAE12240350E002BE9F5 /* NSDictionary+Z.swift in Sources */,
 				CCCBEAF22240350E002BE9F5 /* ZGlossButton.swift in Sources */,
+				CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */,
 				CCCBEAE32240350E002BE9F5 /* NSSet+Z.swift in Sources */,
 				CCCBEAE52240350E002BE9F5 /* Runtime.swift in Sources */,
 				CCCBEAF32240350E002BE9F5 /* ZWeakObjectSet.swift in Sources */,

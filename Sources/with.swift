@@ -50,7 +50,7 @@ import Foundation
 //
 
 
-func with<T>(_ item: T, _ closure: (T)->()) -> T {
+public func with<T>(_ item: T, _ closure: (T)->()) -> T {
 	closure(item)
 	return item
 }

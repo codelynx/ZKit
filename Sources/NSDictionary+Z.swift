@@ -28,15 +28,15 @@
 import Foundation
 
 
-extension NSDictionary {
+public extension NSDictionary {
 	
-	public var data: Data? {
+	var data: Data? {
 		get {
 			return try? PropertyListSerialization.data(fromPropertyList: self, format: .xml, options: 0)
 		}
 	}
 	
-	public func dictionaryByRemovingValues(keyKeys: [String]) -> NSDictionary {
+	func dictionaryByRemovingValues(keyKeys: [String]) -> NSDictionary {
 		let dictionary = self.mutableCopy() as! NSMutableDictionary
 		for key in keyKeys {
 			dictionary.removeObject(forKey: key)
@@ -44,19 +44,19 @@ extension NSDictionary {
 		return dictionary
 	}
 	
-	public func dictionaryByRemovingValue(forKey: String) -> NSDictionary {
+	func dictionaryByRemovingValue(forKey: String) -> NSDictionary {
 		let dictionary = NSMutableDictionary(dictionary: self)
 		dictionary.removeObject(forKey: forKey)
 		return dictionary
 	}
 	
-	public func dictionaryByAddingValue(_ value: Any?, for key: String) -> NSDictionary {
+	func dictionaryByAddingValue(_ value: Any?, for key: String) -> NSDictionary {
 		let dictionary = NSMutableDictionary(dictionary: self)
 		dictionary.setValue(value, forKey: key)
 		return dictionary
 	}
 	
-	public static func + (lhs: NSDictionary, rhs: NSDictionary) -> NSDictionary {
+	static func + (lhs: NSDictionary, rhs: NSDictionary) -> NSDictionary {
 		let dictionary = NSMutableDictionary()
 		for (key, value) in lhs {
 			if let key = key as? NSCopying {
@@ -86,9 +86,9 @@ extension NSDictionary {
 	
 }
 
-extension NSMutableDictionary {
+public extension NSMutableDictionary {
 	
-	public static func += (lhs: inout NSMutableDictionary, rhs: NSDictionary) {
+	static func += (lhs: inout NSMutableDictionary, rhs: NSDictionary) {
 		for (key, valueR) in rhs {
 			if let valueL = lhs[key] {
 				switch (valueL, valueR) {
@@ -106,14 +106,14 @@ extension NSMutableDictionary {
 		}
 	}
 
-	public func setDictionary(_ dictionary: NSDictionary) {
+	func setDictionary(_ dictionary: NSDictionary) {
 		self.setDictionary(dictionary as! [AnyHashable: Any])
 	}
 }
 
-extension NSArray {
+public extension NSArray {
 	
-	public static func + (lhs: NSArray, rhs: NSArray) -> NSArray {
+	static func + (lhs: NSArray, rhs: NSArray) -> NSArray {
 		let array = NSMutableArray()
 		lhs.forEach { array.add($0) }
 		rhs.forEach { array.add($0) }
@@ -122,9 +122,9 @@ extension NSArray {
 	
 }
 
-extension NSMutableArray {
+public extension NSMutableArray {
 	
-	public static func += (lhs: inout NSMutableArray, rhs: NSArray) {
+	static func += (lhs: inout NSMutableArray, rhs: NSArray) {
 		for value in rhs {
 			lhs.add(value)
 		}

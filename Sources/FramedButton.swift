@@ -8,12 +8,12 @@
 
 import UIKit
 
-@IBDesignable class FramedButton: UIButton {
+@IBDesignable public class FramedButton: UIButton {
 	
 	@IBInspectable var borderWidth: CGFloat = 0
 	@IBInspectable var borderColor: UIColor? = nil
 
-	override func awakeFromNib() {
+	override public func awakeFromNib() {
 		super.awakeFromNib()
 		self.layer.borderWidth = self.borderWidth
 		self.layer.borderColor = self.borderColor?.cgColor

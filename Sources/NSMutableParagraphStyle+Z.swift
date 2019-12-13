@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension NSMutableParagraphStyle {
+public extension NSMutableParagraphStyle {
 
 	convenience init(alignment: NSTextAlignment) {
 		self.init()

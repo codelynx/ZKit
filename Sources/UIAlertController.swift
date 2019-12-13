@@ -9,12 +9,12 @@
 import UIKit
 
 
-extension UIAlertController {
+public extension UIAlertController {
 	
-	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		return UIInterfaceOrientationMask.all
 	}
-	open override var shouldAutorotate: Bool {
+	override var shouldAutorotate: Bool {
 		return false
 	}
 	

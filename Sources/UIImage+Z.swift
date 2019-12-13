@@ -28,22 +28,21 @@
 import UIKit
 
 
-// Swift 4
-
-extension UIImage {
+public extension UIImage {
 	
-	func invertAlpha() -> UIImage? {
+	func invertingAlpha() -> UIImage? {
 		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-		let (width, height) = (Int(self.size.width), Int(self.size.height))
+		let (width, height) = (Int(self.size.width * self.scale), Int(self.size.height * self.scale))
 		let bytesPerPixel = 4
 		let bytesPerRow = bytesPerPixel * width
 		let byteOffsetToAlpha = 3 // [r][g][b][a]
-		if let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow,
-								   space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitmapInfo.rawValue),
+		if let context = CGContext(
+				data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow,
+				space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitmapInfo.rawValue),
 			let cgImage = self.cgImage {
 			context.setFillColor(UIColor.clear.cgColor)
 			context.fill(CGRect(origin: CGPoint.zero, size: self.size))
-			context.draw(cgImage, in: CGRect(origin: CGPoint.zero, size: self.size))
+			context.draw(cgImage, in: CGRect(origin: CGPoint.zero, size: self.size * self.scale))
 			if let memory: UnsafeMutableRawPointer = context.data {
 				for y in 0..<height {
 					let pointer = memory.advanced(by: bytesPerRow * y)
@@ -54,27 +53,25 @@ extension UIImage {
 					}
 				}
 				if let cgImage =  context.makeImage() {
-					return UIImage(cgImage: cgImage)
+					let image = UIImage(cgImage: cgImage, scale: self.scale, orientation: .up)
+					return image
 				}
 			}
 		}
 		return nil
 	}
-	
-	func resized(size _size: CGSize) -> UIImage? {
+
+	func resizing(to _size: CGSize) -> UIImage? {
 		let widthRatio = _size.width / size.width
 		let heightRatio = _size.height / size.height
 		let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
-		
 		let resizedSize = CGSize(width: size.width * ratio, height: size.height * ratio)
-		
 		UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
 		draw(in: CGRect(origin: .zero, size: resizedSize))
 		let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		
 		return resizedImage
 	}
-	
+
 }
 

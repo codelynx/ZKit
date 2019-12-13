@@ -44,7 +44,7 @@
 
 
 
-extension Sequence {
+public extension Sequence {
 
 	func makePairs() -> [(Self.Iterator.Element, Self.Iterator.Element)] {
 		let array = self.map { $0 }

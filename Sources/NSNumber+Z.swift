@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension NSNumber {
+public extension NSNumber {
 	
 	convenience init?(_ value: Int?) {
 		guard let value = value else { return nil }
@@ -24,7 +24,7 @@ extension NSNumber {
 }
 
 
-extension NSDecimalNumber {
+public extension NSDecimalNumber {
 	
 	var isNotANumber: Bool {
 		return self.isEqual(NSDecimalNumber.notANumber)

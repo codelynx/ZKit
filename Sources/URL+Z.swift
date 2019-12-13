@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension URL {
+public extension URL {
 
 	var isDirectory: Bool {
 		var isDirectory: ObjCBool = false

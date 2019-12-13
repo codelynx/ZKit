@@ -16,15 +16,15 @@ infix operator ×
 
 
 extension CGRect {
-	init(size: CGSize) {
+	public init(size: CGSize) {
 		self.init(origin: .zero, size: size)
 	}
 	
-	var cgPath: CGPath {
+	public var cgPath: CGPath {
 		return CGPath(rect: self, transform: nil)
 	}
 	
-	func cgPath(cornerRadius: CGFloat) -> CGPath {
+	public func cgPath(cornerRadius: CGFloat) -> CGPath {
 		
 		//	+7-------------6+
 		//	0				5
@@ -47,19 +47,19 @@ extension CGRect {
 		return path
 	}
 	
-	var minXminY: CGPoint { return CGPoint(x: minX, y: minY) }
-	var midXminY: CGPoint { return CGPoint(x: midX, y: minY) }
-	var maxXminY: CGPoint { return CGPoint(x: maxX, y: minY) }
+	public var minXminY: CGPoint { return CGPoint(x: minX, y: minY) }
+	public var midXminY: CGPoint { return CGPoint(x: midX, y: minY) }
+	public var maxXminY: CGPoint { return CGPoint(x: maxX, y: minY) }
 	
-	var minXmidY: CGPoint { return CGPoint(x: minX, y: midY) }
-	var midXmidY: CGPoint { return CGPoint(x: midX, y: midY) }
-	var maxXmidY: CGPoint { return CGPoint(x: maxX, y: midY) }
+	public var minXmidY: CGPoint { return CGPoint(x: minX, y: midY) }
+	public var midXmidY: CGPoint { return CGPoint(x: midX, y: midY) }
+	public var maxXmidY: CGPoint { return CGPoint(x: maxX, y: midY) }
 	
-	var minXmaxY: CGPoint { return CGPoint(x: minX, y: maxY) }
-	var midXmaxY: CGPoint { return CGPoint(x: midX, y: maxY) }
-	var maxXmaxY: CGPoint { return CGPoint(x: maxX, y: maxY) }
+	public var minXmaxY: CGPoint { return CGPoint(x: minX, y: maxY) }
+	public var midXmaxY: CGPoint { return CGPoint(x: midX, y: maxY) }
+	public var maxXmaxY: CGPoint { return CGPoint(x: maxX, y: maxY) }
 	
-	func aspectFill(_ size: CGSize) -> CGRect {
+	public func aspectFill(_ size: CGSize) -> CGRect {
 		let result: CGRect
 		let margin: CGFloat
 		let horizontalRatioToFit = size.width / size.width
@@ -77,7 +77,7 @@ extension CGRect {
 		return result
 	}
 	
-	func aspectFit(_ size: CGSize) -> CGRect {
+	public func aspectFit(_ size: CGSize) -> CGRect {
 		let widthRatio = self.size.width / size.width
 		let heightRatio = self.size.height / size.height
 		let ratio = min(widthRatio, heightRatio)
@@ -88,7 +88,7 @@ extension CGRect {
 		return CGRect(x: minX + xmargin, y: minY + ymargin, width: width, height: height)
 	}
 	
-	func transform(to rect: CGRect) -> CGAffineTransform {
+	public func transform(to rect: CGRect) -> CGAffineTransform {
 		var t = CGAffineTransform.identity
 		t = t.translatedBy(x: -self.minX, y: -self.minY)
 		t = t.translatedBy(x: rect.minX, y: rect.minY)
@@ -97,19 +97,19 @@ extension CGRect {
 		return t
 	}
 
-	static func + (lhs: CGRect, rhs: CGPoint) -> CGRect {
+	static public func + (lhs: CGRect, rhs: CGPoint) -> CGRect {
 		return CGRect(origin: lhs.origin + rhs, size: lhs.size)
 	}
 
-	static func - (lhs: CGRect, rhs: CGPoint) -> CGRect {
+	static public func - (lhs: CGRect, rhs: CGPoint) -> CGRect {
 		return CGRect(origin: lhs.origin - rhs, size: lhs.size)
 	}
 
-	static func + (lhs: CGRect, rhs: CGSize) -> CGRect {
+	static public func + (lhs: CGRect, rhs: CGSize) -> CGRect {
 		return CGRect(origin: lhs.origin, size: lhs.size + rhs)
 	}
 
-	static func - (lhs: CGRect, rhs: CGSize) -> CGRect {
+	static public func - (lhs: CGRect, rhs: CGSize) -> CGRect {
 		return CGRect(origin: lhs.origin, size: lhs.size - rhs)
 	}
 
@@ -117,7 +117,7 @@ extension CGRect {
 
 extension CGSize {
 	
-	func aspectFit(_ size: CGSize) -> CGSize {
+	public func aspectFit(_ size: CGSize) -> CGSize {
 		let widthRatio = self.width / size.width
 		let heightRatio = self.height / size.height
 		let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
@@ -126,27 +126,27 @@ extension CGSize {
 		return CGSize(width: width, height: height)
 	}
 	
-	static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
+	static public func - (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
 	}
 	
-	static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
+	static public func + (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
 	}
 	
-	static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+	static public func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
 		return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
 	}
 
-	static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
+	static public func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
 		return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
 	}
 
-	static func * (lhs: CGSize, rhs: CGSize) -> CGSize {
+	static public func * (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width * rhs.width , height: lhs.height * rhs.height)
 	}
 
-	static func / (lhs: CGSize, rhs: CGSize) -> CGSize {
+	static public func / (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width / rhs.width , height: lhs.height / rhs.height)
 	}
 
@@ -155,14 +155,14 @@ extension CGSize {
 
 extension CGAffineTransform {
 	
-	static func * (lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
+	static public func * (lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
 		return lhs.concatenating(rhs)
 	}
 	
 }
 
 extension float4x4 {
-	init(affineTransform: CGAffineTransform) {
+	public init(affineTransform: CGAffineTransform) {
 		let t = CATransform3DMakeAffineTransform(affineTransform)
 		self.init(
 			SIMD4<Float>(Float(t.m11), Float(t.m12), Float(t.m13), Float(t.m14)),
@@ -175,54 +175,54 @@ extension float4x4 {
 
 // MARK: -
 
-protocol FloatCovertible {
+public protocol FloatCovertible {
 	var floatValue: Float { get }
 }
 
 extension CGFloat: FloatCovertible {
-	var floatValue: Float { return Float(self) }
+	public var floatValue: Float { return Float(self) }
 }
 
 extension Int: FloatCovertible {
-	var floatValue: Float { return Float(self) }
+	public var floatValue: Float { return Float(self) }
 }
 
 extension Float: FloatCovertible {
-	var floatValue: Float { return self }
+	public var floatValue: Float { return self }
 }
 
 // MARK: -
 
-protocol CGFloatCovertible {
+public protocol CGFloatCovertible {
 	var cgFloatValue: CGFloat { get }
 }
 
 extension CGFloat: CGFloatCovertible {
-	var cgFloatValue: CGFloat { return self }
+	public var cgFloatValue: CGFloat { return self }
 }
 
 extension Int: CGFloatCovertible {
-	var cgFloatValue: CGFloat { return CGFloat(self) }
+	public var cgFloatValue: CGFloat { return CGFloat(self) }
 }
 
 extension Float: CGFloatCovertible {
-	var cgFloatValue: CGFloat { return CGFloat(self) }
+	public var cgFloatValue: CGFloat { return CGFloat(self) }
 }
 
 
 
 // MARK: -
 
-protocol PointConvertible {
+public protocol PointConvertible {
 	var pointValue: Point { get }
 }
 
 extension Point: PointConvertible {
-	var pointValue: Point { return self }
+	public var pointValue: Point { return self }
 }
 
 extension CGPoint: PointConvertible {
-	var pointValue: Point { return Point(self) }
+	public var pointValue: Point { return Point(self) }
 }
 
 
@@ -230,72 +230,72 @@ extension CGPoint: PointConvertible {
 
 extension CGPoint {
 	
-	static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+	static public func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
 		return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 	}
 	
-	static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+	static public func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
 		return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
 	
-	static func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+	static public func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
 		return CGPoint(x: lhs.x * rhs, y: lhs.y * rhs)
 	}
 	
-	static func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+	static public func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
 		return CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
 	}
 	
-	static func • (lhs: CGPoint, rhs: CGPoint) -> CGFloat { // dot product
+	static public func • (lhs: CGPoint, rhs: CGPoint) -> CGFloat { // dot product
 		return lhs.x * rhs.x + lhs.y * rhs.y
 	}
 	
-	static func × (lhs: CGPoint, rhs: CGPoint) -> CGFloat { // cross product
+	static public func × (lhs: CGPoint, rhs: CGPoint) -> CGFloat { // cross product
 		return lhs.x * rhs.y - lhs.y * rhs.x
 	}
 	
-	var length²: CGFloat {
+	public var length²: CGFloat {
 		return (x * x) + (y * y)
 	}
 	
-	var length: CGFloat {
+	public var length: CGFloat {
 		return sqrt(self.length²)
 	}
 	
-	var normalized: CGPoint {
+	public var normalized: CGPoint {
 		return self / length
 	}
 	
-	static func length²(_ lhs: CGPoint, _ rhs: CGPoint) -> CGFloat {
+	static public func length²(_ lhs: CGPoint, _ rhs: CGPoint) -> CGFloat {
 		return	pow(rhs.x - lhs.x, 2.0) + pow(rhs.y - lhs.y, 2.0)
 	}
 	
-	static func length(_ lhs: CGPoint, _ rhs: CGPoint) -> CGFloat {
+	static public func length(_ lhs: CGPoint, _ rhs: CGPoint) -> CGFloat {
 		return	sqrt(length²(lhs, rhs))
 	}
 }
 
 
 extension CGPoint {
-	init<X: CGFloatCovertible, Y: CGFloatCovertible>(_ x: X, _ y: Y) {
+	public init<X: CGFloatCovertible, Y: CGFloatCovertible>(_ x: X, _ y: Y) {
 		self.init(x: x.cgFloatValue, y: y.cgFloatValue)
 	}
 }
 
 
 extension CGSize {
-	init(_ size: Size) {
+	public init(_ size: Size) {
 		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
 	}
 	
-	init<W: CGFloatCovertible, H: CGFloatCovertible>(_ width: W, _ height: H) {
+	public init<W: CGFloatCovertible, H: CGFloatCovertible>(_ width: W, _ height: H) {
 		self.init(width: width.cgFloatValue, height: height.cgFloatValue)
 	}
 }
 
 extension CGRect {
 	
-	init<X: CGFloatCovertible, Y: CGFloatCovertible, W: CGFloatCovertible, H: CGFloatCovertible>(_ x: X, _ y: Y, _ width: W, _ height: H) {
+	public init<X: CGFloatCovertible, Y: CGFloatCovertible, W: CGFloatCovertible, H: CGFloatCovertible>(_ x: X, _ y: Y, _ width: W, _ height: H) {
 		self.init(origin: CGPoint(x, y), size: CGSize(width, height))
 	}
 }

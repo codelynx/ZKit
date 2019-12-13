@@ -12,15 +12,15 @@ import AVFoundation
 
 
 
-class SoundManager: NSObject {
+public class SoundManager: NSObject {
 	
-	enum StatePlayed {
+	public enum StatePlayed {
 		case finished
 		case canceled
 		case error
 	}
 	
-	enum PlayableItem {
+	public enum PlayableItem {
 		case sound(item: AVPlayerItem, completion: ((StatePlayed)->())?)
 		case speech(item: AVSpeechUtterance, completion: ((StatePlayed)->())?)
 	}
@@ -30,13 +30,13 @@ class SoundManager: NSObject {
 	
 	private (set) static var shared = SoundManager()
 	
-	lazy var speechSynthesizer: AVSpeechSynthesizer = {
+	public lazy var speechSynthesizer: AVSpeechSynthesizer = {
 		let speechSynthesizer = AVSpeechSynthesizer()
 		speechSynthesizer.delegate = self
 		return speechSynthesizer
 	}()
 	
-	lazy var queuePlayer: AVQueuePlayer = {
+	public lazy var queuePlayer: AVQueuePlayer = {
 		let player = AVQueuePlayer()
 		NotificationCenter.default.addObserver(self, selector: #selector(SoundManager.playerItemDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
 		return player
@@ -93,13 +93,13 @@ class SoundManager: NSObject {
 	
 	// MARK: -
 	
-	func schedulePlay(playerItem: AVPlayerItem, completion: ((StatePlayed)->())?) {
+	public func schedulePlay(playerItem: AVPlayerItem, completion: ((StatePlayed)->())?) {
 		let playableItem = PlayableItem.sound(item: playerItem, completion: completion)
 		queue.append(playableItem)
 		startPlaying()
 	}
 	
-	func scheduleSpeech(utterance: AVSpeechUtterance, completion: ((StatePlayed)->())?) {
+	public func scheduleSpeech(utterance: AVSpeechUtterance, completion: ((StatePlayed)->())?) {
 		let playableItem = PlayableItem.speech(item: utterance, completion: completion)
 		queue.append(playableItem)
 		startPlaying()
@@ -107,7 +107,7 @@ class SoundManager: NSObject {
 	
 	// MARK: -
 	
-	func schedulePlay(playerItems: [AVPlayerItem], completion: ((StatePlayed)->())?) {
+	public func schedulePlay(playerItems: [AVPlayerItem], completion: ((StatePlayed)->())?) {
 		var items = playerItems
 		let last = items.popLast()
 		for item in items {
@@ -118,7 +118,7 @@ class SoundManager: NSObject {
 		}
 	}
 	
-	func scheduleSpeech(utterances: [AVSpeechUtterance], completion: ((StatePlayed)->())?) {
+	public func scheduleSpeech(utterances: [AVSpeechUtterance], completion: ((StatePlayed)->())?) {
 		var items = utterances
 		let last = items.popLast()
 		for item in items {
@@ -131,7 +131,7 @@ class SoundManager: NSObject {
 	
 	// MARK: -
 	
-	func startPlaying() {
+	public func startPlaying() {
 		if isPlaying { return }
 		if let playableItem = queue.first {
 			switch playableItem {
@@ -147,7 +147,7 @@ class SoundManager: NSObject {
 		}
 	}
 	
-	func remove(playerItems: [AVPlayerItem]) {
+	public func remove(playerItems: [AVPlayerItem]) {
 		queue.removeAll { (playable) -> Bool in
 			if case let PlayableItem.sound(playerItem, _) = playable {
 				return playerItems.contains(playerItem)
@@ -156,7 +156,7 @@ class SoundManager: NSObject {
 		}
 	}
 	
-	func abortPlaying() {
+	public func abortPlaying() {
 		queuePlayer.pause()
 		self.speechSynthesizer.stopSpeaking(at: .immediate)
 		self.queue.removeAll()
@@ -165,7 +165,7 @@ class SoundManager: NSObject {
 		isPlaying = false
 	}
 	
-	@objc func playerItemDidFinishPlaying(_ notification: Notification) {
+	@objc public func playerItemDidFinishPlaying(_ notification: Notification) {
 		if let playerItem = notification.object as? AVPlayerItem {
 			if let index = queue.firstIndex(where: { (playableItem) -> Bool in
 				if case .sound(let soundItem) = playableItem, soundItem.item == playerItem { return true }
@@ -186,10 +186,10 @@ class SoundManager: NSObject {
 
 extension SoundManager: AVSpeechSynthesizerDelegate {
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
 	}
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
 		if let index = queue.firstIndex(where: { (playableItem) -> Bool in
 			if case .speech(let speechItem) = playableItem, speechItem.item == utterance { return true }
 			else { return false }
@@ -203,16 +203,16 @@ extension SoundManager: AVSpeechSynthesizerDelegate {
 		}
 	}
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
 	}
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
 	}
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance) {
 	}
 	
-	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
 	}
 	
 }
@@ -220,7 +220,7 @@ extension SoundManager: AVSpeechSynthesizerDelegate {
 
 extension AVSpeechUtterance {
 	
-	convenience init(string: String, voice: AVSpeechSynthesisVoice) {
+	public convenience init(string: String, voice: AVSpeechSynthesisVoice) {
 		self.init(string: string)
 		self.voice = voice
 	}
