@@ -42,4 +42,13 @@ public extension UIView {
 		return nil
 	}
 
+	func firstResponderView() -> UIView? {
+		if self.isFirstResponder { return self }
+		for subview in self.subviews {
+			if let firstResponder = subview.firstResponderView() {
+				return firstResponder
+			}
+		}
+		return nil
+	}
 }
