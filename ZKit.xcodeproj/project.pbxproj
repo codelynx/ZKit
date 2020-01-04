@@ -10,7 +10,7 @@
 		CC0926C8236231FB00F9B1B7 /* Geometric32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0926C7236231FB00F9B1B7 /* Geometric32.swift */; };
 		CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DD5A523A31B0E00950368 /* Array+Z.swift */; };
 		CC40A31923A47B4600580F4F /* UIView+configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40A31823A47B4600580F4F /* UIView+configurable.swift */; };
-		CCCBEACE22403500002BE9F5 /* ZKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */; };
+		CCCBEACE22403500002BE9F5 /* ZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit.framework */; };
 		CCCBEAD322403500002BE9F5 /* ZKit_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */; };
 		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */; };
@@ -75,7 +75,7 @@
 		CCCBEA7F224033A6002BE9F5 /* UIViewContrller+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewContrller+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA81224033A6002BE9F5 /* ZCalendarDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCalendarDate.swift; sourceTree = "<group>"; };
 		CCCBEA82224033A6002BE9F5 /* FramedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FramedButton.swift; sourceTree = "<group>"; };
-		CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCCBEAC522403500002BE9F5 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCBEAC722403500002BE9F5 /* ZKit_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZKit_ios.h; sourceTree = "<group>"; };
 		CCCBEAC822403500002BE9F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCCBEACD22403500002BE9F5 /* ZKit-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZKit-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCCBEACE22403500002BE9F5 /* ZKit_ios.framework in Frameworks */,
+				CCCBEACE22403500002BE9F5 /* ZKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 		CCCBEA53224032FD002BE9F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */,
+				CCCBEAC522403500002BE9F5 /* ZKit.framework */,
 				CCCBEACD22403500002BE9F5 /* ZKit-iosTests.xctest */,
 			);
 			name = Products;
@@ -204,7 +204,7 @@
 			);
 			name = "ZKit-ios";
 			productName = "ZKit-ios";
-			productReference = CCCBEAC522403500002BE9F5 /* ZKit_ios.framework */;
+			productReference = CCCBEAC522403500002BE9F5 /* ZKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		CCCBEACC22403500002BE9F5 /* ZKit-iosTests */ = {
@@ -467,7 +467,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ZKit-ios";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = ZKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -541,7 +541,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ZKit-ios";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = ZKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
