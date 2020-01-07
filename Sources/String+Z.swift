@@ -115,6 +115,20 @@ public extension String {
 	func size(withAttributes: [NSAttributedString.Key : Any]? = nil) -> CGSize {
 		return (self as NSString).size(withAttributes: withAttributes)
 	}
+
+	// MARK: -
+
+	subscript (i: Int) -> Character {
+		return self[index(startIndex, offsetBy: i)]
+	}
+
+	func range(from range: NSRange) -> Range<String.Index>? {
+		return Range(range, in: self)
+	}
+
+	func range(from range: Range<String.Index>) -> NSRange {
+		return NSRange(range, in: self)
+	}
 }
 
 
