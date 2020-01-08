@@ -129,6 +129,10 @@ public extension String {
 	func range(from range: Range<String.Index>) -> NSRange {
 		return NSRange(range, in: self)
 	}
+
+	var wholeRange: NSRange {
+		return NSMakeRange(0, (self as NSString).length) // don't use NSRangeFromString()
+	}
 }
 
 
