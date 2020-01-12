@@ -17,5 +17,10 @@ public class ZFramedButton: UIButton {
 		self.layer.cornerRadius = 3.0
 	}
 
+	public override var intrinsicContentSize: CGSize {
+		let size = super.intrinsicContentSize
+		return CGSize(width: size.width + 8.0, height: size.height + 2.0)
+	}
+	
 }
 
