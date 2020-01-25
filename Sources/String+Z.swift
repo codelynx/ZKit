@@ -139,6 +139,3 @@ public extension String {
 public extension CustomStringConvertible {
 	var xdescription: String { return self.description.stringByDecodingNonLossyASCII }
 }
-
-extension String: Error {
-}

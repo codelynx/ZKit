@@ -11,6 +11,7 @@
 		CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */; };
 		CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DD5A523A31B0E00950368 /* Array+Z.swift */; };
 		CC40A31923A47B4600580F4F /* UIView+configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40A31823A47B4600580F4F /* UIView+configurable.swift */; };
+		CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9B077D23DBFF5E00753BC0 /* ZError.swift */; };
 		CCCBEACE22403500002BE9F5 /* ZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCBEAC522403500002BE9F5 /* ZKit.framework */; };
 		CCCBEAD322403500002BE9F5 /* ZKit_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEAD222403500002BE9F5 /* ZKit_iosTests.swift */; };
 		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,6 +56,7 @@
 		CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFramedButton.swift; sourceTree = "<group>"; };
 		CC0DD5A523A31B0E00950368 /* Array+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Z.swift"; sourceTree = "<group>"; };
 		CC40A31823A47B4600580F4F /* UIView+configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+configurable.swift"; sourceTree = "<group>"; };
+		CC9B077D23DBFF5E00753BC0 /* ZError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZError.swift; sourceTree = "<group>"; };
 		CCCBEA6B224033A3002BE9F5 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Z.swift"; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				CCCBEA77224033A6002BE9F5 /* URL+Z.swift */,
 				CCCBEA74224033A6002BE9F5 /* with.swift */,
 				CCCBEA81224033A6002BE9F5 /* ZCalendarDate.swift */,
+				CC9B077D23DBFF5E00753BC0 /* ZError.swift */,
 				CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */,
 				CCCBEA7E224033A6002BE9F5 /* ZGlossButton.swift */,
 				CCCBEA78224033A6002BE9F5 /* ZWeakObjectSet.swift */,
@@ -312,6 +315,7 @@
 				CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */,
 				CCCBEAE62240350E002BE9F5 /* SoundManager.swift in Sources */,
 				CCCBEAF12240350E002BE9F5 /* ZCalendarDate.swift in Sources */,
+				CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */,
 				CCCBEAE22240350E002BE9F5 /* NSNumber+Z.swift in Sources */,
 				CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */,
 			);
