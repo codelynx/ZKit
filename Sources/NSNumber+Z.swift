@@ -25,9 +25,19 @@ public extension NSNumber {
 
 
 public extension NSDecimalNumber {
-	
+
+	convenience init(number: NSNumber) {
+		self.init(decimal: number.decimalValue)
+	}
+
+	convenience init?(number: NSNumber?) {
+		guard let number = number else { return nil }
+		self.init(decimal: number.decimalValue)
+	}
+
 	var isNotANumber: Bool {
 		return self.isEqual(NSDecimalNumber.notANumber)
 	}
+	
 	
 }
