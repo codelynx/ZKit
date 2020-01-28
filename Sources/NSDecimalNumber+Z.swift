@@ -43,6 +43,19 @@ extension NSDecimalNumber: Comparable {
 	public static func ^ (lhs: NSDecimalNumber, rhs: Int) -> NSDecimalNumber {
 		return lhs.raising(toPower: rhs)
 	}
+
+	public convenience init(number: NSNumber) {
+		self.init(decimal: number.decimalValue)
+	}
+
+	public convenience init?(number: NSNumber?) {
+		guard let number = number else { return nil }
+		self.init(decimal: number.decimalValue)
+	}
+
+	public var isNotANumber: Bool {
+		return self.isEqual(NSDecimalNumber.notANumber)
+	}
 }
 
 

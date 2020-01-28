@@ -23,11 +23,3 @@ public extension NSNumber {
 	
 }
 
-
-public extension NSDecimalNumber {
-	
-	var isNotANumber: Bool {
-		return self.isEqual(NSDecimalNumber.notANumber)
-	}
-	
-}
