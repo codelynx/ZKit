@@ -116,8 +116,6 @@ public extension String {
 		return (self as NSString).size(withAttributes: withAttributes)
 	}
 
-	// MARK: -
-
 	subscript (i: Int) -> Character {
 		return self[index(startIndex, offsetBy: i)]
 	}
@@ -133,6 +131,18 @@ public extension String {
 	var wholeRange: NSRange {
 		return NSMakeRange(0, (self as NSString).length) // don't use NSRangeFromString()
 	}
+
+	subscript(_ range: CountableRange<Int>) -> String {
+		let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+		let end = index(startIndex, offsetBy: min(self.count, range.upperBound))
+		return String(self[start..<end])
+	}
+
+	subscript(_ range: CountablePartialRangeFrom<Int>) -> String {
+		let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+		 return String(self[start...])
+	}
+
 }
 
 
