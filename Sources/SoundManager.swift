@@ -116,6 +116,9 @@ public class SoundManager: NSObject {
 		if let last = last { // specify completion block to only the last item
 			self.schedulePlay(playerItem: last, completion: completion)
 		}
+		else {
+			completion?(.finished)
+		}
 	}
 	
 	public func scheduleSpeech(utterances: [AVSpeechUtterance], completion: ((StatePlayed)->())?) {

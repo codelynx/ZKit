@@ -49,4 +49,12 @@ extension Array where Element: Equatable {
 	mutating public func removeDuplicates() {
 		self = self.removingDuplicates()
 	}
+	
+	public func removing(_ elements: [Element]) -> Array {
+		return self.filter { !elements.contains($0) }
+	}
+
+	mutating public func remove(_ elements: [Element]) {
+		self = self.removing(elements)
+	}
 }
