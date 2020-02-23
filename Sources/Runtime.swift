@@ -87,11 +87,11 @@ public class Runtime {
 	}
 
 	public static func classes(conformToProtocol `protocol`: Protocol) -> [AnyClass] {
-		let classes = self.allClasses().filter { aClass in
-			var subject: AnyClass? = aClass
-			while let aClass = subject {
-				if class_conformsToProtocol(aClass, `protocol`) { print(String(describing: aClass)); return true }
-				subject = class_getSuperclass(aClass)
+		let classes = self.allClasses().filter { `class` in
+			var subject: AnyClass? = `class`
+			while let `class` = subject {
+				if class_conformsToProtocol(`class`, `protocol`) { print(String(describing: `class`)); return true }
+				subject = class_getSuperclass(`class`)
 			}
 			return false
 		}
