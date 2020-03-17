@@ -89,7 +89,6 @@ public extension String {
 	func trimmingWhitespacesAndNewlines() -> String {
 		return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 	}
-
 	var stringByDecodingNonLossyASCII: String {
 		return self.cString(using: .utf8).flatMap({ String(cString: $0, encoding: .nonLossyASCII) }) ?? "???"
 	}
@@ -115,6 +114,19 @@ public extension String {
 	func size(withAttributes: [NSAttributedString.Key : Any]? = nil) -> CGSize {
 		return (self as NSString).size(withAttributes: withAttributes)
 	}
+	
+	// MARK: -
+
+	subscript (i: Int) -> Character {
+		return self[index(startIndex, offsetBy: i)]
+	}
+	func range(from range: NSRange) -> Range<String.Index>? {
+		return Range(range, in: self)
+	}
+	func range(from range: Range<String.Index>) -> NSRange {
+		return NSRange(range, in: self)
+	}
+
 }
 
 
