@@ -41,7 +41,7 @@ fileprivate class WeakObject<T: AnyObject>: Equatable, Hashable {
 	}
 }
 
-class WeakObjectSet<T: AnyObject> {
+public class ZWeakObjectSet<T: AnyObject> {
 	private var _objects: Set<WeakObject<T>>
 	init() {
 		self._objects = Set<WeakObject<T>>([])
@@ -58,28 +58,28 @@ class WeakObjectSet<T: AnyObject> {
 	func addObject(_ object: T) {
 		self._objects.insert(WeakObject(object))
 	}
-	func addingObject(_ object: T) -> WeakObjectSet<T> {
-		return WeakObjectSet( self.objects + [object])
+	func addingObject(_ object: T) -> ZWeakObjectSet<T> {
+		return ZWeakObjectSet( self.objects + [object])
 	}
 	func addObjects(_ objects: [T]) {
 		self._objects.formUnion(objects.map { WeakObject($0) })
 	}
-	func addingObjects(_ objects: [T]) -> WeakObjectSet<T> {
-		return WeakObjectSet( self.objects + objects)
+	func addingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
+		return ZWeakObjectSet( self.objects + objects)
 	}
 	func removeObject(_ object: T) {
 		self._objects.remove(WeakObject(object))
 	}
-	func removingObject(_ object: T) -> WeakObjectSet<T> {
+	func removingObject(_ object: T) -> ZWeakObjectSet<T> {
 		var temporaryObjects = self._objects
 		temporaryObjects.remove(WeakObject(object))
-		return WeakObjectSet(temporaryObjects.compactMap { $0.object })
+		return ZWeakObjectSet(temporaryObjects.compactMap { $0.object })
 	}
 	func removeObjects(_ objects: [T]) {
 		self._objects.subtract(objects.map { WeakObject($0) })
 	}
-	func removingObjects(_ objects: [T]) -> WeakObjectSet<T> {
+	func removingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
 		let temporaryObjects = self._objects.subtracting(objects.map { WeakObject($0) })
-		return WeakObjectSet(temporaryObjects.compactMap { $0.object })
+		return ZWeakObjectSet(temporaryObjects.compactMap { $0.object })
 	}
 }
