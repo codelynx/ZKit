@@ -210,22 +210,6 @@ extension Float: CGFloatCovertible {
 }
 
 
-
-// MARK: -
-
-public protocol PointConvertible {
-	var pointValue: Point { get }
-}
-
-extension Point: PointConvertible {
-	public var pointValue: Point { return self }
-}
-
-extension CGPoint: PointConvertible {
-	public var pointValue: Point { return Point(self) }
-}
-
-
 // MARK: -
 
 extension CGPoint {
@@ -284,17 +268,12 @@ extension CGPoint {
 
 
 extension CGSize {
-	public init(_ size: Size) {
-		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
-	}
-	
 	public init<W: CGFloatCovertible, H: CGFloatCovertible>(_ width: W, _ height: H) {
 		self.init(width: width.cgFloatValue, height: height.cgFloatValue)
 	}
 }
 
 extension CGRect {
-	
 	public init<X: CGFloatCovertible, Y: CGFloatCovertible, W: CGFloatCovertible, H: CGFloatCovertible>(_ x: X, _ y: Y, _ width: W, _ height: H) {
 		self.init(origin: CGPoint(x, y), size: CGSize(width, height))
 	}

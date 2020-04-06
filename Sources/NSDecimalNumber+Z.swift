@@ -44,11 +44,7 @@ extension NSDecimalNumber: Comparable {
 		return lhs.raising(toPower: rhs)
 	}
 
-	public convenience init(number: NSNumber) {
-		self.init(decimal: number.decimalValue)
-	}
-
-	public convenience init?(number: NSNumber?) {
+	public convenience init?(_ number: NSNumber?) {
 		guard let number = number else { return nil }
 		self.init(decimal: number.decimalValue)
 	}

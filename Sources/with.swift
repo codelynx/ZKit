@@ -55,4 +55,9 @@ public func with<T>(_ item: T, _ closure: (T)->()) -> T {
 	return item
 }
 
-
+public func with<T>(_ item: T?, _ closure: (T)->()) -> T? {
+	if let item = item {
+		closure(item)
+	}
+	return item
+}
