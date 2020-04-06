@@ -196,3 +196,23 @@ extension CGRect {
 	}
 
 }
+
+// MARK: -
+
+public protocol PointConvertible {
+	var pointValue: Point { get }
+}
+
+extension Point: PointConvertible {
+	public var pointValue: Point { return self }
+}
+
+extension CGPoint: PointConvertible {
+	public var pointValue: Point { return Point(self) }
+}
+
+extension CGSize {
+	public init(_ size: Size) {
+		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
+	}
+}
