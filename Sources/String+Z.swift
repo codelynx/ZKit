@@ -132,6 +132,10 @@ public extension String {
 		return NSMakeRange(0, (self as NSString).length) // don't use NSRangeFromString()
 	}
 
+	var length: Int {
+		return (self as NSString).length
+	}
+
 	subscript(_ range: CountableRange<Int>) -> String {
 		let start = index(startIndex, offsetBy: max(0, range.lowerBound))
 		let end = index(startIndex, offsetBy: min(self.count, range.upperBound))

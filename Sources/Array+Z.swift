@@ -57,4 +57,5 @@ extension Array where Element: Equatable {
 	mutating public func remove(_ elements: [Element]) {
 		self = self.removing(elements)
 	}
+
 }
