@@ -10,8 +10,6 @@ import Foundation
 import AVFoundation
 
 
-
-
 public class SoundManager: NSObject {
 	
 	public enum StatePlayed {
@@ -138,13 +136,13 @@ public class SoundManager: NSObject {
 		if isPlaying { return }
 		if let playableItem = queue.first {
 			switch playableItem {
-			case .sound(let soundItem):
-				assert(queuePlayer.canInsert(soundItem.item, after: nil))
-				queuePlayer.insert(soundItem.item, after: nil)
+			case .sound(let soundItem, _):
+				assert(queuePlayer.canInsert(soundItem, after: nil))
+				queuePlayer.insert(soundItem, after: nil)
 				queuePlayer.play()
 				isPlaying = true
-			case .speech(let speechItem):
-				speechSynthesizer.speak(speechItem.item)
+			case .speech(let speechItem, _):
+				speechSynthesizer.speak(speechItem)
 				isPlaying = true
 			}
 		}
@@ -171,12 +169,12 @@ public class SoundManager: NSObject {
 	@objc public func playerItemDidFinishPlaying(_ notification: Notification) {
 		if let playerItem = notification.object as? AVPlayerItem {
 			if let index = queue.firstIndex(where: { (playableItem) -> Bool in
-				if case .sound(let soundItem) = playableItem, soundItem.item == playerItem { return true }
+				if case .sound(let soundItem, _) = playableItem, soundItem == playerItem { return true }
 				else { return false }
 			}) {
 				let playableItem = queue.remove(at: index)
-				if case .sound(let soundItem) = playableItem {
-					soundItem.completion?(.finished)
+				if case .sound(_, let completion) = playableItem {
+					completion?(.finished)
 					self.isPlaying = false
 					self.startPlaying()
 				}
@@ -194,12 +192,12 @@ extension SoundManager: AVSpeechSynthesizerDelegate {
 	
 	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
 		if let index = queue.firstIndex(where: { (playableItem) -> Bool in
-			if case .speech(let speechItem) = playableItem, speechItem.item == utterance { return true }
+			if case .speech(let speechItem, _) = playableItem, speechItem == utterance { return true }
 			else { return false }
 		}) {
 			let playableItem = queue.remove(at: index)
-			if case .speech(let speechItem) = playableItem {
-				speechItem.completion?(.finished)
+			if case .speech(_, let completion) = playableItem {
+				completion?(.finished)
 				self.isPlaying = false
 				self.startPlaying()
 			}
