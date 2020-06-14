@@ -58,4 +58,20 @@ extension Array where Element: Equatable {
 		self = self.removing(elements)
 	}
 
+	func indexes(of element: Element) -> [Int] {
+		return self.enumerated().filter({ element == $0.element }).map({ $0.offset })
+	}
+
+	mutating func removeIndexes(_ indexes: [Int]) {
+		for index in Set(indexes).sorted(by: >) {
+			self.remove(at: index)
+		}
+	}
+
+	func removingIndexes(_ indexes: [Int]) -> Self {
+		var array = Array(self)
+		array.removeIndexes(indexes)
+		return array
+	}
+
 }
