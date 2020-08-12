@@ -1,6 +1,6 @@
 //
 //	NSSet+Z.swift
-//	SSI-ios
+//	ZKit
 //
 //	Created by Kaz Yoshikawa on 3/17/18.
 //	Copyright © 2018 Electricwoods LLC. All rights reserved.

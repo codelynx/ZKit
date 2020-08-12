@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */; };
 		CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DD5A523A31B0E00950368 /* Array+Z.swift */; };
+		CC0EE96124E48C750040ECD0 /* Set+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0EE96024E48C750040ECD0 /* Set+Z.swift */; };
 		CC40A31923A47B4600580F4F /* UIView+configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40A31823A47B4600580F4F /* UIView+configurable.swift */; };
 		CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9B077D23DBFF5E00753BC0 /* ZError.swift */; };
 		CCB25B03245A1349004ADA17 /* Float16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B02245A1349004ADA17 /* Float16.swift */; };
@@ -56,6 +57,7 @@
 		CC0926C7236231FB00F9B1B7 /* Geometric32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geometric32.swift; sourceTree = "<group>"; };
 		CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFramedButton.swift; sourceTree = "<group>"; };
 		CC0DD5A523A31B0E00950368 /* Array+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Z.swift"; sourceTree = "<group>"; };
+		CC0EE96024E48C750040ECD0 /* Set+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Z.swift"; sourceTree = "<group>"; };
 		CC40A31823A47B4600580F4F /* UIView+configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+configurable.swift"; sourceTree = "<group>"; };
 		CC9B077D23DBFF5E00753BC0 /* ZError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZError.swift; sourceTree = "<group>"; };
 		CCB25B02245A1349004ADA17 /* Float16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float16.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				CCCBEA7A224033A6002BE9F5 /* NSSet+Z.swift */,
 				CCCBEA6B224033A3002BE9F5 /* Runtime.swift */,
 				CCE773C5238674840066542E /* Sequence+Z.swift */,
+				CC0EE96024E48C750040ECD0 /* Set+Z.swift */,
 				CCCBEA70224033A5002BE9F5 /* SoundManager.swift */,
 				CCCBEA7B224033A6002BE9F5 /* String+Color.swift */,
 				CCCBEA76224033A6002BE9F5 /* String+Z.swift */,
@@ -322,6 +325,7 @@
 				CCCBEAE62240350E002BE9F5 /* SoundManager.swift in Sources */,
 				CCCBEAF12240350E002BE9F5 /* ZCalendarDate.swift in Sources */,
 				CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */,
+				CC0EE96124E48C750040ECD0 /* Set+Z.swift in Sources */,
 				CCCBEAE22240350E002BE9F5 /* NSNumber+Z.swift in Sources */,
 				CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */,
 			);
