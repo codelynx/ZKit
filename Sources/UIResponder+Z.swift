@@ -26,8 +26,8 @@ extension UIResponder {
 	func findResponder<T>() -> T? {
 		var responder = self.next
 		repeat {
-			if let viewController = responder as? T {
-				return viewController
+			if let responder = responder as? T {
+				return responder
 			}
 			responder = responder!.next
 		} while responder != nil

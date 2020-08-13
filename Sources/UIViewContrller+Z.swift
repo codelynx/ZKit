@@ -30,7 +30,7 @@ import UIKit
 
 public extension UIViewController {
 
-	func addViewController(viewController: UIViewController, intoView view: UIView) {
+	func addViewController(viewController: UIViewController, into view: UIView) {
 		viewController.view.frame = view.bounds
 		self.addChild(viewController)
 		view.addSubview(viewController.view)
