@@ -2,7 +2,7 @@
 //	UIImage+Z.swift
 //	ZKit
 //
-//	Copyright (c) 2017 Kaz Yoshikawa
+//	Copyright (c) 2020 Kaz Yoshikawa
 //
 //	Permission is hereby granted, free of charge, to any person
 //	obtaining a copy of this software and associated documentation
