@@ -11,11 +11,13 @@ import CoreGraphics
 import QuartzCore
 import simd
 
+
 infix operator •
 infix operator ×
 
 
 extension CGRect {
+
 	public init(size: CGSize) {
 		self.init(origin: .zero, size: size)
 	}
@@ -213,7 +215,7 @@ extension Float: CGFloatCovertible {
 // MARK: -
 
 extension CGPoint {
-	
+
 	static public func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
 		return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 	}

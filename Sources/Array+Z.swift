@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 extension Array {
 
 	mutating public func rearrange(from fromIndex: Int, to toIndex: Int) {
@@ -35,6 +36,7 @@ extension Array {
 	}
 
 }
+
 
 extension Array where Element: Equatable {
 
