@@ -17,7 +17,6 @@
 		CCB25B03245A1349004ADA17 /* Float16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B02245A1349004ADA17 /* Float16.swift */; };
 		CCB25B05245A1359004ADA17 /* ZWeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B04245A1359004ADA17 /* ZWeakObjectSet.swift */; };
 		CCB5623B24C6637B006339BA /* UIResponder+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB5623A24C6637B006339BA /* UIResponder+Z.swift */; };
-		CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCBEAC722403500002BE9F5 /* ZKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */; };
 		CCCBEADD2240350E002BE9F5 /* NSDecimalNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */; };
 		CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA82224033A6002BE9F5 /* FramedButton.swift */; };
@@ -78,8 +77,6 @@
 		CCCBEA81224033A6002BE9F5 /* ZCalendarDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCalendarDate.swift; sourceTree = "<group>"; };
 		CCCBEA82224033A6002BE9F5 /* FramedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FramedButton.swift; sourceTree = "<group>"; };
 		CCCBEAC522403500002BE9F5 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCCBEAC722403500002BE9F5 /* ZKit_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZKit_ios.h; sourceTree = "<group>"; };
-		CCCBEAC822403500002BE9F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCE773C2238674490066542E /* NSMutableParagraphStyle+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableParagraphStyle+Z.swift"; sourceTree = "<group>"; };
 		CCE773C5238674840066542E /* Sequence+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+Z.swift"; sourceTree = "<group>"; };
 		CCFE4EFB250E23A50041FDDB /* DataStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStream.swift; sourceTree = "<group>"; };
@@ -100,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				CCCBEA6A22403339002BE9F5 /* Sources */,
-				CCCBEAC622403500002BE9F5 /* ZKit-ios */,
 				CCCBEA53224032FD002BE9F5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -155,15 +151,6 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		CCCBEAC622403500002BE9F5 /* ZKit-ios */ = {
-			isa = PBXGroup;
-			children = (
-				CCCBEAC722403500002BE9F5 /* ZKit_ios.h */,
-				CCCBEAC822403500002BE9F5 /* Info.plist */,
-			);
-			path = "ZKit-ios";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -171,7 +158,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCCBEAD522403500002BE9F5 /* ZKit_ios.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +189,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					CCCBEAC422403500002BE9F5 = {
 						CreatedOnToolsVersion = 10.1;
@@ -298,6 +284,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -333,6 +320,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -384,11 +372,13 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -408,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ZKit-ios/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -419,10 +409,13 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ZKit-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZKit;
 				PRODUCT_NAME = ZKit;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -465,11 +458,13 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -483,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ZKit-ios/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -493,10 +488,13 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ZKit-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZKit;
 				PRODUCT_NAME = ZKit;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
