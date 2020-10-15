@@ -14,7 +14,6 @@
 		CC4994752536E17C00D5D976 /* OutputStream+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4994742536E17C00D5D976 /* OutputStream+Z.swift */; };
 		CC94C6DC2505779C00F03672 /* ZBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC94C6DB2505779C00F03672 /* ZBuffer.swift */; };
 		CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9B077D23DBFF5E00753BC0 /* ZError.swift */; };
-		CCB25B03245A1349004ADA17 /* Float16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B02245A1349004ADA17 /* Float16.swift */; };
 		CCB25B05245A1359004ADA17 /* ZWeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B04245A1359004ADA17 /* ZWeakObjectSet.swift */; };
 		CCB5623B24C6637B006339BA /* UIResponder+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB5623A24C6637B006339BA /* UIResponder+Z.swift */; };
 		CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */; };
@@ -251,7 +250,6 @@
 				CCCBEAE92240350E002BE9F5 /* UIAlertController.swift in Sources */,
 				CCE773C6238674840066542E /* Sequence+Z.swift in Sources */,
 				CCCBEAEA2240350E002BE9F5 /* UIColor+Z.swift in Sources */,
-				CCB25B03245A1349004ADA17 /* Float16.swift in Sources */,
 				CC40A31923A47B4600580F4F /* UIView+configurable.swift in Sources */,
 				CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */,
 				CCCBEAE62240350E002BE9F5 /* SoundManager.swift in Sources */,
