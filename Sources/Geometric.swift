@@ -150,8 +150,8 @@ public typealias Point16 = Point<Float16>
 
 public struct Size<T: FloatingPointType>: CustomStringConvertible, Codable {
 
-	var width: T
-	var height: T
+	public var width: T
+	public var height: T
 	
 	public init(width: T, height: T) {
 		(self.width, self.height) = (width, height)
