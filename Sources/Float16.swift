@@ -158,3 +158,12 @@ public extension Double {
 	}
 
 }
+
+
+public extension Float {
+
+	init(_ value: Float16) {
+		self = Float(value.floatValue)
+	}
+
+}
