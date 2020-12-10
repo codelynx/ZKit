@@ -4,7 +4,7 @@
 //
 //	The MIT License (MIT)
 //
-//	Copyright (c) 2020 Electricwoods LLC, Kaz Yoshikawa.
+//	Copyright (c) 2016 Electricwoods LLC, Kaz Yoshikawa.
 //
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import Accelerate
 import CoreGraphics
 
 
-public struct Float16: CustomStringConvertible, Hashable {
+public struct Float16: CustomStringConvertible, Hashable, Codable {
 	
 	var rawValue: UInt16
 	
@@ -107,10 +107,6 @@ public struct Float16: CustomStringConvertible, Hashable {
 		self = Float16.float_to_float16(value: Float(value))
 	}
 
-	public var floatValue: Float {
-		return Float16.float16_to_float(value: self)
-	}
-	
 	public var description: String {
 		return self.floatValue.description
 	}

@@ -196,6 +196,7 @@ extension float4x4 {
 
 // MARK: -
 
+/*
 public protocol FloatCovertible {
 	var floatValue: Float { get }
 }
@@ -211,9 +212,11 @@ extension Int: FloatCovertible {
 extension Float: FloatCovertible {
 	public var floatValue: Float { return self }
 }
+*/
 
 // MARK: -
 
+/*
 public protocol CGFloatCovertible {
 	var cgFloatValue: CGFloat { get }
 }
@@ -229,7 +232,7 @@ extension Int: CGFloatCovertible {
 extension Float: CGFloatCovertible {
 	public var cgFloatValue: CGFloat { return CGFloat(self) }
 }
-
+*/
 
 // MARK: -
 
@@ -280,7 +283,7 @@ extension CGPoint {
 	}
 }
 
-
+/*
 extension CGPoint {
 	public init<X: CGFloatCovertible, Y: CGFloatCovertible>(_ x: X, _ y: Y) {
 		self.init(x: x.cgFloatValue, y: y.cgFloatValue)
@@ -299,3 +302,4 @@ extension CGRect {
 		self.init(origin: CGPoint(x, y), size: CGSize(width, height))
 	}
 }
+*/
