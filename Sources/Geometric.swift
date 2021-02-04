@@ -14,7 +14,6 @@ import simd
 infix operator •
 infix operator ×
 
-
 public protocol FloatingPointType: FloatingPoint, Codable {
 	static func + (lhs: Self, rhs: Self) -> Self
 	static func - (lhs: Self, rhs: Self) -> Self
@@ -54,12 +53,19 @@ extension Float: FloatingPointType {
 	public var floatValue: Float { Float(self) }
 }
 
-extension Float16: FloatingPointType {
-	public static func atan2(_ lhs: Float16, _ rhs: Float16) -> Float16 { Float16(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
+extension Half: FloatingPointType {
+	public static func atan2(_ lhs: Half, _ rhs: Half) -> Half { Half(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
 	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
 }
 
+/*
+extension Float {
+	static func atan2(_ lhs: Self, _ rhs: Self) -> Self {
+		return Float(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs)))
+	}
+}
+*/
 
 public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Codable {
 	
@@ -145,7 +151,7 @@ public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Co
 
 public typealias Point64 = Point<Double>
 public typealias Point32 = Point<Float>
-public typealias Point16 = Point<Float16>
+public typealias Point16 = Point<Half>
 
 
 public struct Size<T: FloatingPointType>: CustomStringConvertible, Codable {
@@ -169,7 +175,7 @@ public struct Size<T: FloatingPointType>: CustomStringConvertible, Codable {
 
 public typealias Size64 = Size<Double>
 public typealias Size32 = Size<Float>
-public typealias Size16 = Size<Float16>
+public typealias Size16 = Size<Half>
 
 
 
@@ -243,7 +249,7 @@ public struct Rect<T: FloatingPointType>: CustomStringConvertible, Codable {
 
 public typealias Rect64 = Rect<Double>
 public typealias Rect32 = Rect<Float>
-public typealias Rect16 = Rect<Float16>
+public typealias Rect16 = Rect<Half>
 
 extension CGPoint {
 

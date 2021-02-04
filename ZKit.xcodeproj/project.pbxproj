@@ -10,6 +10,7 @@
 		CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A069723CB5DA0006CE4B3 /* ZFramedButton.swift */; };
 		CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0DD5A523A31B0E00950368 /* Array+Z.swift */; };
 		CC0EE96124E48C750040ECD0 /* Set+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0EE96024E48C750040ECD0 /* Set+Z.swift */; };
+		CC31C76C25CBA525000EFD97 /* Float16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3A4251254F9572008B89CA /* Float16.swift */; };
 		CC3A424E254F9543008B89CA /* Geometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3A424D254F9543008B89CA /* Geometric.swift */; };
 		CC40A31923A47B4600580F4F /* UIView+configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40A31823A47B4600580F4F /* UIView+configurable.swift */; };
 		CC4994752536E17C00D5D976 /* OutputStream+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4994742536E17C00D5D976 /* OutputStream+Z.swift */; };
@@ -261,6 +262,7 @@
 				CC4994752536E17C00D5D976 /* OutputStream+Z.swift in Sources */,
 				CCFE4EFC250E23A50041FDDB /* DataStream.swift in Sources */,
 				CC0EE96124E48C750040ECD0 /* Set+Z.swift in Sources */,
+				CC31C76C25CBA525000EFD97 /* Float16.swift in Sources */,
 				CCCBEAE22240350E002BE9F5 /* NSNumber+Z.swift in Sources */,
 				CC0A069823CB5DA0006CE4B3 /* ZFramedButton.swift in Sources */,
 			);
@@ -299,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -334,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
