@@ -58,18 +58,6 @@ public extension UInt32 {
 	}
 }
 
-/*
-extension NSNumber {
-convenience init?(_ value: JSValue) {
-if let number = value.toNumber() {
-// no initializer like this, not sure how we can provide this
-self = NSNumber(number: number)
-}
-return nil
-}
-}
-*/
-
 public extension Date {
 	init?(_ value: JSValue) {
 		if let date = value.toDate() {

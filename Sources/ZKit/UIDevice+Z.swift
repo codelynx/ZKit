@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-extension UIDevice {
+public extension UIDevice {
 
 	func setOrientation(orientation: UIDeviceOrientation) {
 		// https://stackoverflow.com/questions/52176134/force-rotate-uiviewcontroller-in-portrait-status

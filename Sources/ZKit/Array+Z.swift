@@ -28,27 +28,27 @@
 import Foundation
 
 
-extension Array {
+public extension Array {
 
-	mutating public func rearrange(from fromIndex: Int, to toIndex: Int) {
+	mutating func rearrange(from fromIndex: Int, to toIndex: Int) {
 		let item = self.remove(at: fromIndex)
 		self.insert(item, at: toIndex)
 	}
 
-	public func rearranged(from fromIndex: Int, to toIndex: Int) -> Array {
+	func rearranged(from fromIndex: Int, to toIndex: Int) -> Array {
 		var array = self
 		let item = array.remove(at: fromIndex)
 		array.insert(item, at: toIndex)
 		return array
 	}
 
-	public func appending(_ elements: [Element]) -> Array {
+	func appending(_ elements: [Element]) -> Array {
 		var array = self
 		array += elements
 		return array
 	}
 
-	public func appending(_ element: Element) -> Array {
+	func appending(_ element: Element) -> Array {
 		var array = self
 		array += [element]
 		return array
@@ -57,9 +57,9 @@ extension Array {
 }
 
 
-extension Array where Element: Equatable {
+public extension Array where Element: Equatable {
 
-	public func removingDuplicates() -> Array {
+	func removingDuplicates() -> Array {
 		return reduce(into: []) { result, element in
 			if !result.contains(element) {
 				result.append(element)
@@ -67,15 +67,15 @@ extension Array where Element: Equatable {
 		}
 	}
 	
-	mutating public func removeDuplicates() {
+	mutating func removeDuplicates() {
 		self = self.removingDuplicates()
 	}
 
-	public func removing(_ elements: [Element]) -> Array {
+	func removing(_ elements: [Element]) -> Array {
 		return self.filter { !elements.contains($0) }
 	}
 
-	mutating public func remove(_ elements: [Element]) {
+	mutating func remove(_ elements: [Element]) {
 		self = self.removing(elements)
 	}
 

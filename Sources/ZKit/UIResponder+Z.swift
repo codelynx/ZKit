@@ -29,7 +29,7 @@ import Foundation
 import UIKit
 
 
-extension UIResponder {
+public extension UIResponder {
 	
 	func findViewController<T: UIViewController>() -> T? {
 		var responder = self.next

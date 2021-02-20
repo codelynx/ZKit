@@ -101,4 +101,5 @@ public class Runtime {
 	public static func classes<T>(conformTo: T.Type) -> [AnyClass] {
 		return self.allClasses().filter { $0 is T }
 	}
+
 }

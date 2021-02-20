@@ -27,6 +27,7 @@
 
 import Foundation
 
+
 public class ZError: Error, CustomStringConvertible {
 	public let messgae: String
 	public let file: String

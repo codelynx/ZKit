@@ -32,7 +32,7 @@ fileprivate var viewNameMap = NSMapTable<UIView, NSString>.weakToStrongObjects()
 fileprivate var viewDictionaryMap = NSMapTable<UIView, NSDictionary>.weakToStrongObjects()
 
 
-extension UIView {
+public extension UIView {
 	
 	@IBInspectable dynamic var name: String? {
 		get {

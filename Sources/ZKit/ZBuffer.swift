@@ -41,7 +41,7 @@ import Foundation
 //	buffer[3] = 0
 //	print(array) // [3, 1, 2, 0]
 
-class ZBuffer<T> {
+public class ZBuffer<T> {
 
 	var bufferPointer: UnsafeBufferPointer<T>
 

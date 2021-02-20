@@ -50,17 +50,24 @@ private let _secondsADay = 60.0 * 60.0 * 24.0
 //	ZCalendarType
 //
 
-protocol ZCalendarType: Comparable, CustomStringConvertible {
+public protocol ZCalendarType: Comparable, CustomStringConvertible {
+
 	var integerValue: Int { get }
+
 }
 
-protocol ZCalendarYearType: ZCalendarType {
+
+public protocol ZCalendarYearType: ZCalendarType {
+
 	var year: Int { get }
 	var firstCalendarMonthOfYear: ZCalendarMonth { get }
 	var lastCalendarMonthOfYear: ZCalendarMonth { get }
+
 }
 
-protocol ZCalendarMonthType: ZCalendarYearType {
+
+public protocol ZCalendarMonthType: ZCalendarYearType {
+
 	var month: Int { get }
 	var firstCalendarDateOfMonth: ZCalendarDate { get }
 	var lastCalendarDateOfMonth: ZCalendarDate { get }
@@ -68,9 +75,12 @@ protocol ZCalendarMonthType: ZCalendarYearType {
 	func offsetMonths(_ calendarMonth: ZCalendarMonth) -> Int
 	var previousCalendarMonth: ZCalendarMonth { get }
 	var nextCalendarMonth: ZCalendarMonth { get }
+
 }
 
-protocol ZCalendarDateType: ZCalendarMonthType {
+
+public protocol ZCalendarDateType: ZCalendarMonthType {
+
 	var day: Int { get }
 	var calendarDayOfWeek: ZCalendarDayOfWeek { get }
 	var firstCalendarDayOfYear: ZCalendarDate { get }
@@ -79,6 +89,7 @@ protocol ZCalendarDateType: ZCalendarMonthType {
 	func calendarDate(offsetByDays days: Int) -> ZCalendarDate
 	func calendarDate(offsetByMonths months: Int) -> ZCalendarDate
 	func days(sinceCalendarDate calendarDate: ZCalendarDate) -> Int
+
 }
 
 
@@ -87,6 +98,7 @@ protocol ZCalendarDateType: ZCalendarMonthType {
 //
 
 public struct ZCalendarYear: ZCalendarYearType, Hashable {
+
 	public let year: Int
 	public init(year: Int) {
 		self.year = year
@@ -112,6 +124,7 @@ public struct ZCalendarYear: ZCalendarYearType, Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(self.year)
 	}
+
 }
 
 
@@ -120,6 +133,7 @@ public struct ZCalendarYear: ZCalendarYearType, Hashable {
 //
 
 public struct ZCalendarMonth: ZCalendarMonthType, Hashable {
+
 	fileprivate let calendarYear: ZCalendarYear
 	public let month: Int
 	public var year: Int { return calendarYear.year }
@@ -205,6 +219,7 @@ public struct ZCalendarMonth: ZCalendarMonthType, Hashable {
 		hasher.combine(self.year)
 		hasher.combine(self.month)
 	}
+
 }
 
 
@@ -213,6 +228,7 @@ public struct ZCalendarMonth: ZCalendarMonthType, Hashable {
 //
 
 public struct ZCalendarDate: ZCalendarDateType, Hashable {
+
 	public let calendarMonth: ZCalendarMonth
 	public let day: Int
 	public var month: Int { return calendarMonth.month }
@@ -327,5 +343,6 @@ public struct ZCalendarDate: ZCalendarDateType, Hashable {
 		hasher.combine(self.month)
 		hasher.combine(self.day)
 	}
+
 }
 

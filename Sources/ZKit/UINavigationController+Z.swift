@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-extension UINavigationController {
+public extension UINavigationController {
 	
-	open override var shouldAutorotate: Bool {
+	override var shouldAutorotate: Bool {
 		guard let viewController = self.visibleViewController else { return true }
 		return viewController.shouldAutorotate
 	}
 	
-	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		guard let viewController = self.visibleViewController else { return .all }
 		return viewController.supportedInterfaceOrientations
 	}

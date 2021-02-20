@@ -26,6 +26,7 @@
 import Foundation
 
 fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
+
 	weak var object: T?
 	private let hashKey: Int
 	init(_ object: T) {
@@ -39,9 +40,11 @@ fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(hashKey)
 	}
+
 }
 
-class ZWeakObjectSet<T: AnyObject> {
+public class ZWeakObjectSet<T: AnyObject> {
+
 	private var _objects: Set<ZWeakObject<T>>
 	init() {
 		self._objects = Set<ZWeakObject<T>>([])
@@ -82,4 +85,5 @@ class ZWeakObjectSet<T: AnyObject> {
 		let temporaryObjects = self._objects.subtracting(objects.map { ZWeakObject($0) })
 		return ZWeakObjectSet(temporaryObjects.compactMap { $0.object })
 	}
+
 }

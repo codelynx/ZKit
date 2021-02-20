@@ -27,50 +27,57 @@
 
 import Foundation
 
+
 extension NSDecimalNumber: Comparable {
 	
 	public static func == (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> Bool {
 		return lhs.compare(rhs) == .orderedSame
 	}
-	
-	public static func < (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> Bool {
+
+}
+
+
+public extension NSDecimalNumber {
+
+	static func < (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> Bool {
 		return lhs.compare(rhs) == .orderedAscending
 	}
 	
 	// MARK: - Arithmetic Operators
 	
-	public static prefix func - (value: NSDecimalNumber) -> NSDecimalNumber {
+	static prefix func - (value: NSDecimalNumber) -> NSDecimalNumber {
 		return value.multiplying(by: NSDecimalNumber(mantissa: 1, exponent: 0, isNegative: true))
 	}
 	
-	public static func + (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
+	static func + (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
 		return lhs.adding(rhs)
 	}
 	
-	public static func - (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
+	static func - (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
 		return lhs.subtracting(rhs)
 	}
 	
-	public static func * (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
+	static func * (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
 		return lhs.multiplying(by: rhs)
 	}
 	
-	public static func / (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
+	static func / (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
 		return lhs.dividing(by: rhs)
 	}
 	
-	public static func ^ (lhs: NSDecimalNumber, rhs: Int) -> NSDecimalNumber {
+	static func ^ (lhs: NSDecimalNumber, rhs: Int) -> NSDecimalNumber {
 		return lhs.raising(toPower: rhs)
 	}
 
-	public convenience init?(_ number: NSNumber?) {
+	convenience init?(_ number: NSNumber?) {
 		guard let number = number else { return nil }
 		self.init(decimal: number.decimalValue)
 	}
 
-	public var isNotANumber: Bool {
+	var isNotANumber: Bool {
 		return self.isEqual(NSDecimalNumber.notANumber)
 	}
+
 }
 
 

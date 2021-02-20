@@ -28,7 +28,7 @@
 import Foundation
 
 
-extension OutputStream {
+public extension OutputStream {
 
 	func write(_ data: Data) -> Int {
 		let pointer = UnsafePointer<UInt8>(OpaquePointer((data as NSData).bytes))

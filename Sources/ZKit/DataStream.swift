@@ -99,7 +99,6 @@ public class DataReadStream {
 		return CFSwapInt16BigToHost(value)
 	}
 
-
 	public func read() throws -> Int32 {
 		let value = try self.readBytes() as UInt32
 		return Int32(bitPattern: CFSwapInt32BigToHost(value))

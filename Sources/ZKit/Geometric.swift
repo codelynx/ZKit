@@ -25,14 +25,14 @@ public protocol FloatingPointType: FloatingPoint, Codable {
 	var floatValue: Float { get }
 }
 
-extension FloatingPointType {
-	public static func + (lhs: Self, rhs: Self) -> Self { return lhs + rhs }
-	public static func - (lhs: Self, rhs: Self) -> Self { return lhs - rhs }
-	public static func * (lhs: Self, rhs: Self) -> Self { return lhs * rhs }
-	public static func / (lhs: Self, rhs: Self) -> Self { return lhs / rhs }
-	public var zero: Self { return Self(0) }
-	public var one: Self { return Self(1) }
-	public var nan: Self { return Self.nan }
+public extension FloatingPointType {
+	static func + (lhs: Self, rhs: Self) -> Self { return lhs + rhs }
+	static func - (lhs: Self, rhs: Self) -> Self { return lhs - rhs }
+	static func * (lhs: Self, rhs: Self) -> Self { return lhs * rhs }
+	static func / (lhs: Self, rhs: Self) -> Self { return lhs / rhs }
+	var zero: Self { return Self(0) }
+	var one: Self { return Self(1) }
+	var nan: Self { return Self.nan }
 }
 
 extension CGFloat: FloatingPointType {
@@ -251,61 +251,61 @@ public typealias Rect64 = Rect<Double>
 public typealias Rect32 = Rect<Float>
 public typealias Rect16 = Rect<Half>
 
-extension CGPoint {
+public extension CGPoint {
 
-	public init<T: FloatingPointType>(_ point: Point<T>) {
+	init<T: FloatingPointType>(_ point: Point<T>) {
 		self = CGPoint(x: CGFloat(point.x.doubleValue), y: CGFloat(point.y.doubleValue))
 	}
 
 }
 
-extension CGSize {
+public extension CGSize {
 
-	public init<T: FloatingPointType>(_ size: Size<T>) {
+	init<T: FloatingPointType>(_ size: Size<T>) {
 		self.init(width: CGFloat(size.width.doubleValue), height: CGFloat(size.height.doubleValue))
 	}
 
 }
 
-extension CGRect {
+public extension CGRect {
 
-	public init<T: FloatingPointType>(_ rect: Rect<T>) {
+	init<T: FloatingPointType>(_ rect: Rect<T>) {
 		self.init(origin: CGPoint(rect.origin), size: CGSize(rect.size))
 	}
 
 }
 
-extension Point32 {
+public extension Point32 {
 
-	public init<T: FloatingPointType>(x: T, y: T) {
+	init<T: FloatingPointType>(x: T, y: T) {
 		self = Point32(x: x.floatValue, y: y.floatValue)
 	}
 
-	public init<T: FloatingPointType>(_ point: Point<T>) {
+	init<T: FloatingPointType>(_ point: Point<T>) {
 		self = Point32(x: point.x.floatValue, y: point.y.floatValue)
 	}
 
 }
 
-extension Size32 {
+public extension Size32 {
 
-	public init<T: FloatingPointType>(width: T, height: T) {
+	init<T: FloatingPointType>(width: T, height: T) {
 		self = Size32(width: width.floatValue, height: height.floatValue)
 	}
 
-	public init<T: FloatingPointType>(_ size: Size<T>) {
+	init<T: FloatingPointType>(_ size: Size<T>) {
 		self = Size32(width: size.width.floatValue, height: size.height.floatValue)
 	}
 
 }
 
-extension Rect32 {
+public extension Rect32 {
 
-	public init<T: FloatingPointType>(origin: Point<T>, size: Size<T>) {
+	init<T: FloatingPointType>(origin: Point<T>, size: Size<T>) {
 		self = Rect32(origin: Point32(origin), size: Size32(size))
 	}
 
-	public init<T: FloatingPointType>(_ rect: Rect<T>) {
+	init<T: FloatingPointType>(_ rect: Rect<T>) {
 		self = Rect32(origin: Point32(rect.origin), size: Size32(rect.size))
 	}
 }
