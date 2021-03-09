@@ -220,30 +220,6 @@ public extension CGAffineTransform {
 		self = CGAffineTransform(scaleX: scale.width, y: scale.height)
 	}
 	
-	func translate(point: CGPoint) -> CGAffineTransform {
-		return self.translatedBy(x: point.x, y: point.y)
-	}
-
-	func scale(point: CGPoint) -> CGAffineTransform {
-		return self.scaledBy(x: point.x, y: point.y)
-	}
-
-	func scale(size: CGSize) -> CGAffineTransform {
-		return self.scaledBy(x: size.width, y: size.height)
-	}
-
-	init (translation: CGPoint) {
-		self = CGAffineTransform(translationX: translation.x, y: translation.y)
-	}
-	
-	init(scale: CGPoint) {
-		self = CGAffineTransform(scaleX: scale.x, y: scale.y)
-	}
-
-	init(scale: CGSize) {
-		self = CGAffineTransform(scaleX: scale.width, y: scale.height)
-	}
-
 }
 
 
