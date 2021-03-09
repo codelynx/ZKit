@@ -115,6 +115,13 @@ public extension String {
 		return self.cString(using: .utf8).flatMap({ String(cString: $0, encoding: .nonLossyASCII) }) ?? "???"
 	}
 
+	func stringByIncrementingTrailingNumber() -> String {
+		if let range = self.range(of: "[0-9]+$", options: [.regularExpression]), let number = Int(self[range]) {
+			return self.replacingCharacters(in: range, with: String(number + 1))
+		}
+		return self + "2"
+	}
+
 	// MARK: -
 	
 	func draw(at point: CGPoint, withAttributes: [NSAttributedString.Key : Any]? = nil) {

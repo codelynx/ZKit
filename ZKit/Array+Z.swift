@@ -57,9 +57,9 @@ public extension Array {
 }
 
 
-extension Array where Element: Equatable {
+public extension Array where Element: Equatable {
 
-	public func removingDuplicates() -> Array {
+	func removingDuplicates() -> Self {
 		return reduce(into: []) { result, element in
 			if !result.contains(element) {
 				result.append(element)
@@ -67,16 +67,24 @@ extension Array where Element: Equatable {
 		}
 	}
 	
-	mutating public func removeDuplicates() {
+	mutating func removeDuplicates() {
 		self = self.removingDuplicates()
 	}
 
-	public func removing(_ elements: [Element]) -> Array {
+	func removing(_ elements: [Element]) -> Self {
 		return self.filter { !elements.contains($0) }
 	}
 
-	mutating public func remove(_ elements: [Element]) {
+	mutating func remove(_ elements: [Element]) {
 		self = self.removing(elements)
+	}
+
+	func removing(_ element: Element) -> Self {
+		return self.removing([element])
+	}
+	
+	mutating func remove(_ element: Element) {
+		self = self.removing(element)
 	}
 
 	func indexes(of element: Element) -> [Int] {
