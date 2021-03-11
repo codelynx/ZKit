@@ -195,7 +195,7 @@ public extension CGAffineTransform {
 	static func * (lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
 		return lhs.concatenating(rhs)
 	}
-	
+
 	func translate(point: CGPoint) -> CGAffineTransform {
 		return self.translatedBy(x: point.x, y: point.y)
 	}
@@ -219,7 +219,7 @@ public extension CGAffineTransform {
 	init(scale: CGSize) {
 		self = CGAffineTransform(scaleX: scale.width, y: scale.height)
 	}
-
+	
 }
 
 
