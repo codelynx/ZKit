@@ -49,7 +49,7 @@ extension XResponder {
 		return nil
 	}
 	
-	func findResponder<T>() -> T? {
+	func findResponder<T>(for: T.Type) -> T? {
 		var responder = self.next
 		repeat {
 			if let responder = responder as? T {
