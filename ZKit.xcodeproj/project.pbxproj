@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CC68289125FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
+		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
 		CCAB037F25E2EFD500E7D217 /* ZCalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035A25E2EFD500E7D217 /* ZCalendarDate.swift */; };
 		CCAB038025E2EFD500E7D217 /* XColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035B25E2EFD500E7D217 /* XColor.swift */; };
 		CCAB038125E2EFD500E7D217 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035C25E2EFD500E7D217 /* SoundManager.swift */; };
@@ -115,6 +117,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
 		CCAB034225E2EF8B00E7D217 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAB034525E2EF8C00E7D217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCAB034F25E2EF9900E7D217 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -245,6 +248,7 @@
 				CCAB035F25E2EFD500E7D217 /* Set+Z.swift */,
 				CCAB035C25E2EFD500E7D217 /* SoundManager.swift */,
 				CCAB037425E2EFD500E7D217 /* String+Z.swift */,
+				CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */,
 				CCAB036425E2EFD500E7D217 /* URL+Z.swift */,
 				CCAB037625E2EFD500E7D217 /* with.swift */,
 				CCAB040C25E3164600E7D217 /* XBezierPath.swift */,
@@ -381,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCAB03A125E2EFD600E7D217 /* NSDecimalNumber+Z.swift in Sources */,
+				CC68289125FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */,
 				CCAB039625E2EFD600E7D217 /* OutputStream+Z.swift in Sources */,
 				CCAB03FE25E314F100E7D217 /* XImage.swift in Sources */,
 				CCAB039225E2EFD600E7D217 /* JSValue+Z.swift in Sources */,
@@ -459,6 +464,7 @@
 				CCAB03C325E2EFE900E7D217 /* Half.swift in Sources */,
 				CCAB03AB25E2EFE900E7D217 /* SoundManager.swift in Sources */,
 				CCAB03C025E2EFE900E7D217 /* NSSet+Z.swift in Sources */,
+				CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */,
 				CCAB03BF25E2EFE900E7D217 /* UIViewContrller+Z.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
