@@ -79,7 +79,7 @@ import UIKit
 		context.restoreGState()
 		
 		// garient inner fill button
-		let glossiness: CGFloat = 0.25 * (1.0 - min(max(self.gloss, 0.0), 1.0)) + 0.01
+		let glossiness: CGFloat = 0.25 * (1.0 - Swift.min(Swift.max(self.gloss, 0.0), 1.0)) + 0.01
 		let components: [CGFloat] = [
 			r1, g1, b1, a,
 			r1, g1, b1, a,
