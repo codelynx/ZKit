@@ -37,4 +37,15 @@ public typealias XViewController = NSViewController
 #endif
 
 
+public extension XResponder {
 
+	func findViewController<T: XViewController>(of: T.Type) -> T? {
+		for responder in self {
+			if let viewController = responder as? T {
+				return viewController
+			}
+		}
+		return nil
+	}
+
+}
