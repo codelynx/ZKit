@@ -181,6 +181,10 @@ public extension String {
 		 return String(self[start...])
 	}
 
+	var number: NSNumber? {
+		return NumberFormatter().number(from: self)
+	}
+
 }
 
 
