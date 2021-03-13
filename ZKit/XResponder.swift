@@ -36,27 +36,23 @@ public typealias XResponder = NSResponder
 #endif
 
 
-extension XResponder {
+public extension XResponder {
 	
-	func findViewController<T: XViewController>() -> T? {
-		var responder = self.next
-		repeat {
+	func findViewController<T: XViewController>(of: T.Type) -> T? {
+		for responder in self {
 			if let viewController = responder as? T {
 				return viewController
 			}
-			responder = responder!.next
-		} while responder != nil
+		}
 		return nil
 	}
 	
-	func findResponder<T>(for: T.Type) -> T? {
-		var responder = self.next
-		repeat {
+	func findResponder<T>(of: T.Type) -> T? {
+		for responder in self {
 			if let responder = responder as? T {
 				return responder
 			}
-			responder = responder!.next
-		} while responder != nil
+		}
 		return nil
 	}
 
@@ -66,4 +62,33 @@ extension XResponder {
 	}
 	#endif
 
+	var responders: [XResponder] {
+		return self.map { $0 }
+	}
 }
+
+extension XResponder: Sequence {
+
+	public func makeIterator() -> Iterator {
+		return Iterator(responder: self)
+	}
+
+	public struct Iterator: IteratorProtocol {
+
+		public typealias Element = XResponder
+		private var responder: XResponder?
+
+		init(responder: XResponder) {
+			self.responder = responder
+		}
+
+		public mutating func next() -> XResponder? {
+			let next = self.responder?.next
+			self.responder = next
+			return next
+		}
+		
+	}
+
+}
+
