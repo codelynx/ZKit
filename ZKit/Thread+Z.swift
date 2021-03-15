@@ -1,5 +1,5 @@
 //
-//	UINavigationController+Leaf.swift
+//	Thread+Z.swift
 //	ZKit
 //
 //	The MIT License (MIT)
@@ -25,23 +25,20 @@
 //	THE SOFTWARE.
 //
 
-#if os(iOS)
+import Foundation
 
-import UIKit
 
-public extension UINavigationController {
-	
-	override var shouldAutorotate: Bool {
-		guard let viewController = self.visibleViewController else { return true }
-		return viewController.shouldAutorotate
+public extension Thread {
+
+	static func executeOnMain(_ closure: (()->())) {
+		if Thread.isMainThread {
+			closure()
+		}
+		else {
+			DispatchQueue.main.sync {
+				closure()
+			}
+		}
 	}
-	
-	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		guard let viewController = self.visibleViewController else { return .all }
-		return viewController.supportedInterfaceOrientations
-	}
-	
+
 }
-
-#endif
-

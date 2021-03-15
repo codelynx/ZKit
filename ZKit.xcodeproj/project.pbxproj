@@ -96,6 +96,8 @@
 		CCAB040925E315EC00E7D217 /* XScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB040725E315EC00E7D217 /* XScrollView.swift */; };
 		CCAB040D25E3164600E7D217 /* XBezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB040C25E3164600E7D217 /* XBezierPath.swift */; };
 		CCAB040E25E3164600E7D217 /* XBezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB040C25E3164600E7D217 /* XBezierPath.swift */; };
+		CCBF587725FF873A004929E8 /* Thread+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBF587625FF873A004929E8 /* Thread+Z.swift */; };
+		CCBF587825FF873A004929E8 /* Thread+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBF587625FF873A004929E8 /* Thread+Z.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +164,7 @@
 		CCAB040225E3159300E7D217 /* XFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XFont.swift; sourceTree = "<group>"; };
 		CCAB040725E315EC00E7D217 /* XScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XScrollView.swift; sourceTree = "<group>"; };
 		CCAB040C25E3164600E7D217 /* XBezierPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XBezierPath.swift; sourceTree = "<group>"; };
+		CCBF587625FF873A004929E8 /* Thread+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+Z.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +250,7 @@
 				CCAB035F25E2EFD500E7D217 /* Set+Z.swift */,
 				CCAB035C25E2EFD500E7D217 /* SoundManager.swift */,
 				CCAB037425E2EFD500E7D217 /* String+Z.swift */,
+				CCBF587625FF873A004929E8 /* Thread+Z.swift */,
 				CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */,
 				CCAB036425E2EFD500E7D217 /* URL+Z.swift */,
 				CCAB037625E2EFD500E7D217 /* with.swift */,
@@ -385,6 +389,7 @@
 			files = (
 				CCAB03A125E2EFD600E7D217 /* NSDecimalNumber+Z.swift in Sources */,
 				CCAB039625E2EFD600E7D217 /* OutputStream+Z.swift in Sources */,
+				CCBF587725FF873A004929E8 /* Thread+Z.swift in Sources */,
 				CCAB03FE25E314F100E7D217 /* XImage.swift in Sources */,
 				CCAB039225E2EFD600E7D217 /* JSValue+Z.swift in Sources */,
 				CCAB038F25E2EFD600E7D217 /* ZError.swift in Sources */,
@@ -462,6 +467,7 @@
 				CCAB03C325E2EFE900E7D217 /* Half.swift in Sources */,
 				CCAB03AB25E2EFE900E7D217 /* SoundManager.swift in Sources */,
 				CCAB03C025E2EFE900E7D217 /* NSSet+Z.swift in Sources */,
+				CCBF587825FF873A004929E8 /* Thread+Z.swift in Sources */,
 				CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */,
 				CCAB03BF25E2EFE900E7D217 /* UIViewContrller+Z.swift in Sources */,
 			);
