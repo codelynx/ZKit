@@ -28,10 +28,13 @@
 import Foundation
 import CoreGraphics
 
-public struct Point: Hashable, CustomStringConvertible {
+infix operator •
+infix operator ×
+
+public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringConvertible, Codable {
 	
-	public var x: Float
-	public var y: Float
+	public var x: T
+	public var y: T
 	
 	static public func - (lhs: Point, rhs: Point) -> Point {
 		return Point(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
@@ -41,40 +44,43 @@ public struct Point: Hashable, CustomStringConvertible {
 		return Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
 	
-	static public func * (lhs: Point, rhs: Float) -> Point {
+	static public func * (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x * rhs, y: lhs.y * rhs)
 	}
 	
-	static public func / (lhs: Point, rhs: Float) -> Point {
+	static public func / (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x / rhs, y: lhs.y / rhs)
 	}
 	
-	static public func • (lhs: Point, rhs: Point) -> Float { // dot product
+	static public func • (lhs: Point, rhs: Point) -> T { // dot product
 		return lhs.x * rhs.x + lhs.y * rhs.y
 	}
 	
-	static public func × (lhs: Point, rhs: Point) -> Float { // cross product
+	static public func × (lhs: Point, rhs: Point) -> T { // cross product
 		return lhs.x * rhs.y - lhs.y * rhs.x
 	}
 	
-	public init<X: FloatCovertible, Y: FloatCovertible>(_ x: X, _ y: Y) {
-		self.x = x.floatValue
-		self.y = y.floatValue
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(_ x: X, _ y: Y) {
+		self.x = T(x)
+		self.y = T(y)
 	}
-	public init<X: FloatCovertible, Y: FloatCovertible>(x: X, y: Y) {
-		self.x = x.floatValue
-		self.y = y.floatValue
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
+		self.x = T(x)
+		self.y = T(y)
+	}
+	public init<U: BinaryFloatingPoint>(_ point: Point<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
 	}
 	public init(_ point: CGPoint) {
-		self.x = Float(point.x)
-		self.y = Float(point.y)
+		self.x = T(point.x)
+		self.y = T(point.y)
 	}
-	
-	public var length²: Float {
+	public var length²: T {
 		return (x * x) + (y * y)
 	}
 	
-	public var length: Float {
+	public var length: T {
 		return sqrt(self.length²)
 	}
 	
@@ -83,12 +89,12 @@ public struct Point: Hashable, CustomStringConvertible {
 		return Point(x: x/length, y: y/length)
 	}
 	
-	public func angle(to: Point) -> Float {
-		return atan2(to.y - self.y, to.x - self.x)
+	public func angle(to: Point) -> T {
+		return T(atan2(CGFloat(to.y - self.y), CGFloat(to.x - self.x)))
 	}
 	
-	public func angle(from: Point) -> Float {
-		return atan2(self.y - from.y, self.x - from.x)
+	public func angle(from: Point) -> T {
+		return T(atan2(CGFloat(self.y - from.y), CGFloat(self.x - from.x)))
 	}
 	
 	static public func == (lhs: Point, rhs: Point) -> Bool {
@@ -104,31 +110,33 @@ public struct Point: Hashable, CustomStringConvertible {
 		return "(x:\(x), y:\(y))"
 	}
 	
-	static public let zero = Point(x: 0, y: 0)
-	static public let nan = Point(x: Float.nan, y: Float.nan)
+	static public var zero: Point { Point(x: 0, y: 0) }
+	static public var nan: Point { Point(x: Float.nan, y: Float.nan) }
 	
-	public func offsetBy(x: Float, y: Float) -> Point {
+	public func offsetBy(x: T, y: T) -> Point {
 		return Point(x: self.x + x, y: self.y + y)
 	}
 }
 
 
-public struct Size: CustomStringConvertible {
-	var width: Float
-	var height: Float
-	
-	public init<W: FloatCovertible, H: FloatCovertible>(_ width: W, _ height: H) {
-		self.width = width.floatValue
-		self.height = height.floatValue
+public struct Size<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
+	public var width: T
+	public var height: T
+	public init<W: BinaryFloatingPoint, H: BinaryFloatingPoint>(_ width: W, _ height: H) {
+		self.width = T(width)
+		self.height = T(height)
 	}
-	
-	public init<W: FloatCovertible, H: FloatCovertible>(width: W, height: H) {
-		self.width = width.floatValue
-		self.height = height.floatValue
+	public init<W: BinaryFloatingPoint, H: BinaryFloatingPoint>(width: W, height: H) {
+		self.width = T(width)
+		self.height = T(height)
 	}
 	public init(_ size: CGSize) {
-		self.width = Float(size.width)
-		self.height = Float(size.height)
+		self.width = T(size.width)
+		self.height = T(size.height)
+	}
+	public init<U: BinaryFloatingPoint>(_ size: Size<U>) {
+		self.width = T(size.width)
+		self.height = T(size.height)
 	}
 	public var description: String {
 		return "(w:\(width), h:\(height))"
@@ -136,65 +144,69 @@ public struct Size: CustomStringConvertible {
 }
 
 
-public struct Rect: CustomStringConvertible {
-	public var origin: Point
-	public var size: Size
+public struct Rect<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
+	public var origin: Point<T>
+	public var size: Size<T>
 	
-	public init(origin: Point, size: Size) {
+	public init(origin: Point<T>, size: Size<T>) {
 		self.origin = origin; self.size = size
 	}
-	public init(_ origin: Point, _ size: Size) {
+	public init(_ origin: Point<T>, _ size: Size<T>) {
 		self.origin = origin; self.size = size
 	}
-	public init<X: FloatCovertible, Y: FloatCovertible, W: FloatCovertible, H: FloatCovertible>(_ x: X, _ y: Y, _ width: W, _ height: H) {
-		self.origin = Point(x: x, y: y)
-		self.size = Size(width: width, height: height)
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint, W: BinaryFloatingPoint, H: BinaryFloatingPoint>(_ x: X, _ y: Y, _ width: W, _ height: H) {
+		self.origin = Point<T>(x: x, y: y)
+		self.size = Size<T>(width: width, height: height)
 	}
-	public init<X: FloatCovertible, Y: FloatCovertible, W: FloatCovertible, H: FloatCovertible>(x: X, y: Y, width: W, height: H) {
-		self.origin = Point(x: x, y: y)
-		self.size = Size(width: width, height: height)
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint, W: BinaryFloatingPoint, H: BinaryFloatingPoint>(x: X, y: Y, width: W, height: H) {
+		self.origin = Point<T>(x: x, y: y)
+		self.size = Size<T>(width: width, height: height)
+	}
+	public init<U: BinaryFloatingPoint>(_ rect: Rect<U>) {
+		self.origin = Point<T>(rect.origin)
+		self.size = Size<T>(rect.size)
 	}
 	public init(_ rect: CGRect) {
 		self.origin = Point(rect.origin)
 		self.size = Size(rect.size)
 	}
 	
-	public var width: Float { return size.width }
-	public var height: Float { return size.height }
+	public var width: T { return size.width }
+	public var height: T { return size.height }
 	
-	public var minX: Float { return min(origin.x, origin.x + size.width) }
-	public var maxX: Float { return max(origin.x, origin.x + size.width) }
-	public var midX: Float { return (origin.x + origin.x + size.width) / 2.0 }
-	public var minY: Float { return min(origin.y, origin.y + size.height) }
-	public var maxY: Float { return max(origin.y, origin.y + size.height) }
-	public var midY: Float { return (origin.y + origin.y + size.height) / 2.0 }
+	public var minX: T { return min(origin.x, origin.x + size.width) }
+	public var maxX: T { return max(origin.x, origin.x + size.width) }
+	public var midX: T { return (origin.x + origin.x + size.width) / 2.0 }
+	public var minY: T { return min(origin.y, origin.y + size.height) }
+	public var maxY: T { return max(origin.y, origin.y + size.height) }
+	public var midY: T { return (origin.y + origin.y + size.height) / 2.0 }
 	
-	public var minXminY: Point { return Point(x: minX, y: minY) }
-	public var midXminY: Point { return Point(x: midX, y: minY) }
-	public var maxXminY: Point { return Point(x: maxX, y: minY) }
+	public var minXminY: Point<T> { return Point(x: minX, y: minY) }
+	public var midXminY: Point<T> { return Point(x: midX, y: minY) }
+	public var maxXminY: Point<T> { return Point(x: maxX, y: minY) }
 	
-	public var minXmidY: Point { return Point(x: minX, y: midY) }
-	public var midXmidY: Point { return Point(x: midX, y: midY) }
-	public var maxXmidY: Point { return Point(x: maxX, y: midY) }
+	public var minXmidY: Point<T> { return Point(x: minX, y: midY) }
+	public var midXmidY: Point<T> { return Point(x: midX, y: midY) }
+	public var maxXmidY: Point<T> { return Point(x: maxX, y: midY) }
 	
-	public var minXmaxY: Point { return Point(x: minX, y: maxY) }
-	public var midXmaxY: Point { return Point(x: midX, y: maxY) }
-	public var maxXmaxY: Point { return Point(x: maxX, y: maxY) }
+	public var minXmaxY: Point<T> { return Point(x: minX, y: maxY) }
+	public var midXmaxY: Point<T> { return Point(x: midX, y: maxY) }
+	public var maxXmaxY: Point<T> { return Point(x: maxX, y: maxY) }
 	
 	public var cgRectValue: CGRect { return CGRect(x: CGFloat(origin.x), y: CGFloat(origin.y), width: CGFloat(size.width), height: CGFloat(size.height)) }
 	public var description: String { return "{Rect: (\(origin.x),\(origin.y))-(\(size.width), \(size.height))}" }
 	
-	static public var zero = Rect(x: 0, y: 0, width: 0, height: 0)
+	static public var zero: Rect { Rect(x: 0, y: 0, width: 0, height: 0) }
 	
-	public func offsetBy(x: Float, y: Float) -> Rect {
+	public func offsetBy(x: T, y: T) -> Rect {
 		return Rect(origin: self.origin.offsetBy(x: x, y: y), size: self.size)
 	}
 	
-	public func offsetBy(point: Point) -> Rect {
+	public func offsetBy(point: Point<T>) -> Rect {
 		return Rect(origin: self.origin + point, size: self.size)
 	}
 	
-	public func insetBy(dx: Float, dy: Float) -> Rect {
+	public func insetBy(dx: T, dy: T) -> Rect {
 		return Rect(CGRect(self).insetBy(dx: CGFloat(dx), dy: CGFloat(dy)))
 	}
 }
@@ -202,36 +214,25 @@ public struct Rect: CustomStringConvertible {
 
 extension CGPoint {
 
-	public init(_ point: Point) {
+	public init<T: BinaryFloatingPoint>(_ point: Point<T>) {
 		self.init(x: CGFloat(point.x), y: CGFloat(point.y))
+	}
+
+}
+
+extension CGSize {
+
+	public init<T: BinaryFloatingPoint>(_ size: Size<T>) {
+		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
 	}
 
 }
 
 extension CGRect {
 
-	public init(_ rect: Rect) {
+	public init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self.init(origin: CGPoint(rect.origin), size: CGSize(rect.size))
 	}
 
 }
 
-// MARK: -
-
-public protocol PointConvertible {
-	var pointValue: Point { get }
-}
-
-extension Point: PointConvertible {
-	public var pointValue: Point { return self }
-}
-
-extension CGPoint: PointConvertible {
-	public var pointValue: Point { return Point(self) }
-}
-
-extension CGSize {
-	public init(_ size: Size) {
-		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
-	}
-}

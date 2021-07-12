@@ -16,6 +16,7 @@
 		CC9B077E23DBFF5E00753BC0 /* ZError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9B077D23DBFF5E00753BC0 /* ZError.swift */; };
 		CCB25B05245A1359004ADA17 /* ZWeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB25B04245A1359004ADA17 /* ZWeakObjectSet.swift */; };
 		CCB5623B24C6637B006339BA /* UIResponder+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB5623A24C6637B006339BA /* UIResponder+Z.swift */; };
+		CCC27BDF269BEF27000ABA41 /* Geometric32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0926C7236231FB00F9B1B7 /* Geometric32.swift */; };
 		CCCBEADC2240350E002BE9F5 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */; };
 		CCCBEADD2240350E002BE9F5 /* NSDecimalNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA6D224033A4002BE9F5 /* NSDecimalNumber+Z.swift */; };
 		CCCBEADE2240350E002BE9F5 /* FramedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBEA82224033A6002BE9F5 /* FramedButton.swift */; };
@@ -51,7 +52,6 @@
 		CC4994742536E17C00D5D976 /* OutputStream+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OutputStream+Z.swift"; sourceTree = "<group>"; };
 		CC94C6DB2505779C00F03672 /* ZBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZBuffer.swift; sourceTree = "<group>"; };
 		CC9B077D23DBFF5E00753BC0 /* ZError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZError.swift; sourceTree = "<group>"; };
-		CCB25B02245A1349004ADA17 /* Float16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float16.swift; sourceTree = "<group>"; };
 		CCB25B04245A1359004ADA17 /* ZWeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZWeakObjectSet.swift; sourceTree = "<group>"; };
 		CCB5623A24C6637B006339BA /* UIResponder+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Z.swift"; sourceTree = "<group>"; };
 		CCCBEA6B224033A3002BE9F5 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
@@ -114,7 +114,6 @@
 				CC0DD5A523A31B0E00950368 /* Array+Z.swift */,
 				CCCBEA6E224033A4002BE9F5 /* CoreGraphics+Z.swift */,
 				CCFE4EFB250E23A50041FDDB /* DataStream.swift */,
-				CCB25B02245A1349004ADA17 /* Float16.swift */,
 				CCCBEA82224033A6002BE9F5 /* FramedButton.swift */,
 				CC0926C7236231FB00F9B1B7 /* Geometric32.swift */,
 				CCCBEA6C224033A3002BE9F5 /* Int+Z.swift */,
@@ -238,6 +237,7 @@
 				CCCBEAE72240350E002BE9F5 /* String+Color.swift in Sources */,
 				CCCBEAE12240350E002BE9F5 /* NSDictionary+Z.swift in Sources */,
 				CCCBEAF22240350E002BE9F5 /* ZGlossButton.swift in Sources */,
+				CCC27BDF269BEF27000ABA41 /* Geometric32.swift in Sources */,
 				CC0DD5A623A31B0E00950368 /* Array+Z.swift in Sources */,
 				CCCBEAE32240350E002BE9F5 /* NSSet+Z.swift in Sources */,
 				CCCBEAE52240350E002BE9F5 /* Runtime.swift in Sources */,
