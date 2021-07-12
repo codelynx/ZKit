@@ -29,36 +29,36 @@ import Foundation
 
 
 public extension Array {
-
+	
 	mutating func rearrange(from fromIndex: Int, to toIndex: Int) {
 		let item = self.remove(at: fromIndex)
 		self.insert(item, at: toIndex)
 	}
-
+	
 	func rearranged(from fromIndex: Int, to toIndex: Int) -> Array {
 		var array = self
 		let item = array.remove(at: fromIndex)
 		array.insert(item, at: toIndex)
 		return array
 	}
-
+	
 	func appending(_ elements: [Element]) -> Array {
 		var array = self
 		array += elements
 		return array
 	}
-
+	
 	func appending(_ element: Element) -> Array {
 		var array = self
 		array += [element]
 		return array
 	}
-
+	
 }
 
 
 public extension Array where Element: Equatable {
-
+	
 	func removingDuplicates() -> Self {
 		return reduce(into: []) { result, element in
 			if !result.contains(element) {
@@ -70,15 +70,15 @@ public extension Array where Element: Equatable {
 	mutating func removeDuplicates() {
 		self = self.removingDuplicates()
 	}
-
+	
 	func removing(_ elements: [Element]) -> Self {
 		return self.filter { !elements.contains($0) }
 	}
-
+	
 	mutating func remove(_ elements: [Element]) {
 		self = self.removing(elements)
 	}
-
+	
 	func removing(_ element: Element) -> Self {
 		return self.removing([element])
 	}
@@ -86,21 +86,36 @@ public extension Array where Element: Equatable {
 	mutating func remove(_ element: Element) {
 		self = self.removing(element)
 	}
-
+	
 	func indexes(of element: Element) -> [Int] {
 		return self.enumerated().filter({ element == $0.element }).map({ $0.offset })
 	}
-
+	
 	mutating func removeIndexes(_ indexes: [Int]) {
 		for index in Set(indexes).sorted(by: >) {
 			self.remove(at: index)
 		}
 	}
-
+	
 	func removingIndexes(_ indexes: [Int]) -> Self {
 		var array = Array(self)
 		array.removeIndexes(indexes)
 		return array
 	}
+	
+}
 
+
+public extension Array {
+	init(data: Data) {
+		self = data.elements()
+	}
+	var data: Data {
+		var value = self
+		return Data(bytes: &value, count: MemoryLayout<Element>.stride * count)
+	}
+}
+
+private extension Data {
+	func elements<T>() -> [T] { withUnsafeBytes { .init($0.bindMemory(to: T.self)) } }
 }
