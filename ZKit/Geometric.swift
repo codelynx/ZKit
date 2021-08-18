@@ -78,13 +78,12 @@ extension Half: FloatingPointType {
 	public var floatValue: Float { Float(self) }
 }
 
-/*
-extension Float {
-	static func atan2(_ lhs: Self, _ rhs: Self) -> Self {
-		return Float(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs)))
-	}
+@available(iOS 14.0, *)
+extension Float16: FloatingPointType {
+	public static func atan2(_ lhs: Float16, _ rhs: Float16) -> Float16 { Float16(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
+	public var doubleValue: Double { Double(self) }
+	public var floatValue: Float { Float(self) }
 }
-*/
 
 public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Codable {
 	
