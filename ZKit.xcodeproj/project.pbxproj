@@ -23,6 +23,10 @@
 
 /* Begin PBXBuildFile section */
 		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
+		CC940CAB26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
+		CC940CAC26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
+		CC96A2BE2619A5810077A008 /* UseDefaults+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */; };
+		CC96A2BF2619A5810077A008 /* UseDefaults+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */; };
 		CCAB037F25E2EFD500E7D217 /* ZCalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035A25E2EFD500E7D217 /* ZCalendarDate.swift */; };
 		CCAB038025E2EFD500E7D217 /* XColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035B25E2EFD500E7D217 /* XColor.swift */; };
 		CCAB038125E2EFD500E7D217 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035C25E2EFD500E7D217 /* SoundManager.swift */; };
@@ -30,7 +34,6 @@
 		CCAB038425E2EFD500E7D217 /* Set+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035F25E2EFD500E7D217 /* Set+Z.swift */; };
 		CCAB038525E2EFD500E7D217 /* NSNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036025E2EFD500E7D217 /* NSNumber+Z.swift */; };
 		CCAB038625E2EFD500E7D217 /* CoreGraphics+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036125E2EFD500E7D217 /* CoreGraphics+Z.swift */; };
-		CCAB038725E2EFD500E7D217 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036225E2EFD500E7D217 /* Half.swift */; };
 		CCAB038825E2EFD500E7D217 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036325E2EFD500E7D217 /* Runtime.swift */; };
 		CCAB038925E2EFD500E7D217 /* URL+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036425E2EFD500E7D217 /* URL+Z.swift */; };
 		CCAB038A25E2EFD500E7D217 /* ZWeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036525E2EFD500E7D217 /* ZWeakObjectSet.swift */; };
@@ -76,7 +79,6 @@
 		CCAB03C025E2EFE900E7D217 /* NSSet+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB037925E2EFD500E7D217 /* NSSet+Z.swift */; };
 		CCAB03C125E2EFE900E7D217 /* NSDecimalNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB037C25E2EFD500E7D217 /* NSDecimalNumber+Z.swift */; };
 		CCAB03C225E2EFE900E7D217 /* NSNumber+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036025E2EFD500E7D217 /* NSNumber+Z.swift */; };
-		CCAB03C325E2EFE900E7D217 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036225E2EFD500E7D217 /* Half.swift */; };
 		CCAB03C425E2EFE900E7D217 /* UIView+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB036825E2EFD500E7D217 /* UIView+Z.swift */; };
 		CCAB03C525E2EFE900E7D217 /* NSDictionary+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB037825E2EFD500E7D217 /* NSDictionary+Z.swift */; };
 		CCAB03C625E2EFE900E7D217 /* Set+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035F25E2EFD500E7D217 /* Set+Z.swift */; };
@@ -119,6 +121,8 @@
 
 /* Begin PBXFileReference section */
 		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
+		CC940CAA26D62739009A06F5 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
+		CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseDefaults+Z.swift"; sourceTree = "<group>"; };
 		CCAB034225E2EF8B00E7D217 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAB034525E2EF8C00E7D217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCAB034F25E2EF9900E7D217 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +135,6 @@
 		CCAB035F25E2EFD500E7D217 /* Set+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Set+Z.swift"; sourceTree = "<group>"; };
 		CCAB036025E2EFD500E7D217 /* NSNumber+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNumber+Z.swift"; sourceTree = "<group>"; };
 		CCAB036125E2EFD500E7D217 /* CoreGraphics+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Z.swift"; sourceTree = "<group>"; };
-		CCAB036225E2EFD500E7D217 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
 		CCAB036325E2EFD500E7D217 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		CCAB036425E2EFD500E7D217 /* URL+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Z.swift"; sourceTree = "<group>"; };
 		CCAB036525E2EFD500E7D217 /* ZWeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZWeakObjectSet.swift; sourceTree = "<group>"; };
@@ -188,10 +191,10 @@
 		CCAB032725E2EF3B00E7D217 = {
 			isa = PBXGroup;
 			children = (
-				CCAB035925E2EFD500E7D217 /* ZKit */,
-				CCAB034325E2EF8C00E7D217 /* ZKit-mac */,
-				CCAB035025E2EF9900E7D217 /* ZKit-ios */,
 				CCAB033425E2EF4F00E7D217 /* Products */,
+				CCAB035925E2EFD500E7D217 /* ZKit */,
+				CCAB035025E2EF9900E7D217 /* ZKit-ios */,
+				CCAB034325E2EF8C00E7D217 /* ZKit-mac */,
 			);
 			sourceTree = "<group>";
 		};
@@ -236,7 +239,7 @@
 				CCAB036125E2EFD500E7D217 /* CoreGraphics+Z.swift */,
 				CCAB036F25E2EFD500E7D217 /* DataStream.swift */,
 				CCAB035E25E2EFD500E7D217 /* Geometric.swift */,
-				CCAB036225E2EFD500E7D217 /* Half.swift */,
+				CC940CAA26D62739009A06F5 /* Half.swift */,
 				CCAB037025E2EFD500E7D217 /* Int+Z.swift */,
 				CCAB036D25E2EFD500E7D217 /* JSValue+Z.swift */,
 				CCAB037C25E2EFD500E7D217 /* NSDecimalNumber+Z.swift */,
@@ -253,6 +256,7 @@
 				CCBF587625FF873A004929E8 /* Thread+Z.swift */,
 				CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */,
 				CCAB036425E2EFD500E7D217 /* URL+Z.swift */,
+				CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */,
 				CCAB037625E2EFD500E7D217 /* with.swift */,
 				CCAB040C25E3164600E7D217 /* XBezierPath.swift */,
 				CCAB035B25E2EFD500E7D217 /* XColor.swift */,
@@ -403,12 +407,13 @@
 				CCAB039425E2EFD600E7D217 /* DataStream.swift in Sources */,
 				CCAB039725E2EFD600E7D217 /* NSMutableParagraphStyle+Z.swift in Sources */,
 				CCAB040325E3159300E7D217 /* XFont.swift in Sources */,
+				CC940CAB26D62739009A06F5 /* Half.swift in Sources */,
 				CCAB039525E2EFD600E7D217 /* Int+Z.swift in Sources */,
 				CCAB037F25E2EFD500E7D217 /* ZCalendarDate.swift in Sources */,
+				CC96A2BE2619A5810077A008 /* UseDefaults+Z.swift in Sources */,
 				CCAB038325E2EFD500E7D217 /* Geometric.swift in Sources */,
 				CCAB038825E2EFD500E7D217 /* Runtime.swift in Sources */,
 				CCAB038125E2EFD500E7D217 /* SoundManager.swift in Sources */,
-				CCAB038725E2EFD500E7D217 /* Half.swift in Sources */,
 				CCAB039825E2EFD600E7D217 /* Sequence+Z.swift in Sources */,
 				CCAB038425E2EFD500E7D217 /* Set+Z.swift in Sources */,
 				CCAB03EE25E312EC00E7D217 /* XView.swift in Sources */,
@@ -435,6 +440,7 @@
 				CCAB03AE25E2EFE900E7D217 /* Array+Z.swift in Sources */,
 				CCAB040E25E3164600E7D217 /* XBezierPath.swift in Sources */,
 				CCAB03A825E2EFE900E7D217 /* String+Z.swift in Sources */,
+				CC940CAC26D62739009A06F5 /* Half.swift in Sources */,
 				CCAB03B925E2EFE900E7D217 /* Runtime.swift in Sources */,
 				CCAB03B425E2EFE900E7D217 /* UIAlertController.swift in Sources */,
 				CCAB03B825E2EFE900E7D217 /* ZCalendarDate.swift in Sources */,
@@ -447,6 +453,7 @@
 				CCAB03BD25E2EFE900E7D217 /* JSValue+Z.swift in Sources */,
 				CCAB03BC25E2EFE900E7D217 /* UIDevice+Z.swift in Sources */,
 				CCAB03B625E2EFE900E7D217 /* Sequence+Z.swift in Sources */,
+				CC96A2BF2619A5810077A008 /* UseDefaults+Z.swift in Sources */,
 				CCAB040425E3159300E7D217 /* XFont.swift in Sources */,
 				CCAB03B725E2EFE900E7D217 /* Geometric.swift in Sources */,
 				CCAB03AC25E2EFE900E7D217 /* UINavigationController+Z.swift in Sources */,
@@ -464,7 +471,6 @@
 				CCAB03CA25E2EFE900E7D217 /* XColor.swift in Sources */,
 				CCAB03B125E2EFE900E7D217 /* CoreGraphics+Z.swift in Sources */,
 				CCAB03FF25E314F100E7D217 /* XImage.swift in Sources */,
-				CCAB03C325E2EFE900E7D217 /* Half.swift in Sources */,
 				CCAB03AB25E2EFE900E7D217 /* SoundManager.swift in Sources */,
 				CCAB03C025E2EFE900E7D217 /* NSSet+Z.swift in Sources */,
 				CCBF587825FF873A004929E8 /* Thread+Z.swift in Sources */,

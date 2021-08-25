@@ -33,60 +33,8 @@ import simd
 infix operator •
 infix operator ×
 
-public protocol FloatingPointType: FloatingPoint, Codable {
-	static func + (lhs: Self, rhs: Self) -> Self
-	static func - (lhs: Self, rhs: Self) -> Self
-	static func * (lhs: Self, rhs: Self) -> Self
-	static func / (lhs: Self, rhs: Self) -> Self
-	static func atan2(_ lhs: Self, _ rhs: Self) -> Self
-	init(_ value: CGFloat)
-	var doubleValue: Double { get }
-	var floatValue: Float { get }
-}
 
-public extension FloatingPointType {
-	static func + (lhs: Self, rhs: Self) -> Self { return lhs + rhs }
-	static func - (lhs: Self, rhs: Self) -> Self { return lhs - rhs }
-	static func * (lhs: Self, rhs: Self) -> Self { return lhs * rhs }
-	static func / (lhs: Self, rhs: Self) -> Self { return lhs / rhs }
-	var zero: Self { return Self(0) }
-	var one: Self { return Self(1) }
-	var nan: Self { return Self.nan }
-}
-
-extension CGFloat: FloatingPointType {
-	public static func atan2(_ lhs: CGFloat, _ rhs: CGFloat) -> CGFloat { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
-	public var floatValue: Float { Float(self) }
-}
-
-extension Double: FloatingPointType {
-	public static func atan2(_ lhs: Double, _ rhs: Double) -> Double { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
-	public var floatValue: Float { Float(self) }
-}
-
-extension Float: FloatingPointType {
-	public static func atan2(_ lhs: Float, _ rhs: Float) -> Float { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
-	public var floatValue: Float { Float(self) }
-}
-
-extension Half: FloatingPointType {
-	public static func atan2(_ lhs: Half, _ rhs: Half) -> Half { Half(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
-	public var doubleValue: Double { Double(self) }
-	public var floatValue: Float { Float(self) }
-}
-
-/*
-extension Float {
-	static func atan2(_ lhs: Self, _ rhs: Self) -> Self {
-		return Float(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs)))
-	}
-}
-*/
-
-public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Codable {
+public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringConvertible, Codable {
 	
 	public var x: T
 	public var y: T
@@ -139,11 +87,11 @@ public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Co
 	}
 	
 	public func angle(to: Point) -> T {
-		return T.atan2(to.y - self.y, to.x - self.x)
+		return T(CoreGraphics.atan2(CGFloat(to.y - self.y), CGFloat(to.x - self.x)))
 	}
 	
 	public func angle(from: Point) -> T {
-		return T.atan2(self.y - from.y, self.x - from.x)
+		return T(CoreGraphics.atan2(CGFloat(self.y - from.y), CGFloat(self.x - from.x)))
 	}
 	
 	static public func == (lhs: Point, rhs: Point) -> Bool {
@@ -170,10 +118,11 @@ public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Co
 
 public typealias Point64 = Point<Double>
 public typealias Point32 = Point<Float>
-public typealias Point16 = Point<Half>
+@available (iOS 14, *)
+public typealias Point16 = Point<Float16>
 
 
-public struct Size<T: FloatingPointType>: CustomStringConvertible, Codable {
+public struct Size<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
 
 	public var width: T
 	public var height: T
@@ -195,10 +144,11 @@ public struct Size<T: FloatingPointType>: CustomStringConvertible, Codable {
 
 public typealias Size64 = Size<Double>
 public typealias Size32 = Size<Float>
-public typealias Size16 = Size<Half>
+@available (iOS 14, *)
+public typealias Size16 = Size<Float16>
 
 
-public struct Rect<T: FloatingPointType>: CustomStringConvertible, Codable {
+public struct Rect<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
 
 	public var origin: Point<T>
 	public var size: Size<T>
@@ -253,7 +203,7 @@ public struct Rect<T: FloatingPointType>: CustomStringConvertible, Codable {
 	}
 	
 	public func insetBy(dx: T, dy: T) -> Rect<T> {
-		return Rect(CGRect(self).insetBy(dx: CGFloat(dx.doubleValue), dy: CGFloat(dy.doubleValue)))
+		return Rect(CGRect(self).insetBy(dx: CGFloat(dx), dy: CGFloat(dy)))
 	}
 
 }
@@ -261,13 +211,14 @@ public struct Rect<T: FloatingPointType>: CustomStringConvertible, Codable {
 
 public typealias Rect64 = Rect<Double>
 public typealias Rect32 = Rect<Float>
-public typealias Rect16 = Rect<Half>
+@available (iOS 14, *)
+public typealias Rect16 = Rect<Float16>
 
 
 public extension CGPoint {
 
-	init<T: FloatingPointType>(_ point: Point<T>) {
-		self = CGPoint(x: CGFloat(point.x.doubleValue), y: CGFloat(point.y.doubleValue))
+	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
+		self = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))
 	}
 
 }
@@ -275,8 +226,8 @@ public extension CGPoint {
 
 public extension CGSize {
 
-	init<T: FloatingPointType>(_ size: Size<T>) {
-		self.init(width: CGFloat(size.width.doubleValue), height: CGFloat(size.height.doubleValue))
+	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
+		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
 	}
 
 }
@@ -284,7 +235,7 @@ public extension CGSize {
 
 public extension CGRect {
 
-	init<T: FloatingPointType>(_ rect: Rect<T>) {
+	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self.init(origin: CGPoint(rect.origin), size: CGSize(rect.size))
 	}
 
@@ -293,12 +244,8 @@ public extension CGRect {
 
 public extension Point32 {
 
-	init<T: FloatingPointType>(x: T, y: T) {
-		self = Point32(x: x.floatValue, y: y.floatValue)
-	}
-
-	init<T: FloatingPointType>(_ point: Point<T>) {
-		self = Point32(x: point.x.floatValue, y: point.y.floatValue)
+	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
+		self = Point32(x: Float(point.x), y: Float(point.y))
 	}
 
 }
@@ -306,12 +253,8 @@ public extension Point32 {
 
 public extension Size32 {
 
-	init<T: FloatingPointType>(width: T, height: T) {
-		self = Size32(width: width.floatValue, height: height.floatValue)
-	}
-
-	init<T: FloatingPointType>(_ size: Size<T>) {
-		self = Size32(width: size.width.floatValue, height: size.height.floatValue)
+	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
+		self = Size32(width: Float(size.width), height: Float(size.height))
 	}
 
 }
@@ -319,11 +262,11 @@ public extension Size32 {
 
 public extension Rect32 {
 
-	init<T: FloatingPointType>(origin: Point<T>, size: Size<T>) {
+	init<T: BinaryFloatingPoint>(origin: Point<T>, size: Size<T>) {
 		self = Rect32(origin: Point32(origin), size: Size32(size))
 	}
 
-	init<T: FloatingPointType>(_ rect: Rect<T>) {
+	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self = Rect32(origin: Point32(rect.origin), size: Size32(rect.size))
 	}
 }
