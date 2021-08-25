@@ -25,6 +25,8 @@
 		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
 		CC940CAB26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
 		CC940CAC26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
+		CC940CAF26D65B12009A06F5 /* CGPath+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */; };
+		CC940CB026D65B12009A06F5 /* CGPath+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */; };
 		CC96A2BE2619A5810077A008 /* UseDefaults+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */; };
 		CC96A2BF2619A5810077A008 /* UseDefaults+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */; };
 		CCAB037F25E2EFD500E7D217 /* ZCalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB035A25E2EFD500E7D217 /* ZCalendarDate.swift */; };
@@ -122,6 +124,7 @@
 /* Begin PBXFileReference section */
 		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
 		CC940CAA26D62739009A06F5 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
+		CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPath+Z.swift"; sourceTree = "<group>"; };
 		CC96A2BD2619A5810077A008 /* UseDefaults+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseDefaults+Z.swift"; sourceTree = "<group>"; };
 		CCAB034225E2EF8B00E7D217 /* ZKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAB034525E2EF8C00E7D217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -236,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				CCAB036725E2EFD500E7D217 /* Array+Z.swift */,
+				CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */,
 				CCAB036125E2EFD500E7D217 /* CoreGraphics+Z.swift */,
 				CCAB036F25E2EFD500E7D217 /* DataStream.swift */,
 				CCAB035E25E2EFD500E7D217 /* Geometric.swift */,
@@ -391,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC940CAF26D65B12009A06F5 /* CGPath+Z.swift in Sources */,
 				CCAB03A125E2EFD600E7D217 /* NSDecimalNumber+Z.swift in Sources */,
 				CCAB039625E2EFD600E7D217 /* OutputStream+Z.swift in Sources */,
 				CCBF587725FF873A004929E8 /* Thread+Z.swift in Sources */,
@@ -472,6 +477,7 @@
 				CCAB03B125E2EFE900E7D217 /* CoreGraphics+Z.swift in Sources */,
 				CCAB03FF25E314F100E7D217 /* XImage.swift in Sources */,
 				CCAB03AB25E2EFE900E7D217 /* SoundManager.swift in Sources */,
+				CC940CB026D65B12009A06F5 /* CGPath+Z.swift in Sources */,
 				CCAB03C025E2EFE900E7D217 /* NSSet+Z.swift in Sources */,
 				CCBF587825FF873A004929E8 /* Thread+Z.swift in Sources */,
 				CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */,
