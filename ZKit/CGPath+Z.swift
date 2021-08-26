@@ -95,7 +95,7 @@ public extension CGPath {
 	}
 }
 
-extension CGPath {
+public extension CGPath {
 	
 	static func quadraticCurveLength(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint) -> CGFloat {
 		
@@ -143,7 +143,7 @@ extension CGPath {
 
 
 
-extension CGPoint {
+public extension CGPoint {
 	static let nan = CGPoint(x: CGFloat.nan, y: CGFloat.nan)
 }
 
