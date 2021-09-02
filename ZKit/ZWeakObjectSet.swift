@@ -27,62 +27,70 @@
 import Foundation
 
 
-fileprivate class ZWeakObject<T: AnyObject>: Equatable, Hashable {
+public class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 	weak var object: T?
 	private let hashKey: Int
 	init(_ object: T) {
 		self.object = object
 		self.hashKey = ObjectIdentifier(object).hashValue
 	}
-	static func == (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
+	public static func == (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
 		if lhs.object == nil || rhs.object == nil { return false }
 		return lhs.object === rhs.object
 	}
-	func hash(into hasher: inout Hasher) {
+	public func hash(into hasher: inout Hasher) {
 		hasher.combine(hashKey)
 	}
 }
 
 
-public class ZWeakObjectSet<T: AnyObject> {
+public class ZWeakObjectSet<T: AnyObject>: Sequence {
 	private var _objects: Set<ZWeakObject<T>>
-	init() {
+	public init() {
 		self._objects = Set<ZWeakObject<T>>([])
 	}
-	init(_ objects: [T]) {
+	public init(_ objects: [T]) {
 		self._objects = Set<ZWeakObject<T>>(objects.map { ZWeakObject($0) })
 	}
-	var objects: [T] {
+	public var objects: [T] {
 		return self._objects.compactMap { $0.object }
 	}
-	func contains(_ object: T) -> Bool {
+	public func contains(_ object: T) -> Bool {
 		return self._objects.contains(ZWeakObject(object))
 	}
-	func addObject(_ object: T) {
+	public func addObject(_ object: T) {
 		self._objects.insert(ZWeakObject(object))
 	}
-	func addingObject(_ object: T) -> ZWeakObjectSet<T> {
+	public func addingObject(_ object: T) -> ZWeakObjectSet<T> {
 		return ZWeakObjectSet( self.objects + [object])
 	}
-	func addObjects(_ objects: [T]) {
+	public func addObjects(_ objects: [T]) {
 		self._objects.formUnion(objects.map { ZWeakObject($0) })
 	}
-	func addingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
+	public func addingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
 		return ZWeakObjectSet( self.objects + objects)
 	}
-	func removeObject(_ object: T) {
+	public func removeObject(_ object: T) {
 		self._objects.remove(ZWeakObject(object))
 	}
-	func removingObject(_ object: T) -> ZWeakObjectSet<T> {
+	public func removingObject(_ object: T) -> ZWeakObjectSet<T> {
 		var temporaryObjects = self._objects
 		temporaryObjects.remove(ZWeakObject(object))
 		return ZWeakObjectSet(temporaryObjects.compactMap { $0.object })
 	}
-	func removeObjects(_ objects: [T]) {
+	public func removeObjects(_ objects: [T]) {
 		self._objects.subtract(objects.map { ZWeakObject($0) })
 	}
-	func removingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
+	public func removingObjects(_ objects: [T]) -> ZWeakObjectSet<T> {
 		let temporaryObjects = self._objects.subtracting(objects.map { ZWeakObject($0) })
 		return ZWeakObjectSet(temporaryObjects.compactMap { $0.object })
+	}
+	public func makeIterator() -> AnyIterator<T> {
+		let objects = self.objects
+		var index = 0
+		return AnyIterator {
+			defer { index += 1 }
+			return index < objects.count ? objects[index] : nil
+		}
 	}
 }
