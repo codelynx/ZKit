@@ -28,6 +28,8 @@
 		CC0295C126E5123C003DDD88 /* Pointer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */; };
 		CC0295C326E5C03F003DDD88 /* ZArchivable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295C226E5C03F003DDD88 /* ZArchivable.swift */; };
 		CC0295C426E5C03F003DDD88 /* ZArchivable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295C226E5C03F003DDD88 /* ZArchivable.swift */; };
+		CC0295CB26E667FE003DDD88 /* Data+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295CA26E667FE003DDD88 /* Data+Z.swift */; };
+		CC0295CC26E667FE003DDD88 /* Data+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295CA26E667FE003DDD88 /* Data+Z.swift */; };
 		CC2B824726E0A4ED00FF6B39 /* UIBezierPath+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */; };
 		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
 		CC940CAB26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
@@ -132,6 +134,7 @@
 		CC0295BB26E4D83D003DDD88 /* NSCoder+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCoder+Z.swift"; sourceTree = "<group>"; };
 		CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pointer+Z.swift"; sourceTree = "<group>"; };
 		CC0295C226E5C03F003DDD88 /* ZArchivable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZArchivable.swift; sourceTree = "<group>"; };
+		CC0295CA26E667FE003DDD88 /* Data+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Z.swift"; sourceTree = "<group>"; };
 		CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Z.swift"; sourceTree = "<group>"; };
 		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
 		CC940CAA26D62739009A06F5 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
@@ -254,6 +257,7 @@
 				CCAB036725E2EFD500E7D217 /* Array+Z.swift */,
 				CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */,
 				CCAB036125E2EFD500E7D217 /* CoreGraphics+Z.swift */,
+				CC0295CA26E667FE003DDD88 /* Data+Z.swift */,
 				CCAB036F25E2EFD500E7D217 /* DataStream.swift */,
 				CCAB035E25E2EFD500E7D217 /* Geometric.swift */,
 				CC940CAA26D62739009A06F5 /* Half.swift */,
@@ -439,6 +443,7 @@
 				CCAB038125E2EFD500E7D217 /* SoundManager.swift in Sources */,
 				CCAB039825E2EFD600E7D217 /* Sequence+Z.swift in Sources */,
 				CCAB038425E2EFD500E7D217 /* Set+Z.swift in Sources */,
+				CC0295CB26E667FE003DDD88 /* Data+Z.swift in Sources */,
 				CCAB03EE25E312EC00E7D217 /* XView.swift in Sources */,
 				CCAB040D25E3164600E7D217 /* XBezierPath.swift in Sources */,
 				CCAB039925E2EFD600E7D217 /* String+Z.swift in Sources */,
@@ -481,6 +486,7 @@
 				CCAB03B625E2EFE900E7D217 /* Sequence+Z.swift in Sources */,
 				CC96A2BF2619A5810077A008 /* UseDefaults+Z.swift in Sources */,
 				CCAB040425E3159300E7D217 /* XFont.swift in Sources */,
+				CC0295CC26E667FE003DDD88 /* Data+Z.swift in Sources */,
 				CCAB03B725E2EFE900E7D217 /* Geometric.swift in Sources */,
 				CCAB03AC25E2EFE900E7D217 /* UINavigationController+Z.swift in Sources */,
 				CCAB03A625E2EFE900E7D217 /* ZFramedButton.swift in Sources */,

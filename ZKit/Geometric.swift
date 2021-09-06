@@ -39,9 +39,12 @@ public protocol FloatingPointType: FloatingPoint, Codable {
 	static func * (lhs: Self, rhs: Self) -> Self
 	static func / (lhs: Self, rhs: Self) -> Self
 	static func atan2(_ lhs: Self, _ rhs: Self) -> Self
+	init(_ value: Float)
+	init(_ value: Double)
 	init(_ value: CGFloat)
-	var doubleValue: Double { get }
 	var floatValue: Float { get }
+	var doubleValue: Double { get }
+	var cgFloatValue: CGFloat { get }
 }
 
 public extension FloatingPointType {
@@ -56,33 +59,38 @@ public extension FloatingPointType {
 
 extension CGFloat: FloatingPointType {
 	public static func atan2(_ lhs: CGFloat, _ rhs: CGFloat) -> CGFloat { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
+	public var doubleValue: Double { Double(self) }
+	public var cgFloatValue: CGFloat { CGFloat(self) }
 }
 
 extension Double: FloatingPointType {
 	public static func atan2(_ lhs: Double, _ rhs: Double) -> Double { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
+	public var doubleValue: Double { Double(self) }
+	public var cgFloatValue: CGFloat { CGFloat(self) }
 }
 
 extension Float: FloatingPointType {
 	public static func atan2(_ lhs: Float, _ rhs: Float) -> Float { CoreGraphics.atan2(lhs, rhs) }
-	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
+	public var doubleValue: Double { Double(self) }
+	public var cgFloatValue: CGFloat { CGFloat(self) }
 }
 
 extension Half: FloatingPointType {
 	public static func atan2(_ lhs: Half, _ rhs: Half) -> Half { Half(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
-	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
+	public var doubleValue: Double { Double(self) }
+	public var cgFloatValue: CGFloat { CGFloat(self) }
 }
 
 @available(iOS 14.0, *)
 extension Float16: FloatingPointType {
 	public static func atan2(_ lhs: Float16, _ rhs: Float16) -> Float16 { Float16(CoreGraphics.atan2(CGFloat(lhs), CGFloat(rhs))) }
-	public var doubleValue: Double { Double(self) }
 	public var floatValue: Float { Float(self) }
+	public var doubleValue: Double { Double(self) }
+	public var cgFloatValue: CGFloat { CGFloat(self) }
 }
 
 public struct Point<T: FloatingPointType>: Hashable, CustomStringConvertible, Codable {

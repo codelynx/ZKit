@@ -104,18 +104,3 @@ public extension Array where Element: Equatable {
 	}
 	
 }
-
-
-public extension Array {
-	init(data: Data) {
-		self = data.elements()
-	}
-	var data: Data {
-		var value = self
-		return Data(bytes: &value, count: MemoryLayout<Element>.stride * count)
-	}
-}
-
-private extension Data {
-	func elements<T>() -> [T] { withUnsafeBytes { .init($0.bindMemory(to: T.self)) } }
-}
