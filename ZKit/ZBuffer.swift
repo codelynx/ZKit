@@ -44,31 +44,41 @@ import Foundation
 class ZBuffer<T> {
 
 	var bufferPointer: UnsafeBufferPointer<T>
+	let count: Int
 
-	init(bufferPointer: UnsafeBufferPointer<T>) {
+	init(bufferPointer: UnsafeBufferPointer<T>, bytes: Int) {
 		self.bufferPointer = bufferPointer
-	}
-	init(rawPointer: UnsafeRawPointer, count: Int) {
-		self.bufferPointer = UnsafeBufferPointer(start: rawPointer.assumingMemoryBound(to: T.self), count: count)
+		self.count = bytes / MemoryLayout<T>.stride
 	}
 	init(rawPointer: UnsafeRawPointer, bytes: Int) {
-		self.bufferPointer = UnsafeBufferPointer(start: rawPointer.assumingMemoryBound(to: T.self), count: bytes / MemoryLayout<T>.stride)
+		self.bufferPointer = UnsafeBufferPointer(start: rawPointer.assumingMemoryBound(to: T.self), count: bytes)
+		self.count = bytes / MemoryLayout<T>.stride
 	}
 	init(array: Array<T>) {
 		self.bufferPointer = array.withUnsafeBufferPointer { $0 }
+		self.count = array.count
 	}
 	init(opaquePointer: OpaquePointer, count: Int) {
 		self.bufferPointer = UnsafeBufferPointer(start: UnsafeRawPointer(opaquePointer).assumingMemoryBound(to: T.self), count: count)
+		self.count = count
 	}
 	init(opaquePointer: OpaquePointer, bytes: Int) {
-		self.bufferPointer = UnsafeBufferPointer(start: UnsafeRawPointer(opaquePointer).assumingMemoryBound(to: T.self), count: bytes / MemoryLayout<T>.stride)
+		let count = bytes / MemoryLayout<T>.stride
+		self.bufferPointer = UnsafeBufferPointer(start: UnsafeRawPointer(opaquePointer).assumingMemoryBound(to: T.self), count: count)
+		self.count = count
 	}
 	var mutableBufferPointer: UnsafeMutableBufferPointer<T> {
 		return UnsafeMutableBufferPointer(mutating: bufferPointer)
 	}
 	subscript(index: Int) -> T {
-		get { self.bufferPointer[index] }
-		set { self.mutableBufferPointer[index] = newValue }
+		get {
+			assert(index < self.count)
+			return self.bufferPointer[index]
+		}
+		set {
+			assert(index < self.count)
+			self.mutableBufferPointer[index] = newValue
+		}
 	}
 
 }

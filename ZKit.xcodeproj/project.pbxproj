@@ -22,6 +22,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CC0295BC26E4D83D003DDD88 /* NSCoder+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295BB26E4D83D003DDD88 /* NSCoder+Z.swift */; };
+		CC0295BD26E4D83D003DDD88 /* NSCoder+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295BB26E4D83D003DDD88 /* NSCoder+Z.swift */; };
+		CC0295C026E5123C003DDD88 /* Pointer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */; };
+		CC0295C126E5123C003DDD88 /* Pointer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */; };
+		CC0295C326E5C03F003DDD88 /* ZArchivable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295C226E5C03F003DDD88 /* ZArchivable.swift */; };
+		CC0295C426E5C03F003DDD88 /* ZArchivable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0295C226E5C03F003DDD88 /* ZArchivable.swift */; };
 		CC2B824726E0A4ED00FF6B39 /* UIBezierPath+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */; };
 		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
 		CC940CAB26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
@@ -123,6 +129,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC0295BB26E4D83D003DDD88 /* NSCoder+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCoder+Z.swift"; sourceTree = "<group>"; };
+		CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pointer+Z.swift"; sourceTree = "<group>"; };
+		CC0295C226E5C03F003DDD88 /* ZArchivable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZArchivable.swift; sourceTree = "<group>"; };
 		CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Z.swift"; sourceTree = "<group>"; };
 		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
 		CC940CAA26D62739009A06F5 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
@@ -250,12 +259,14 @@
 				CC940CAA26D62739009A06F5 /* Half.swift */,
 				CCAB037025E2EFD500E7D217 /* Int+Z.swift */,
 				CCAB036D25E2EFD500E7D217 /* JSValue+Z.swift */,
+				CC0295BB26E4D83D003DDD88 /* NSCoder+Z.swift */,
 				CCAB037C25E2EFD500E7D217 /* NSDecimalNumber+Z.swift */,
 				CCAB037825E2EFD500E7D217 /* NSDictionary+Z.swift */,
 				CCAB037225E2EFD500E7D217 /* NSMutableParagraphStyle+Z.swift */,
 				CCAB036025E2EFD500E7D217 /* NSNumber+Z.swift */,
 				CCAB037925E2EFD500E7D217 /* NSSet+Z.swift */,
 				CCAB037125E2EFD500E7D217 /* OutputStream+Z.swift */,
+				CC0295BF26E5123C003DDD88 /* Pointer+Z.swift */,
 				CCAB036325E2EFD500E7D217 /* Runtime.swift */,
 				CCAB037325E2EFD500E7D217 /* Sequence+Z.swift */,
 				CCAB035F25E2EFD500E7D217 /* Set+Z.swift */,
@@ -273,6 +284,7 @@
 				CCAB040725E315EC00E7D217 /* XScrollView.swift */,
 				CCAB03ED25E312EC00E7D217 /* XView.swift */,
 				CCAB03F225E3135A00E7D217 /* XViewController.swift */,
+				CC0295C226E5C03F003DDD88 /* ZArchivable.swift */,
 				CCAB037725E2EFD500E7D217 /* ZBuffer.swift */,
 				CCAB035A25E2EFD500E7D217 /* ZCalendarDate.swift */,
 				CCAB036A25E2EFD500E7D217 /* ZError.swift */,
@@ -399,9 +411,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC940CAF26D65B12009A06F5 /* CGPath+Z.swift in Sources */,
+				CC0295BC26E4D83D003DDD88 /* NSCoder+Z.swift in Sources */,
 				CCAB03A125E2EFD600E7D217 /* NSDecimalNumber+Z.swift in Sources */,
 				CCAB039625E2EFD600E7D217 /* OutputStream+Z.swift in Sources */,
 				CCBF587725FF873A004929E8 /* Thread+Z.swift in Sources */,
+				CC0295C026E5123C003DDD88 /* Pointer+Z.swift in Sources */,
 				CCAB03FE25E314F100E7D217 /* XImage.swift in Sources */,
 				CCAB039225E2EFD600E7D217 /* JSValue+Z.swift in Sources */,
 				CCAB038F25E2EFD600E7D217 /* ZError.swift in Sources */,
@@ -413,6 +427,7 @@
 				CCAB040825E315EC00E7D217 /* XScrollView.swift in Sources */,
 				CCAB03F325E3135A00E7D217 /* XViewController.swift in Sources */,
 				CCAB039425E2EFD600E7D217 /* DataStream.swift in Sources */,
+				CC0295C326E5C03F003DDD88 /* ZArchivable.swift in Sources */,
 				CCAB039725E2EFD600E7D217 /* NSMutableParagraphStyle+Z.swift in Sources */,
 				CCAB040325E3159300E7D217 /* XFont.swift in Sources */,
 				CC940CAB26D62739009A06F5 /* Half.swift in Sources */,
@@ -440,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC0295C126E5123C003DDD88 /* Pointer+Z.swift in Sources */,
 				CCAB03A925E2EFE900E7D217 /* ZBuffer.swift in Sources */,
 				CCAB03C425E2EFE900E7D217 /* UIView+Z.swift in Sources */,
 				CCAB03C625E2EFE900E7D217 /* Set+Z.swift in Sources */,
@@ -449,6 +465,7 @@
 				CCAB040E25E3164600E7D217 /* XBezierPath.swift in Sources */,
 				CCAB03A825E2EFE900E7D217 /* String+Z.swift in Sources */,
 				CC940CAC26D62739009A06F5 /* Half.swift in Sources */,
+				CC0295C426E5C03F003DDD88 /* ZArchivable.swift in Sources */,
 				CCAB03B925E2EFE900E7D217 /* Runtime.swift in Sources */,
 				CCAB03B425E2EFE900E7D217 /* UIAlertController.swift in Sources */,
 				CCAB03B825E2EFE900E7D217 /* ZCalendarDate.swift in Sources */,
@@ -473,6 +490,7 @@
 				CCAB03B025E2EFE900E7D217 /* UIImage+Z.swift in Sources */,
 				CCAB03B525E2EFE900E7D217 /* ZError.swift in Sources */,
 				CCAB03C225E2EFE900E7D217 /* NSNumber+Z.swift in Sources */,
+				CC0295BD26E4D83D003DDD88 /* NSCoder+Z.swift in Sources */,
 				CCAB03B225E2EFE900E7D217 /* XResponder.swift in Sources */,
 				CCAB03F425E3135A00E7D217 /* XViewController.swift in Sources */,
 				CCAB03C725E2EFE900E7D217 /* DataStream.swift in Sources */,
