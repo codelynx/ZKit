@@ -24,6 +24,39 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 //
+//
+//	[DESCRIPTION]
+//
+//	ZArchivable is a protocol for archive / unarchive struct item into swift `Data`, and the other way around.
+//	It is designed for save and load large number of vertex data or fixed structued data without tagging
+//	for each member element.  Since this utility code simply import or export binary data without
+//	any checkings, so it is your responsible to load and save the same data.
+//
+//	[USAGE]
+//
+//	struct RGBA8: ZArchivable {
+//		var r: UInt8
+//		var g: UInt8
+//		var b: UInt8
+//		var a: UInt8
+//	}
+//
+//	struct RGBA16: ZArchivable {
+//		var r: Float16
+//		var g: Float16
+//		var b: Float16
+//		var a: Float16
+//	}
+//
+//	let color1s = RGBA8(r: 255, g: 128, b: 80, a: 255)
+//	let color2s = RGBA16(r: 0.25, g: 0.5, b: 0.75, a: 1.0)
+//	let data1 = color1s.archive()
+//	let data2 = color2s.archive()
+//
+//	let color1d = data1.unarchive(as: RGBA8.self) // OK
+//	let color2d = data2.unarchive(as: RGBA16.self) // OK
+//	let color2f = data1.unarchive(as: RGBA16.self) // NG
+
 
 import Foundation
 
@@ -52,6 +85,3 @@ public extension Data {
 	}
 
 }
-
-
-
