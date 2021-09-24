@@ -42,5 +42,17 @@ public extension Set {
 		return lhs.intersection(rhs)
 	}
 
+	static func += (lhs: inout Self, rhs: Self) {
+		lhs.formUnion(rhs)
+	}
+
+	static func -= (lhs: inout Self, rhs: Self) {
+		lhs.subtract(rhs)
+	}
+	
+	static func *= (lhs: inout Self, rhs: Self) {
+		lhs.formIntersection(rhs)
+	}
+
 }
 
