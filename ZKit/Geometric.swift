@@ -214,7 +214,7 @@ public typealias Rect32 = Rect<Float>
 @available(iOS 14, *)
 public typealias Rect16 = Rect<Float16>
 
-public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
+public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable, Equatable {
 
 	var a: T
 	var b: T
@@ -223,7 +223,7 @@ public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringCon
 	var tx: T
 	var ty: T
 
-	init<A: BinaryFloatingPoint, B: BinaryFloatingPoint, C: BinaryFloatingPoint, D: BinaryFloatingPoint, TX: BinaryFloatingPoint, TY: BinaryFloatingPoint>(a: A, b: B, c: C, d: D, tx: TX, ty: TY) {
+	public init<A: BinaryFloatingPoint, B: BinaryFloatingPoint, C: BinaryFloatingPoint, D: BinaryFloatingPoint, TX: BinaryFloatingPoint, TY: BinaryFloatingPoint>(a: A, b: B, c: C, d: D, tx: TX, ty: TY) {
 		self.a = T(a)
 		self.b = T(b)
 		self.c = T(c)
@@ -232,7 +232,7 @@ public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringCon
 		self.ty = T(ty)
 	}
 
-	init(_ transform: CGAffineTransform) {
+	public init(_ transform: CGAffineTransform) {
 		self.a = T(transform.a)
 		self.b = T(transform.b)
 		self.c = T(transform.c)
@@ -241,45 +241,54 @@ public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringCon
 		self.ty = T(transform.ty)
 	}
 
-	var affineTransform: CGAffineTransform {
+	public var affineTransform: CGAffineTransform {
 		return CGAffineTransform(a: CGFloat(self.a), b: CGFloat(self.b), c: CGFloat(self.c), d: CGFloat(self.d), tx: CGFloat(self.tx), ty: CGFloat(self.ty))
 	}
 
-	static func * (lhs: Self, rhs: Self) -> Self {
+	public static func * (lhs: Self, rhs: Self) -> Self {
 		return Self(lhs.affineTransform.concatenating(rhs.affineTransform))
 	}
 
-	static func *= (lhs: inout Self, rhs: Self) {
+	public static func *= (lhs: inout Self, rhs: Self) {
 		lhs = Self(lhs.affineTransform * rhs.affineTransform)
 	}
 
-	func translate<T: BinaryFloatingPoint>(point: Point<T>) -> Self {
+	public func translate<T: BinaryFloatingPoint>(point: Point<T>) -> Self {
 		return Self(self.affineTransform.translatedBy(x: CGFloat(point.x), y: CGFloat(point.y)))
 	}
 
-	func scale<U: BinaryFloatingPoint>(point: Point<U>) -> Self {
+	public func scale<U: BinaryFloatingPoint>(point: Point<U>) -> Self {
 		return Self(self.affineTransform.scaledBy(x: CGFloat(point.x), y: CGFloat(point.y)))
 	}
 
-	func scale<U: BinaryFloatingPoint>(size: Size<U>) -> Self {
+	public func scale<U: BinaryFloatingPoint>(size: Size<U>) -> Self {
 		return Self(self.affineTransform.scaledBy(x: CGFloat(size.width), y: CGFloat(size.height)))
 	}
 
-	init<U: BinaryFloatingPoint>(translation: Point<U>) {
+	public init<U: BinaryFloatingPoint>(translation: Point<U>) {
 		self = Self(CGAffineTransform(translationX: CGFloat(translation.x), y: CGFloat(translation.y)))
 	}
 	
-	init<U: BinaryFloatingPoint>(scale: Point<U>) {
+	public init<U: BinaryFloatingPoint>(scale: Point<U>) {
 		self = Self(CGAffineTransform(scaleX: CGFloat(scale.x), y: CGFloat(scale.y)))
 	}
 
-	init<U: BinaryFloatingPoint>(scale: Size<U>) {
+	public init<U: BinaryFloatingPoint>(scale: Size<U>) {
 		self = Self(CGAffineTransform(scaleX: CGFloat(scale.width), y: CGFloat(scale.height)))
 	}
 
 	public var description: String {
 		return String("{AffineTransform: a=\(self.a), b=\(self.b), c=\(self.c), d=\(self.d), tx=\(self.tx), ty=\(self.ty)}")
 	}
+
+	public static var identity: Self {
+		return Self(CGAffineTransform.identity)
+	}
+
+	public static func == (lhs: Self, rhs: Self) -> Bool {
+		return lhs.affineTransform == rhs.affineTransform
+	}
+
 }
 
 public typealias AffineTransform64 = AffineTransform<Double>
@@ -349,6 +358,17 @@ public extension Rect32 {
 
 	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self = Rect32(origin: Point32(rect.origin), size: Size32(rect.size))
+	}
+
+}
+
+
+public extension float4x4 {
+
+	static let identity = matrix_identity_float4x4
+
+	init<T: BinaryFloatingPoint>(_ transform: AffineTransform<T>) {
+		self = float4x4(transform.affineTransform)
 	}
 
 }

@@ -229,8 +229,8 @@ public extension CGAffineTransform {
 
 public extension float4x4 {
 
-	init(affineTransform: CGAffineTransform) {
-		let t = CATransform3DMakeAffineTransform(affineTransform)
+	init(_ transform: CGAffineTransform) {
+		let t = CATransform3DMakeAffineTransform(transform)
 		self.init(
 			SIMD4<Float>(Float(t.m11), Float(t.m12), Float(t.m13), Float(t.m14)),
 			SIMD4<Float>(Float(t.m21), Float(t.m22), Float(t.m23), Float(t.m24)),
