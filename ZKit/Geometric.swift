@@ -301,6 +301,13 @@ public typealias AffineTransform32 = AffineTransform<Float>
 @available(iOS 14, *)
 public typealias AffineTransform16 = AffineTransform<Float16>
 
+public extension CGAffineTransform {
+	init<T: BinaryFloatingPoint>(_ transform: AffineTransform<T>) {
+		self = transform.affineTransform
+	}
+}
+
+
 
 public extension CGPoint {
 
@@ -331,8 +338,9 @@ public extension CGRect {
 
 public extension Point32 {
 
-	init<T: BinaryFloatingPoint>(x: T, y: T) {
-		self = Point32(x: Float(x), y: Float(y))
+	init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
+		self.x = Float(x)
+		self.y = Float(y)
 	}
 
 	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
@@ -345,7 +353,8 @@ public extension Point32 {
 public extension Size32 {
 
 	init<T: BinaryFloatingPoint>(width: T, height: T) {
-		self = Size32(width: Float(width), height: Float(height))
+		self.width = Float(width)
+		self.height = Float(height)
 	}
 
 	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
