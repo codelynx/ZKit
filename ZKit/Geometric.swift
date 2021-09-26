@@ -63,9 +63,9 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 		return lhs.x * rhs.y - lhs.y * rhs.x
 	}
 	
-	public init(x: T, y: T) {
-		self.x = x
-		self.y = y
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
+		self.x = T(x)
+		self.y = T(y)
 	}
 
 	public init(_ point: CGPoint) {
@@ -114,6 +114,11 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 		return Point<T>(x: self.x + x, y: self.y + y)
 	}
 
+	func applying(_ transform: CGAffineTransform) -> Point<T> {
+		let point = CGPoint(x: CGFloat(self.x), y: CGFloat(self.y)).applying(transform)
+		return Point(x: T(point.x), y: T(point.y))
+	}
+
 }
 
 public typealias Point64 = Point<Double>
@@ -127,8 +132,8 @@ public struct Size<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, C
 	public var width: T
 	public var height: T
 	
-	public init(width: T, height: T) {
-		(self.width, self.height) = (width, height)
+	public init<W: BinaryFloatingPoint, H: BinaryFloatingPoint>(width: W, height: H) {
+		(self.width, self.height) = (T(width), T(height))
 	}
 	
 	public init(_ size: CGSize) {
@@ -159,9 +164,9 @@ public struct Rect<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, C
 	public init(_ origin: Point<T>, _ size: Size<T>) {
 		self.origin = origin; self.size = size
 	}
-	public init(x: T, y: T, width: T, height: T) {
-		self.origin = Point<T>(x: x, y: y)
-		self.size = Size<T>(width: width, height: height)
+	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint, W: BinaryFloatingPoint, H: BinaryFloatingPoint>(x: X, y: Y, width: W, height: H) {
+		self.origin = Point<T>(x: T(x), y: T(y))
+		self.size = Size<T>(width: T(width), height: T(height))
 	}
 	public init(_ rect: CGRect) {
 		self.origin = Point(rect.origin)
