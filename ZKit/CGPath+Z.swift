@@ -31,14 +31,14 @@ import CoreGraphics
 import simd
 
 
-public enum PathElement: Equatable {
+public enum CGPathElement: Equatable {
 	case moveTo(CGPoint)
 	case lineTo(CGPoint)
 	case quadCurveTo(CGPoint, CGPoint)
 	case curveTo(CGPoint, CGPoint, CGPoint)
 	case closeSubpath
 	
-	static public func ==(lhs: PathElement, rhs: PathElement) -> Bool {
+	static public func ==(lhs: CGPathElement, rhs: CGPathElement) -> Bool {
 		switch (lhs, rhs) {
 		case let (.moveTo(l), .moveTo(r)),
 			 let (.lineTo(l), .lineTo(r)):
@@ -59,10 +59,10 @@ public enum PathElement: Equatable {
 public extension CGPath {
 	
 	private class Elements {
-		var pathElements = [PathElement]()
+		var pathElements = [CGPathElement]()
 	}
 	
-	var pathElements: [PathElement] {
+	var pathElements: [CGPathElement] {
 		var elements = Elements()
 		
 		self.apply(info: &elements) { (info, element) -> () in
@@ -94,6 +94,7 @@ public extension CGPath {
 		return pathelements
 	}
 }
+
 
 public extension CGPath {
 	
@@ -142,9 +143,69 @@ public extension CGPath {
 }
 
 
-
 public extension CGPoint {
 	static let nan = CGPoint(x: CGFloat.nan, y: CGFloat.nan)
 }
 
 
+public enum PathElement<T: BinaryFloatingPoint & Codable>: Equatable {
+
+	case moveTo(Point<T>)
+	case lineTo(Point<T>)
+	case quadCurveTo(Point<T>, Point<T>)
+	case curveTo(Point<T>, Point<T>, Point<T>)
+	case closeSubpath
+	
+	static public func ==(lhs: PathElement, rhs: PathElement) -> Bool {
+		switch (lhs, rhs) {
+		case let (.moveTo(l), .moveTo(r)),
+			 let (.lineTo(l), .lineTo(r)):
+			return l == r
+		case let (.quadCurveTo(l1, l2), .quadCurveTo(r1, r2)):
+			return l1 == r1 && l2 == r2
+		case let (.curveTo(l1, l2, l3), .curveTo(r1, r2, r3)):
+			return l1 == r1 && l2 == r2 && l3 == r3
+		case (.closeSubpath, .closeSubpath):
+			return true
+		default:
+			return false
+		}
+	}
+
+}
+
+
+public extension CGPath {
+
+	private class Info<T: BinaryFloatingPoint & Codable> {
+		var pathElements = [PathElement<T>]()
+	}
+	
+	func makePathElements<T: BinaryFloatingPoint & Codable>() -> [PathElement<T>] {
+		let elements: [PathElement<T>] = self.pathElements.map {
+			switch $0 {
+			case .moveTo(let p0): return PathElement.moveTo(Point(p0))
+			case .lineTo(let p1): return PathElement.lineTo(Point(p1))
+			case .quadCurveTo(let p1, let p2): return PathElement.quadCurveTo(Point(p1), Point(p2))
+			case .curveTo(let p1, let p2, let p3): return PathElement.curveTo(Point(p1), Point(p2), Point(p3))
+			case .closeSubpath: return PathElement.closeSubpath
+			}
+		}
+		return elements
+	}
+
+	static func makePath<T: BinaryFloatingPoint & Codable>(elements: [PathElement<T>]) -> CGPath {
+		let bezierPath = CGMutablePath()
+		for element in elements {
+			switch element {
+			case .moveTo(let p0): bezierPath.move(to: CGPoint(p0))
+			case .lineTo(let p1): bezierPath.addLine(to: CGPoint(p1))
+			case .quadCurveTo(let p1, let p2): bezierPath.addQuadCurve(to: CGPoint(p2), control: CGPoint(p1))
+			case .curveTo(let p1, let p2, let p3): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(p2), control2: CGPoint(p3))
+			case .closeSubpath: bezierPath.closeSubpath()
+			}
+		}
+		return bezierPath
+	}
+
+}
