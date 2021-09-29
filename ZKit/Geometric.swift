@@ -386,3 +386,161 @@ public extension float4x4 {
 	}
 
 }
+
+// MARK: -
+
+public extension CGPath {
+
+	private class Info<T: BinaryFloatingPoint & Codable> {
+		var pathElements = [BezierPathElement<T>]()
+	}
+	
+	func makePathElements<T: BinaryFloatingPoint & Codable>() -> [BezierPathElement<T>] {
+		typealias Element = BezierPathElement
+		let elements: [BezierPathElement<T>] = self.pathElements.map {
+			switch $0 {
+			case .moveTo(let p0): return Element.moveTo(Point(p0))
+			case .lineTo(let p1): return Element.lineTo(Point(p1))
+			case .quadCurveTo(let p1, let p2): return Element.quadCurveTo(Point(p1), Point(p2))
+			case .curveTo(let p1, let p2, let p3): return Element.curveTo(Point(p3), Point(p1), Point(p2))
+			case .closeSubpath: return Element.closeSubpath
+			}
+		}
+		return elements
+	}
+
+	static func makePath<T: BinaryFloatingPoint & Codable>(elements: [BezierPathElement<T>]) -> CGPath {
+		let bezierPath = CGMutablePath()
+		for element in elements {
+			switch element {
+			case .moveTo(let p0): bezierPath.move(to: CGPoint(p0))
+			case .lineTo(let p1): bezierPath.addLine(to: CGPoint(p1))
+			case .quadCurveTo(let p1, let p2): bezierPath.addQuadCurve(to: CGPoint(p2), control: CGPoint(p1))
+			case .curveTo(let p1, let p2, let p3): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(p2), control2: CGPoint(p3))
+			case .closeSubpath: bezierPath.closeSubpath()
+			}
+		}
+		return bezierPath
+	}
+
+}
+
+
+public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Codable {
+
+	enum CodingKeys: String, CodingKey { case type, values }
+	enum ElementType: Int, CodingKey { case move, line, quad, curve, close }
+
+	case moveTo(Point<T>)
+	case lineTo(Point<T>)
+	case quadCurveTo(Point<T>, Point<T>)
+	case curveTo(Point<T>, Point<T>, Point<T>)
+	case closeSubpath
+	
+	public init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let elemenType = try container.decode(Int.self, forKey: .type)
+		switch ElementType(rawValue: elemenType) {
+		case .move:
+			let values = try container.decode([Point<T>].self, forKey: .values)
+			self = BezierPathElement.moveTo(values[0])
+		case .line:
+			let values = try container.decode([Point<T>].self, forKey: .values)
+			self = BezierPathElement.lineTo(values[0])
+		case .quad:
+			let values = try container.decode([Point<T>].self, forKey: .values)
+			self = BezierPathElement.quadCurveTo(values[0], values[1])
+		case .curve:
+			let values = try container.decode([Point<T>].self, forKey: .values)
+			self = BezierPathElement.curveTo(values[0], values[1], values[2])
+		case .close:
+			self = BezierPathElement.closeSubpath
+		default:
+			fatalError()
+		}
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		switch self {
+		case .moveTo(let p0):
+			try container.encode(ElementType.move.rawValue, forKey: .type)
+			try container.encode([p0], forKey: .values)
+		case .lineTo(let p1):
+			try container.encode(ElementType.line.rawValue, forKey: .type)
+			try container.encode([p1], forKey: .values)
+		case .quadCurveTo(let p1, let p2):
+			try container.encode(ElementType.quad.rawValue, forKey: .type)
+			try container.encode([p1, p2], forKey: .values)
+		case .curveTo(let p1, let p2, let p3):
+			try container.encode(ElementType.curve.rawValue, forKey: .type)
+			try container.encode([p1, p2, p3], forKey: .values)
+		case .closeSubpath:
+			try container.encode(ElementType.close.rawValue, forKey: .type)
+		}
+	}
+
+	static public func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
+		switch (lhs, rhs) {
+		case let (.moveTo(l), .moveTo(r)),
+			 let (.lineTo(l), .lineTo(r)):
+			return l == r
+		case let (.quadCurveTo(l1, l2), .quadCurveTo(r1, r2)):
+			return l1 == r1 && l2 == r2
+		case let (.curveTo(l1, l2, l3), .curveTo(r1, r2, r3)):
+			return l1 == r1 && l2 == r2 && l3 == r3
+		case (.closeSubpath, .closeSubpath):
+			return true
+		default:
+			return false
+		}
+	}
+
+}
+
+
+public class BezierPath<T: BinaryFloatingPoint & Codable>: Codable {
+	private (set) public var pathElements: [BezierPathElement<T>]
+	public init() {
+		self.pathElements = []
+	}
+	public init(pathElements: [BezierPathElement<T>]) {
+		self.pathElements = pathElements
+	}
+	public init(path: CGPath) {
+		self.pathElements = path.makePathElements()
+	}
+	public var cgPath: CGPath {
+		CGPath.makePath(elements: self.pathElements)
+	}
+	func move(to point: Point<T>) {
+		self.pathElements.append(BezierPathElement.moveTo(point))
+	}
+	func addLine(to point: Point<T>) {
+		self.pathElements.append(BezierPathElement.lineTo(point))
+	}
+	func addQuadCurve(to point: Point<T>, controlPoint: Point<T>) {
+		self.pathElements.append(BezierPathElement.quadCurveTo(controlPoint, point))
+	}
+	func addCurve(to point: Point<T>, controlPoint1: Point<T>, controlPoint2: Point<T>) {
+		self.pathElements.append(BezierPathElement.curveTo(point, controlPoint1, controlPoint2))
+	}
+	func close() {
+		self.pathElements.append(BezierPathElement.closeSubpath)
+	}
+	func removeAlllPoints() {
+		self.pathElements.removeAll()
+	}
+	static func + (lhs: BezierPath<T>, rhs: BezierPath<T>) -> BezierPath {
+		return BezierPath(pathElements: lhs.pathElements + rhs.pathElements)
+	}
+	static func += (lhs: inout BezierPath, rhs: BezierPath) {
+		lhs.pathElements += rhs.pathElements
+	}
+}
+
+
+@available(iOS 14, *)
+public typealias BezierPath16 = BezierPath<Float16>
+public typealias BezierPath32 = BezierPath<Float32>
+
