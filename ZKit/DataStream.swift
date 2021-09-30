@@ -66,68 +66,68 @@ open class DataReadStream {
 		return self.bytes - self.offset
 	}
 	
-	public func readBytes<T>() throws -> T {
+	public func readBytes<T>(as: T.Type) throws -> T {
 		let valueSize = MemoryLayout<T>.size
 		let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
-		var buffer = [UInt8](repeating: 0, count: MemoryLayout<T>.stride)
-		let bufferPointer = UnsafeMutablePointer<UInt8>(&buffer)
-		if self.inputStream.read(bufferPointer, maxLength: valueSize) != valueSize {
+		let rawPointer = UnsafeMutableRawPointer(valuePointer)
+		if self.inputStream.read(rawPointer.assumingMemoryBound(to: UInt8.self), maxLength: valueSize) != valueSize {
 			throw DataStreamError.readError
 		}
-		bufferPointer.withMemoryRebound(to: T.self, capacity: 1) {
-			valuePointer.pointee = $0.pointee
-		}
-		offset += valueSize
 		return valuePointer.pointee
 	}
 
 	public func read() throws -> Int8 {
-		return try self.readBytes() as Int8
+		return try self.readBytes(as: Int8.self)
 	}
 
 	public func read() throws -> UInt8 {
-		return try self.readBytes() as UInt8
+		return try self.readBytes(as: UInt8.self)
 	}
 
 	public func read() throws -> Int16 {
-		let value = try self.readBytes() as UInt16
+		let value = try self.readBytes(as: UInt16.self)
 		return Int16(bitPattern: CFSwapInt16BigToHost(value))
 	}
 
 	public func read() throws -> UInt16 {
-		let value = try self.readBytes() as UInt16
+		let value = try self.readBytes(as: UInt16.self)
 		return CFSwapInt16BigToHost(value)
 	}
 
-
 	public func read() throws -> Int32 {
-		let value = try self.readBytes() as UInt32
+		let value = try self.readBytes(as: UInt32.self)
 		return Int32(bitPattern: CFSwapInt32BigToHost(value))
 	}
 
 	public func read() throws -> UInt32 {
-		let value = try self.readBytes() as UInt32
+		let value = try self.readBytes(as: UInt32.self)
 		return CFSwapInt32BigToHost(value)
 	}
 
 	public func read() throws -> Int64 {
-		let value = try self.readBytes() as UInt64
+		let value = try self.readBytes(as: UInt64.self)
 		return Int64(bitPattern: CFSwapInt64BigToHost(value))
 	}
 
 	public func read() throws -> UInt64 {
-		let value = try self.readBytes() as UInt64
+		let value = try self.readBytes(as: UInt64.self)
 		return CFSwapInt64BigToHost(value)
 	}
 
 	public func read() throws -> Float {
-		let value = try self.readBytes() as CFSwappedFloat32
+		let value = try self.readBytes(as: CFSwappedFloat32.self)
 		return CFConvertFloatSwappedToHost(value)
 	}
 
 	public func read() throws -> Float64 {
-		let value = try self.readBytes() as CFSwappedFloat64
+		let value = try self.readBytes(as: CFSwappedFloat64.self)
 		return CFConvertFloat64SwappedToHost(value)
+	}
+
+	@available(iOS 14, *)
+	public func read() throws -> Float16  {
+		let value = try self.readBytes(as: Float16.self)
+		return value
 	}
 
 	public func read(count: Int) throws -> Data {
@@ -136,7 +136,7 @@ open class DataReadStream {
 			throw DataStreamError.readError
 		}
 		offset += count
-		return Data(bytes: UnsafeRawPointer(&buffer), count: buffer.count)
+		return Data(bytes: &buffer, count: count)
 	}
 
 	public func read() throws -> Bool {
@@ -167,16 +167,16 @@ public class DataWriteStream {
 	public var data: Data? {
 		return self.outputStream.property(forKey: .dataWrittenToMemoryStreamKey) as? Data
 	}
-	
+
 	public func writeBytes<T>(value: T) throws {
 		let valueSize = MemoryLayout<T>.size
 		var value = value
-		var result = false
-		let valuePointer = UnsafeMutablePointer<T>(&value)
-		let _ = valuePointer.withMemoryRebound(to: UInt8.self, capacity: valueSize) {
-			result = (outputStream.write($0, maxLength: valueSize) == valueSize)
+		let result: Bool = withUnsafePointer(to: &value) { valuePointer in
+			let rawPointer = UnsafeRawPointer(valuePointer)
+			let bytesPointer = rawPointer.assumingMemoryBound(to: UInt8.self)
+			return self.outputStream.write(bytesPointer, maxLength: valueSize) == valueSize
 		}
-		if !result { throw DataStreamError.writeError }
+		guard result else { throw DataStreamError.writeError }
 	}
 
 	public func write(_ value: Int8) throws {
@@ -217,6 +217,11 @@ public class DataWriteStream {
 
 	public func write(_ value: Float64) throws {
 		try writeBytes(value: CFConvertFloat64HostToSwapped(value))
+	}
+	
+	@available(iOS 14, *)
+	public func write(_ value: Float16) throws {
+		try writeBytes(value: value)
 	}
 
 	public func write(_ data: Data) throws {
