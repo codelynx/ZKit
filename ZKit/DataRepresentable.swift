@@ -7,6 +7,10 @@
 
 import UIKit
 
+public protocol ZDataRepresentable {
+	init(data: Data) throws
+	var dataRepresentation: Data { get }
+}
 
 public protocol DataRepresentable {
 	init?(data: Data)
@@ -51,7 +55,7 @@ public extension Data {
 			let classes = Runtime.classes(conformTo: DataRepresentable.Type.self)
 
 			let marker1 = try unserializer.read() as UInt32 // (a)
-			guard marker1 == markerHeader else { throw SerializationError.unexpectedFormat }
+			guard marker1 == markerHeader else { throw ZError("unexpected format") }
 			let count1 = try unserializer.read() as Int32 // (b)
 			var typeStrings = [String]()
 			for _ in 0 ..< count1 {
@@ -59,11 +63,11 @@ public extension Data {
 				typeStrings.append(typeString)
 			}
 			let marker2 = try unserializer.read() as UInt32 // (d)
-			guard marker2 == markerBody else { throw SerializationError.unexpectedFormat }
+			guard marker2 == markerBody else { throw ZError("unexpected format") }
 			let count2 = try unserializer.read() as Int32 // (e)
 			for _ in 0 ..< count2 {
 				let typeIndex = try unserializer.read() as Int32 // (f)
-				guard typeIndex < typeStrings.count else { throw SerializationError.failed }
+				guard typeIndex < typeStrings.count else { throw ZError("logical error") }
 				let typeString = typeStrings[Int(typeIndex)]
 				let data = try unserializer.read() as Data // (g)
 				if let aClass = classes.filter({ String(describing: $0) == typeString }).first {
@@ -75,7 +79,7 @@ public extension Data {
 				}
 			}
 			let marker3 = try unserializer.read() as UInt32 // (h)
-			guard marker3 == markerFooter else { throw SerializationError.unexpectedFormat }
+			guard marker3 == markerFooter else { throw ZError("unexpected format") }
 		}
 		catch { fatalError("\(error)") }
 		return items

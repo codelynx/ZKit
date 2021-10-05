@@ -34,7 +34,7 @@ infix operator •
 infix operator ×
 
 
-public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringConvertible, Codable {
+public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible, ZArchivable {
 	
 	public var x: T
 	public var y: T
@@ -66,6 +66,11 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
 		self.x = T(x)
 		self.y = T(y)
+	}
+
+	public init<U: BinaryFloatingPoint>(_ point: Point<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
 	}
 
 	public init(_ point: CGPoint) {
@@ -127,7 +132,7 @@ public typealias Point32 = Point<Float>
 public typealias Point16 = Point<Float16>
 
 
-public struct Size<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
+public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible, ZArchivable {
 
 	public var width: T
 	public var height: T
@@ -153,7 +158,7 @@ public typealias Size32 = Size<Float>
 public typealias Size16 = Size<Float16>
 
 
-public struct Rect<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable {
+public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible, ZArchivable {
 
 	public var origin: Point<T>
 	public var size: Size<T>
@@ -219,7 +224,7 @@ public typealias Rect32 = Rect<Float>
 @available(iOS 14, *)
 public typealias Rect16 = Rect<Float16>
 
-public struct AffineTransform<T: BinaryFloatingPoint & Codable>: CustomStringConvertible, Codable, Equatable {
+public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, Equatable, ZArchivable {
 
 	var a: T
 	var b: T
@@ -391,15 +396,15 @@ public extension float4x4 {
 
 public extension CGPath {
 
-	private class Info<T: BinaryFloatingPoint & Codable> {
+	private class Info<T: BinaryFloatingPoint> {
 		var pathElements = [BezierPathElement<T>]()
 	}
 	
-	func makePathElements<T: BinaryFloatingPoint & Codable>() -> [BezierPathElement<T>] {
-		typealias Element = BezierPathElement
-		let elements: [BezierPathElement<T>] = self.pathElements.map {
+	func makePathElements<T: BinaryFloatingPoint>() -> [BezierPathElement<T>] {
+		typealias Element = BezierPathElement<T>
+		let elements: [Element] = self.pathElements.map {
 			switch $0 {
-			case .moveTo(let p0): return Element.moveTo(Point(p0))
+			case .moveTo(let p0): return Element.moveTo(Point<T>(p0))
 			case .lineTo(let p1): return Element.lineTo(Point(p1))
 			case .quadCurveTo(let p1, let p2): return Element.quadCurveTo(Point(p1), Point(p2))
 			case .curveTo(let p1, let p2, let p3): return Element.curveTo(Point(p3), Point(p1), Point(p2))
@@ -409,7 +414,7 @@ public extension CGPath {
 		return elements
 	}
 
-	static func makePath<T: BinaryFloatingPoint & Codable>(elements: [BezierPathElement<T>]) -> CGPath {
+	static func makePath<T: BinaryFloatingPoint>(elements: [BezierPathElement<T>]) -> CGPath {
 		let bezierPath = CGMutablePath()
 		for element in elements {
 			switch element {
@@ -426,7 +431,7 @@ public extension CGPath {
 }
 
 
-public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Codable {
+public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresentable {
 
 	enum CodingKeys: String, CodingKey { case type, values }
 	enum ElementType: Int, CodingKey { case move, line, quad, curve, close }
@@ -436,7 +441,72 @@ public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Coda
 	case quadCurveTo(Point<T>, Point<T>)
 	case curveTo(Point<T>, Point<T>, Point<T>)
 	case closeSubpath
-	
+
+	private enum TypeKey: UInt16 { case none, move, line, quadcurve, curve, close }
+
+	public init?(data: Data) {
+		let unserializer = Unserializer(data: data)
+		print(">> begin unserialize")
+		do {
+			let typeValue = try unserializer.read() as UInt16
+			print("typeValue=", typeValue)
+			guard let type = TypeKey(rawValue: typeValue) else { throw ZError("\(Self.self) expected.") }
+			print("type=", type)
+			switch type {
+			case .move:
+				let p0 = try unserializer.readBytes(as: Point<T>.self)
+				self = Self.moveTo(p0)
+			case .line:
+				let p1 = try unserializer.readBytes(as: Point<T>.self)
+				self = Self.lineTo(p1)
+			case .quadcurve:
+				let p1 = try unserializer.readBytes(as: Point<T>.self)
+				let p2 = try unserializer.readBytes(as: Point<T>.self)
+				self = Self.quadCurveTo(p1, p2)
+			case .curve:
+				let p1 = try unserializer.readBytes(as: Point<T>.self)
+				let p2 = try unserializer.readBytes(as: Point<T>.self)
+				let p3 = try unserializer.readBytes(as: Point<T>.self)
+				self = Self.curveTo(p1, p2, p3)
+			case .close:
+				self = Self.closeSubpath
+			default:
+				throw ZError("unexpected format")
+			}
+		}
+		catch { fatalError("\(error)") }
+	}
+
+	public var dataRepresentation: Data {
+		let serializer = Serializer()
+		do {
+			switch self {
+			case .moveTo(let p0):
+				print(">> moveto", p0)
+				try serializer.write(Self.TypeKey.move.rawValue)
+				try serializer.writeBytes(p0)
+			case .lineTo(let p1):
+				try serializer.write(Self.TypeKey.line.rawValue)
+				try serializer.writeBytes(p1)
+			case .quadCurveTo(let p1, let p2):
+				try serializer.write(Self.TypeKey.quadcurve.rawValue)
+				try serializer.writeBytes(p1)
+				try serializer.writeBytes(p2)
+			case .curveTo(let p1, let p2, let p3):
+				try serializer.write(Self.TypeKey.curve.rawValue)
+				try serializer.writeBytes(p1)
+				try serializer.writeBytes(p2)
+				try serializer.writeBytes(p3)
+			case .closeSubpath:
+				try serializer.write(Self.TypeKey.close.rawValue)
+			}
+		}
+		catch { fatalError("\(error)") }
+		print(">> end serializing")
+		return serializer.data
+	}
+
+	/*
 	public init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let elemenType = try container.decode(Int.self, forKey: .type)
@@ -459,7 +529,20 @@ public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Coda
 			fatalError()
 		}
 	}
+	*/
 
+	public init<U: BinaryFloatingPoint>(_ pathElement: BezierPathElement<U>) {
+		switch pathElement {
+		case .moveTo(let p0): self = Self.moveTo(Point<T>(p0))
+		case .lineTo(let p1): self = Self.lineTo(Point<T>(p1))
+		case .quadCurveTo(let p1, let p2): self = Self.quadCurveTo(Point<T>(p1), Point<T>(p2))
+		case .curveTo(let p1, let p2, let p3): self = Self.curveTo(Point(p1), Point(p2), Point(p3))
+		case .closeSubpath: self = Self.closeSubpath
+		}
+	}
+
+
+/*
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		switch self {
@@ -479,6 +562,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Coda
 			try container.encode(ElementType.close.rawValue, forKey: .type)
 		}
 	}
+*/
 
 	public static func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
 		switch (lhs, rhs) {
@@ -499,10 +583,34 @@ public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Coda
 }
 
 
-public class BezierPath<T: BinaryFloatingPoint & Codable>: Codable {
+public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 	private (set) public var pathElements: [BezierPathElement<T>]
+	public required init?(data: Data) {
+		let unserializer = Unserializer(data: data)
+		do {
+			print(Self.self, #function, #line)
+			let count = try unserializer.read() as Int32
+			self.pathElements = try (0 ..< count).map { _ in try unserializer.read(of: BezierPathElement<T>.self) }
+			print(Self.self, #function, #line)
+		}
+		catch { fatalError("\(error)") }
+	}
+	public var dataRepresentation: Data {
+		let serializer = Serializer()
+		do {
+			try serializer.write(Int32(self.pathElements.count))
+			for element in self.pathElements {
+				try serializer.write(element, of: BezierPathElement<T>.self)
+			}
+		}
+		catch { fatalError("\(error)") }
+		return serializer.data
+	}
 	public init() {
 		self.pathElements = []
+	}
+	public init<U: BinaryFloatingPoint>(bezierPath: BezierPath<U>) {
+		self.pathElements = bezierPath.pathElements.map { BezierPathElement<T>($0)  }
 	}
 	public init(pathElements: [BezierPathElement<T>]) {
 		self.pathElements = pathElements
@@ -544,3 +652,12 @@ public class BezierPath<T: BinaryFloatingPoint & Codable>: Codable {
 public typealias BezierPath16 = BezierPath<Float16>
 public typealias BezierPath32 = BezierPath<Float32>
 
+
+
+public extension CGContext {
+
+	func stroke<T: BinaryFloatingPoint>(bezierPath: BezierPath<T>) {
+		self.addPath(bezierPath.cgPath)
+	}
+
+}

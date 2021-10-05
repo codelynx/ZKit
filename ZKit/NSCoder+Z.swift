@@ -27,17 +27,17 @@ public extension NSCoder {
 
 public extension NSCoder {
 
-	func encode<T: Codable>(_ value: T?, forKey key: String, as: T.Type) {
+	func encode<T: Codable>(_ value: T?, forKey key: CodingKey, as: T.Type) {
 		let encoder = PropertyListEncoder()
 		encoder.outputFormat = .binary
 		if let value = value, let data = try? encoder.encode(value) {
-			self.encode(data as NSData, forKey: key)
+			self.encode(data as NSData, forKey: key.stringValue)
 		}
 	}
 
-	func decode<T: Codable>(forKey key: String, as: T.Type) -> T? {
+	func decode<T: Codable>(forKey key: CodingKey, as: T.Type) -> T? {
 		let decoder = PropertyListDecoder()
-		if let data = self.decodeObject(forKey: key) as? Data {
+		if let data = self.decodeObject(forKey: key.stringValue) as? Data {
 			return try? decoder.decode(T.self, from: data)
 		}
 		return nil
@@ -47,14 +47,14 @@ public extension NSCoder {
 
 public extension NSCoder {
 
-	func encode<T: ZArchivable>(_ value: T?, forKey key: String, as: T.Type) {
+	func encode<T: ZArchivable>(_ value: T?, forKey key: CodingKey, as: T.Type) {
 		if let data = value?.archive() {
-			self.encode(data as NSData, forKey: key)
+			self.encode(data as NSData, forKey: key.stringValue)
 		}
 	}
 
-	func decode<T: ZArchivable>(forKey key: String, as: T.Type) -> T? {
-		if let data = self.decodeObject(forKey: key) as? Data {
+	func decode<T: ZArchivable>(forKey key: CodingKey, as: T.Type) -> T? {
+		if let data = self.decodeObject(forKey: key.stringValue) as? Data {
 			return data.unarchive(as: T.self)
 		}
 		return nil

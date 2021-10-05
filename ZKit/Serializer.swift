@@ -24,7 +24,7 @@
 
 import Foundation
 
-
+/*
 public enum SerializationError: Error, CustomStringConvertible {
 	case runOutOfBuffer
 	case tooLarge
@@ -39,6 +39,7 @@ public enum SerializationError: Error, CustomStringConvertible {
 		}
 	}
 }
+*/
 
 open class Serializer {
 
@@ -59,7 +60,7 @@ open class Serializer {
 	}
 	
 	public func write(binary: Data) throws {
-		guard binary.count < Int32.max else { throw SerializationError.tooLarge }
+		guard binary.count < Int32.max else { throw ZError("\(Self.self): too large to write \(binary.count) bytes.") }
 		self.data.append(binary)
 	}
 
@@ -72,7 +73,7 @@ open class Serializer {
 	}
 
 	public func write(_ data: Data) throws {
-		guard data.count < Int32.max else { throw SerializationError.tooLarge }
+		guard data.count < Int32.max else { throw ZError("\(Self.self): too large to write \(data.count) bytes.") }
 		try self.writeBytes(Int32(data.count))
 		self.data.append(data)
 	}
@@ -84,11 +85,18 @@ open class Serializer {
 	public func write<T: DataRepresentable>(_ value: T, of: T.Type) throws {
 		let typeString = String(describing: type(of: value))
 		let data = value.dataRepresentation
-		guard data.count < Int32.max else { throw SerializationError.tooLarge }
+		guard data.count < Int32.max else { throw ZError("\(Self.self): too large to write \(data.count) bytes.") }
 		try self.write(typeString)
 		try self.write(data)
 	}
 
+	public func write<T: ZDataRepresentable>(_ value: T, of: T.Type) throws {
+		let typeString = String(describing: type(of: value))
+		let data = value.dataRepresentation
+		guard data.count < Int32.max else { throw ZError("\(Self.self): too large to write \(data.count) bytes.") }
+		try self.write(typeString)
+		try self.write(data)
+	}
 }
 
 
@@ -108,7 +116,7 @@ open class Unserializer {
 
 	public func readBytes<T>(as: T.Type) throws -> T {
 		let length = MemoryLayout<T>.size
-		guard self.location + length <= self.data.count else { throw SerializationError.runOutOfBuffer }
+		guard self.location + length <= self.data.count else { throw ZError("\(Self.self): buffer overrun") }
 		let subdata = data.subdata(in: location ..< location + length)
 		defer { self.location += length }
 		return subdata.withUnsafeBytes { $0.load(as: T.self) }
@@ -124,8 +132,8 @@ open class Unserializer {
 
 	public func read() throws -> Data {
 		let length = Int(try self.readBytes(as: UInt32.self))
-		guard length < Int32.max else { throw SerializationError.tooLarge }
-		guard self.location + length <= self.data.count else { throw SerializationError.runOutOfBuffer }
+		guard length < Int32.max else { throw ZError("\(Self.self) too large data to read.") }
+		guard self.location + length <= self.data.count else { throw ZError("\(Self.self): buffer overrun") }
 		let subdata = data.subdata(in: location ..< location + length)
 		defer { self.location += length }
 		return Data(subdata)
@@ -133,21 +141,43 @@ open class Unserializer {
 	
 	public func read() throws -> String {
 		let data: Data = try self.read()
-		guard let string = String(data: data, encoding: .utf8) else { throw SerializationError.failed }
+		guard let string = String(data: data, encoding: .utf8) else { throw ZError("\(Self.self): String expected.") }
 		return string
 	}
 
-	public func read<T: DataRepresentable>(of: T.Type) throws -> T? {
+	public func read<T: DataRepresentable>(of: T.Type) throws -> T {
 		let typeString = try self.read() as String
 		let subdata = try self.read() as Data
+		print(self.dataRepresentableClasses.map { String(describing: $0) }.joined(separator: ", "))
 		if let type = dataRepresentableClasses.filter({ String(describing: $0) == typeString }).first as? DataRepresentable.Type {
-			return type.init(data: subdata) as? T
+			print("\(type)")
+			let item = type.init(data: subdata)
+			if let item = item as? T {
+				return item
+			}
 		}
-		return nil
+		throw ZError("\(Self.self): \(T.self) expected")
+	}
+
+	public func read<T: ZDataRepresentable>(of: T.Type) throws -> T {
+		let typeString = try self.read() as String
+		let subdata = try self.read() as Data
+		print(self.dataRepresentableClasses.map { String(describing: $0) }.joined(separator: ", "))
+		if let type = zdataRepresentableClasses.filter({ String(describing: $0) == typeString }).first as? ZDataRepresentable.Type {
+			print("\(type)")
+			if let item = try type.init(data: subdata) as? T {
+				return item
+			}
+		}
+		throw ZError("\(Self.self): \(T.self) expected")
 	}
 
 	private lazy var dataRepresentableClasses: [AnyClass] = {
 		return Runtime.classes(conformTo: DataRepresentable.Type.self)
+	}()
+
+	private lazy var zdataRepresentableClasses: [AnyClass] = {
+		return Runtime.classes(conformTo: ZDataRepresentable.Type.self)
 	}()
 
 }
