@@ -7,13 +7,8 @@
 
 import UIKit
 
-public protocol ZDataRepresentable {
-	init(data: Data) throws
-	var dataRepresentation: Data { get }
-}
-
 public protocol DataRepresentable {
-	init?(data: Data)
+	init(data: Data) throws
 	var dataRepresentation: Data { get }
 }
 
@@ -72,9 +67,8 @@ public extension Data {
 				let data = try unserializer.read() as Data // (g)
 				if let aClass = classes.filter({ String(describing: $0) == typeString }).first {
 					if let type = aClass as? DataRepresentable.Type {
-						if let item = type.init(data: data) {
-							items.append(item)
-						}
+						let item = try type.init(data: data)
+						items.append(item)
 					}
 				}
 			}

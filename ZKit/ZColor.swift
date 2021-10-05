@@ -24,8 +24,8 @@ public struct ZRGBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equ
 	public var color: UIColor {
 		return UIColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: CGFloat(self.a))
 	}
-	public init?(data: Data) {
-		guard let rgba = data.unarchive(as: ZRGBA<T>.self) else { return nil }
+	public init(data: Data) throws {
+		guard let rgba = data.unarchive(as: ZRGBA<T>.self) else { throw ZError("expected \(ZRGBA<T>.self)") }
 		self = rgba
 	}
 	public var dataRepresentation: Data {
@@ -61,8 +61,8 @@ public struct ZRGB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equa
 	public var color: UIColor {
 		return UIColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: 1.0)
 	}
-	public init?(data: Data) {
-		guard let rgb = data.unarchive(as: ZRGB<T>.self) else { return nil }
+	public init(data: Data) throws {
+		guard let rgb = data.unarchive(as: ZRGB<T>.self) else { throw ZError("\(ZRGB<T>.self) expected") }
 		self = rgb
 	}
 	public var dataRepresentation: Data {
@@ -98,8 +98,8 @@ public struct ZHSBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equ
 	public var color: UIColor {
 		return UIColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: CGFloat(self.a))
 	}
-	public init?(data: Data) {
-		guard let hsba = data.unarchive(as: ZHSBA<T>.self) else { return nil }
+	public init(data: Data) throws {
+		guard let hsba = data.unarchive(as: ZHSBA<T>.self) else { throw ZError("expected \(ZHSBA<T>.self)") }
 		self = hsba
 	}
 	public var dataRepresentation: Data {
@@ -135,8 +135,8 @@ public struct ZHSB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equa
 	public var color: UIColor {
 		return UIColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: 1.0)
 	}
-	public init?(data: Data) {
-		guard let hsb = data.unarchive(as: ZHSB<T>.self) else { return nil }
+	public init(data: Data) throws {
+		guard let hsb = data.unarchive(as: ZHSB<T>.self) else { throw ZError("\(ZHSB<T>.self) expected") }
 		self = hsb
 	}
 	public var dataRepresentation: Data {

@@ -444,7 +444,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresenta
 
 	private enum TypeKey: UInt16 { case none, move, line, quadcurve, curve, close }
 
-	public init?(data: Data) {
+	public init(data: Data) throws {
 		let unserializer = Unserializer(data: data)
 		print(">> begin unserialize")
 		do {
@@ -585,7 +585,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresenta
 
 public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 	private (set) public var pathElements: [BezierPathElement<T>]
-	public required init?(data: Data) {
+	public required init(data: Data) throws {
 		let unserializer = Unserializer(data: data)
 		do {
 			print(Self.self, #function, #line)

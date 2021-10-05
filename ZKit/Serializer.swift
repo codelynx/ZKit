@@ -90,13 +90,6 @@ open class Serializer {
 		try self.write(data)
 	}
 
-	public func write<T: ZDataRepresentable>(_ value: T, of: T.Type) throws {
-		let typeString = String(describing: type(of: value))
-		let data = value.dataRepresentation
-		guard data.count < Int32.max else { throw ZError("\(Self.self): too large to write \(data.count) bytes.") }
-		try self.write(typeString)
-		try self.write(data)
-	}
 }
 
 
@@ -151,21 +144,8 @@ open class Unserializer {
 		print(self.dataRepresentableClasses.map { String(describing: $0) }.joined(separator: ", "))
 		if let type = dataRepresentableClasses.filter({ String(describing: $0) == typeString }).first as? DataRepresentable.Type {
 			print("\(type)")
-			let item = type.init(data: subdata)
+			let item = try type.init(data: subdata)
 			if let item = item as? T {
-				return item
-			}
-		}
-		throw ZError("\(Self.self): \(T.self) expected")
-	}
-
-	public func read<T: ZDataRepresentable>(of: T.Type) throws -> T {
-		let typeString = try self.read() as String
-		let subdata = try self.read() as Data
-		print(self.dataRepresentableClasses.map { String(describing: $0) }.joined(separator: ", "))
-		if let type = zdataRepresentableClasses.filter({ String(describing: $0) == typeString }).first as? ZDataRepresentable.Type {
-			print("\(type)")
-			if let item = try type.init(data: subdata) as? T {
 				return item
 			}
 		}
@@ -174,10 +154,6 @@ open class Unserializer {
 
 	private lazy var dataRepresentableClasses: [AnyClass] = {
 		return Runtime.classes(conformTo: DataRepresentable.Type.self)
-	}()
-
-	private lazy var zdataRepresentableClasses: [AnyClass] = {
-		return Runtime.classes(conformTo: ZDataRepresentable.Type.self)
 	}()
 
 }
