@@ -38,7 +38,7 @@ public enum CGPathElement: Equatable {
 	case curveTo(CGPoint, CGPoint, CGPoint)
 	case closeSubpath
 	
-	static public func ==(lhs: CGPathElement, rhs: CGPathElement) -> Bool {
+	public static func ==(lhs: CGPathElement, rhs: CGPathElement) -> Bool {
 		switch (lhs, rhs) {
 		case let (.moveTo(l), .moveTo(r)),
 			 let (.lineTo(l), .lineTo(r)):

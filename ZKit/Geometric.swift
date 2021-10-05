@@ -39,27 +39,27 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 	public var x: T
 	public var y: T
 	
-	static public func - (lhs: Self, rhs: Self) -> Self {
+	public static func - (lhs: Self, rhs: Self) -> Self {
 		return Point<T>(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 	}
 	
-	static public func + (lhs: Self, rhs: Self) -> Point {
+	public static func + (lhs: Self, rhs: Self) -> Point {
 		return Point<T>(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
 	
-	static public func * (lhs: Point, rhs: T) -> Point {
+	public static func * (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x * rhs, y: lhs.y * rhs)
 	}
 	
-	static public func / (lhs: Point, rhs: T) -> Point {
+	public static func / (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x / rhs, y: lhs.y / rhs)
 	}
 	
-	static public func • (lhs: Point, rhs: Point) -> T { // dot product
+	public static func • (lhs: Point, rhs: Point) -> T { // dot product
 		return lhs.x * rhs.x + lhs.y * rhs.y
 	}
 	
-	static public func × (lhs: Point, rhs: Point) -> T { // cross product
+	public static func × (lhs: Point, rhs: Point) -> T { // cross product
 		return lhs.x * rhs.y - lhs.y * rhs.x
 	}
 	
@@ -94,7 +94,7 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 		return T(CoreGraphics.atan2(CGFloat(self.y) - CGFloat(from.y), CGFloat(self.x) - CGFloat(from.x)))
 	}
 	
-	static public func == (lhs: Point, rhs: Point) -> Bool {
+	public static func == (lhs: Point, rhs: Point) -> Bool {
 		return lhs.x == rhs.y && lhs.y == rhs.y
 	}
 
@@ -107,8 +107,8 @@ public struct Point<T: BinaryFloatingPoint & Codable>: Hashable, CustomStringCon
 		return "(x:\(x), y:\(y))"
 	}
 	
-	static public var zero: Point { return Point(x: T.zero, y: T.zero) }
-	static public var nan: Point { return Point(x: T.nan, y: T.nan) }
+	public static var zero: Point { return Point(x: T.zero, y: T.zero) }
+	public static var nan: Point { return Point(x: T.nan, y: T.nan) }
 	
 	public func offsetBy(x: T, y: T) -> Point<T> {
 		return Point<T>(x: self.x + x, y: self.y + y)
@@ -480,7 +480,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint & Codable>: Equatable, Coda
 		}
 	}
 
-	static public func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
+	public static func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
 		switch (lhs, rhs) {
 		case let (.moveTo(l), .moveTo(r)),
 			 let (.lineTo(l), .lineTo(r)):
@@ -513,28 +513,28 @@ public class BezierPath<T: BinaryFloatingPoint & Codable>: Codable {
 	public var cgPath: CGPath {
 		CGPath.makePath(elements: self.pathElements)
 	}
-	func move(to point: Point<T>) {
+	public func move(to point: Point<T>) {
 		self.pathElements.append(BezierPathElement.moveTo(point))
 	}
-	func addLine(to point: Point<T>) {
+	public func addLine(to point: Point<T>) {
 		self.pathElements.append(BezierPathElement.lineTo(point))
 	}
-	func addQuadCurve(to point: Point<T>, controlPoint: Point<T>) {
+	public func addQuadCurve(to point: Point<T>, controlPoint: Point<T>) {
 		self.pathElements.append(BezierPathElement.quadCurveTo(controlPoint, point))
 	}
-	func addCurve(to point: Point<T>, controlPoint1: Point<T>, controlPoint2: Point<T>) {
+	public func addCurve(to point: Point<T>, controlPoint1: Point<T>, controlPoint2: Point<T>) {
 		self.pathElements.append(BezierPathElement.curveTo(point, controlPoint1, controlPoint2))
 	}
-	func close() {
+	public func closeSubpath() {
 		self.pathElements.append(BezierPathElement.closeSubpath)
 	}
-	func removeAlllPoints() {
+	public func removeAlllPoints() {
 		self.pathElements.removeAll()
 	}
-	static func + (lhs: BezierPath<T>, rhs: BezierPath<T>) -> BezierPath {
+	public static func + (lhs: BezierPath<T>, rhs: BezierPath<T>) -> BezierPath {
 		return BezierPath(pathElements: lhs.pathElements + rhs.pathElements)
 	}
-	static func += (lhs: inout BezierPath, rhs: BezierPath) {
+	public static func += (lhs: inout BezierPath, rhs: BezierPath) {
 		lhs.pathElements += rhs.pathElements
 	}
 }
