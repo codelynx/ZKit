@@ -8,7 +8,7 @@
 import UIKit
 
 
-public struct ZRGBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equatable {
+public struct ZRGBA<T: BinaryFloatingPoint>: ZArchivable, Equatable {
 	public var r: T
 	public var g: T
 	public var b: T
@@ -23,13 +23,6 @@ public struct ZRGBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equ
 	}
 	public var color: UIColor {
 		return UIColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: CGFloat(self.a))
-	}
-	public init(data: Data) throws {
-		guard let rgba = data.unarchive(as: ZRGBA<T>.self) else { throw ZError("expected \(ZRGBA<T>.self)") }
-		self = rgba
-	}
-	public var dataRepresentation: Data {
-		return self.archive()
 	}
 	public var red: T { return self.r }
 	public var green: T { return self.g }
@@ -46,7 +39,7 @@ public typealias ZRGBA32 = ZRGBA<Float>
 public typealias ZRGBA64 = ZRGBA<Double>
 
 
-public struct ZRGB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equatable {
+public struct ZRGB<T: BinaryFloatingPoint>: ZArchivable, Equatable {
 	public var r: T
 	public var g: T
 	public var b: T
@@ -60,13 +53,6 @@ public struct ZRGB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equa
 	}
 	public var color: UIColor {
 		return UIColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: 1.0)
-	}
-	public init(data: Data) throws {
-		guard let rgb = data.unarchive(as: ZRGB<T>.self) else { throw ZError("\(ZRGB<T>.self) expected") }
-		self = rgb
-	}
-	public var dataRepresentation: Data {
-		return self.archive()
 	}
 	public var red: T { return self.r }
 	public var green: T { return self.g }
@@ -82,7 +68,7 @@ public typealias ZRGB32 = ZRGB<Float>
 public typealias ZRGB64 = ZRGB<Double>
 
 
-public struct ZHSBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equatable {
+public struct ZHSBA<T: BinaryFloatingPoint>: ZArchivable, Equatable {
 	public var h: T
 	public var s: T
 	public var b: T
@@ -97,13 +83,6 @@ public struct ZHSBA<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equ
 	}
 	public var color: UIColor {
 		return UIColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: CGFloat(self.a))
-	}
-	public init(data: Data) throws {
-		guard let hsba = data.unarchive(as: ZHSBA<T>.self) else { throw ZError("expected \(ZHSBA<T>.self)") }
-		self = hsba
-	}
-	public var dataRepresentation: Data {
-		return self.archive()
 	}
 	public var hue: T { return self.h }
 	public var saturation: T { return self.s }
@@ -120,7 +99,7 @@ public typealias ZHSBA32 = ZHSBA<Float>
 public typealias ZHSBA64 = ZHSBA<Double>
 
 
-public struct ZHSB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equatable {
+public struct ZHSB<T: BinaryFloatingPoint>: ZArchivable, Equatable {
 	public var h: T
 	public var s: T
 	public var b: T
@@ -134,13 +113,6 @@ public struct ZHSB<T: BinaryFloatingPoint>: DataRepresentable, ZArchivable, Equa
 	}
 	public var color: UIColor {
 		return UIColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: 1.0)
-	}
-	public init(data: Data) throws {
-		guard let hsb = data.unarchive(as: ZHSB<T>.self) else { throw ZError("\(ZHSB<T>.self) expected") }
-		self = hsb
-	}
-	public var dataRepresentation: Data {
-		return self.archive()
 	}
 	public var hue: T { return self.h }
 	public var saturation: T { return self.s }

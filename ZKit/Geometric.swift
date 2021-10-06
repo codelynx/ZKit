@@ -431,7 +431,7 @@ public extension CGPath {
 }
 
 
-public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresentable {
+public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 
 	enum CodingKeys: String, CodingKey { case type, values }
 	enum ElementType: Int, CodingKey { case move, line, quad, curve, close }
@@ -445,91 +445,57 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresenta
 	private enum TypeKey: UInt16 { case none, move, line, quadcurve, curve, close }
 
 	public init(data: Data) throws {
-		let unserializer = Unserializer(data: data)
-		print(">> begin unserialize")
-		do {
-			let typeValue = try unserializer.read() as UInt16
-			print("typeValue=", typeValue)
+		self = try Unserializer.unserialize(data: data) {
+			let typeValue = try $0.read() as UInt16
 			guard let type = TypeKey(rawValue: typeValue) else { throw ZError("\(Self.self) expected.") }
-			print("type=", type)
 			switch type {
 			case .move:
-				let p0 = try unserializer.readBytes(as: Point<T>.self)
-				self = Self.moveTo(p0)
+				let p0 = try $0.readBytes(as: Point<T>.self)
+				return Self.moveTo(p0)
 			case .line:
-				let p1 = try unserializer.readBytes(as: Point<T>.self)
-				self = Self.lineTo(p1)
+				let p1 = try $0.readBytes(as: Point<T>.self)
+				return Self.lineTo(p1)
 			case .quadcurve:
-				let p1 = try unserializer.readBytes(as: Point<T>.self)
-				let p2 = try unserializer.readBytes(as: Point<T>.self)
-				self = Self.quadCurveTo(p1, p2)
+				let p1 = try $0.readBytes(as: Point<T>.self)
+				let p2 = try $0.readBytes(as: Point<T>.self)
+				return Self.quadCurveTo(p1, p2)
 			case .curve:
-				let p1 = try unserializer.readBytes(as: Point<T>.self)
-				let p2 = try unserializer.readBytes(as: Point<T>.self)
-				let p3 = try unserializer.readBytes(as: Point<T>.self)
-				self = Self.curveTo(p1, p2, p3)
+				let p1 = try $0.readBytes(as: Point<T>.self)
+				let p2 = try $0.readBytes(as: Point<T>.self)
+				let p3 = try $0.readBytes(as: Point<T>.self)
+				return Self.curveTo(p1, p2, p3)
 			case .close:
-				self = Self.closeSubpath
+				return Self.closeSubpath
 			default:
 				throw ZError("unexpected format")
 			}
 		}
-		catch { fatalError("\(error)") }
 	}
 
 	public var dataRepresentation: Data {
-		let serializer = Serializer()
-		do {
+		return try! Serializer.serialize() {
 			switch self {
 			case .moveTo(let p0):
 				print(">> moveto", p0)
-				try serializer.write(Self.TypeKey.move.rawValue)
-				try serializer.writeBytes(p0)
+				try $0.write(Self.TypeKey.move.rawValue)
+				try $0.writeBytes(p0)
 			case .lineTo(let p1):
-				try serializer.write(Self.TypeKey.line.rawValue)
-				try serializer.writeBytes(p1)
+				try $0.write(Self.TypeKey.line.rawValue)
+				try $0.writeBytes(p1)
 			case .quadCurveTo(let p1, let p2):
-				try serializer.write(Self.TypeKey.quadcurve.rawValue)
-				try serializer.writeBytes(p1)
-				try serializer.writeBytes(p2)
+				try $0.write(Self.TypeKey.quadcurve.rawValue)
+				try $0.writeBytes(p1)
+				try $0.writeBytes(p2)
 			case .curveTo(let p1, let p2, let p3):
-				try serializer.write(Self.TypeKey.curve.rawValue)
-				try serializer.writeBytes(p1)
-				try serializer.writeBytes(p2)
-				try serializer.writeBytes(p3)
+				try $0.write(Self.TypeKey.curve.rawValue)
+				try $0.writeBytes(p1)
+				try $0.writeBytes(p2)
+				try $0.writeBytes(p3)
 			case .closeSubpath:
-				try serializer.write(Self.TypeKey.close.rawValue)
+				try $0.write(Self.TypeKey.close.rawValue)
 			}
 		}
-		catch { fatalError("\(error)") }
-		print(">> end serializing")
-		return serializer.data
 	}
-
-	/*
-	public init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: CodingKeys.self)
-		let elemenType = try container.decode(Int.self, forKey: .type)
-		switch ElementType(rawValue: elemenType) {
-		case .move:
-			let values = try container.decode([Point<T>].self, forKey: .values)
-			self = BezierPathElement.moveTo(values[0])
-		case .line:
-			let values = try container.decode([Point<T>].self, forKey: .values)
-			self = BezierPathElement.lineTo(values[0])
-		case .quad:
-			let values = try container.decode([Point<T>].self, forKey: .values)
-			self = BezierPathElement.quadCurveTo(values[0], values[1])
-		case .curve:
-			let values = try container.decode([Point<T>].self, forKey: .values)
-			self = BezierPathElement.curveTo(values[0], values[1], values[2])
-		case .close:
-			self = BezierPathElement.closeSubpath
-		default:
-			fatalError()
-		}
-	}
-	*/
 
 	public init<U: BinaryFloatingPoint>(_ pathElement: BezierPathElement<U>) {
 		switch pathElement {
@@ -540,29 +506,6 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresenta
 		case .closeSubpath: self = Self.closeSubpath
 		}
 	}
-
-
-/*
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		switch self {
-		case .moveTo(let p0):
-			try container.encode(ElementType.move.rawValue, forKey: .type)
-			try container.encode([p0], forKey: .values)
-		case .lineTo(let p1):
-			try container.encode(ElementType.line.rawValue, forKey: .type)
-			try container.encode([p1], forKey: .values)
-		case .quadCurveTo(let p1, let p2):
-			try container.encode(ElementType.quad.rawValue, forKey: .type)
-			try container.encode([p1, p2], forKey: .values)
-		case .curveTo(let p1, let p2, let p3):
-			try container.encode(ElementType.curve.rawValue, forKey: .type)
-			try container.encode([p1, p2, p3], forKey: .values)
-		case .closeSubpath:
-			try container.encode(ElementType.close.rawValue, forKey: .type)
-		}
-	}
-*/
 
 	public static func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
 		switch (lhs, rhs) {
@@ -584,27 +527,28 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, DataRepresenta
 
 
 public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
+	
 	private (set) public var pathElements: [BezierPathElement<T>]
+
 	public required init(data: Data) throws {
-		let unserializer = Unserializer(data: data)
-		do {
-			print(Self.self, #function, #line)
-			let count = try unserializer.read() as Int32
-			self.pathElements = try (0 ..< count).map { _ in try unserializer.read(of: BezierPathElement<T>.self) }
-			print(Self.self, #function, #line)
+		self.pathElements = try Unserializer.unserialize(data: data) {
+			var elements = [BezierPathElement<T>]()
+			let counter = try $0.read() as Int32
+			for _ in 0 ..< counter {
+				let data = try $0.read() as Data
+				let element = try BezierPathElement<T>(data: data)
+				elements.append(element)
+			}
+			return elements
 		}
-		catch { fatalError("\(error)") }
 	}
 	public var dataRepresentation: Data {
-		let serializer = Serializer()
-		do {
-			try serializer.write(Int32(self.pathElements.count))
+		return try! Serializer.serialize() {
+			try $0.write(Int32(self.pathElements.count))
 			for element in self.pathElements {
-				try serializer.write(element, of: BezierPathElement<T>.self)
+				try $0.write(element.dataRepresentation)
 			}
 		}
-		catch { fatalError("\(error)") }
-		return serializer.data
 	}
 	public init() {
 		self.pathElements = []

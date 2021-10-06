@@ -49,6 +49,12 @@ open class Serializer {
 		self.data = Data()
 	}
 
+	public static func serialize(closuer: (Serializer) throws -> ()) throws -> Data {
+		let serializer = Serializer()
+		try closuer(serializer)
+		return serializer.data
+	}
+
 	public func writeBytes<T>(_ value: T) throws {
 		var value = value
 		Swift.withUnsafePointer(to: &value) { valuePointer in
@@ -101,6 +107,11 @@ open class Unserializer {
 	public init(data: Data) {
 		self.data = data
 		self.location = 0
+	}
+	
+	public static func unserialize<T>(data: Data, closure: (Unserializer) throws -> T) throws -> T {
+		let unserializer = Unserializer(data: data)
+		return try closure(unserializer)
 	}
 
 	public var isAtEnd: Bool {
