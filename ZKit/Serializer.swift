@@ -24,22 +24,6 @@
 
 import Foundation
 
-/*
-public enum SerializationError: Error, CustomStringConvertible {
-	case runOutOfBuffer
-	case tooLarge
-	case failed
-	case unexpectedFormat
-	public var description: String {
-		switch self {
-		case .runOutOfBuffer: return "Serialization: run out of buffer"
-		case .tooLarge: return "Serialization: too large binary data"
-		case .failed: return "Serialization: unexpected failure"
-		case .unexpectedFormat: return "Serialization: unexpected format"
-		}
-	}
-}
-*/
 
 open class Serializer {
 

@@ -47,17 +47,38 @@ public extension NSCoder {
 
 public extension NSCoder {
 
-	func encode<T: ZArchivable>(_ value: T?, forKey key: CodingKey, as: T.Type) {
+	/*
+	func archive<T: ZArchivable>(_ value: T?, forKey key: CodingKey, as: T.Type) {
 		if let data = value?.archive() {
 			self.encode(data as NSData, forKey: key.stringValue)
 		}
 	}
 
-	func decode<T: ZArchivable>(forKey key: CodingKey, as: T.Type) -> T? {
+	func unarchive<T: ZArchivable>(forKey key: CodingKey, as: T.Type) -> T? {
 		if let data = self.decodeObject(forKey: key.stringValue) as? Data {
 			return data.unarchive(as: T.self)
 		}
 		return nil
 	}
+	*/
+
+	func serialize<T>(_ value: T, forKey key: CodingKey, of: T.Type) {
+		var value = value
+		Swift.withUnsafePointer(to: &value) { valuePointer in
+			let rawPointer = UnsafeRawPointer(valuePointer)
+			let bytesPointer = rawPointer.assumingMemoryBound(to: UInt8.self)
+			let data = Data(bytes: bytesPointer, count: MemoryLayout<T>.size)
+			self.encode(data, forKey: key.stringValue)
+		}
+	}
+
+	func unserialize<T>(forKey key: CodingKey, of: T.Type) -> T? {
+		let length = MemoryLayout<T>.size
+		if let data = self.decodeData(forKey: key.stringValue), data.count >= length {
+			return data.withUnsafeBytes { $0.load(as: T.self) }
+		}
+		return nil
+	}
+	
 
 }

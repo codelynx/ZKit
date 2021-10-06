@@ -12,13 +12,6 @@ public protocol DataRepresentable: AnyObject {
 	var dataRepresentation: Data { get }
 }
 
-public extension DataRepresentable {
-
-	var types: [DataRepresentable.Type] {
-		return Runtime.classes(conformTo: DataRepresentable.Type.self).compactMap { $0 as? DataRepresentable.Type }
-	}
-}
-
 
 private let markerHeader = FourCharCode("ZDR1")!
 private let markerBody = FourCharCode("ZDR2")!

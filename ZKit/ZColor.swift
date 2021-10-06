@@ -8,7 +8,7 @@
 import UIKit
 
 
-public struct ZRGBA<T: BinaryFloatingPoint>: ZArchivable, Equatable {
+public struct ZRGBA<T: BinaryFloatingPoint>: Equatable {
 	public var r: T
 	public var g: T
 	public var b: T
@@ -31,6 +31,7 @@ public struct ZRGBA<T: BinaryFloatingPoint>: ZArchivable, Equatable {
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a
 	}
+	public static var black: Self { return Self(color: UIColor.black) }
 }
 
 @available(iOS 14, *)
@@ -39,7 +40,7 @@ public typealias ZRGBA32 = ZRGBA<Float>
 public typealias ZRGBA64 = ZRGBA<Double>
 
 
-public struct ZRGB<T: BinaryFloatingPoint>: ZArchivable, Equatable {
+public struct ZRGB<T: BinaryFloatingPoint>: Equatable {
 	public var r: T
 	public var g: T
 	public var b: T
@@ -68,7 +69,7 @@ public typealias ZRGB32 = ZRGB<Float>
 public typealias ZRGB64 = ZRGB<Double>
 
 
-public struct ZHSBA<T: BinaryFloatingPoint>: ZArchivable, Equatable {
+public struct ZHSBA<T: BinaryFloatingPoint>: Equatable {
 	public var h: T
 	public var s: T
 	public var b: T
@@ -99,7 +100,7 @@ public typealias ZHSBA32 = ZHSBA<Float>
 public typealias ZHSBA64 = ZHSBA<Double>
 
 
-public struct ZHSB<T: BinaryFloatingPoint>: ZArchivable, Equatable {
+public struct ZHSB<T: BinaryFloatingPoint>: Equatable {
 	public var h: T
 	public var s: T
 	public var b: T
@@ -128,7 +129,7 @@ public typealias ZHSB32 = ZHSB<Float>
 public typealias ZHSB64 = ZHSB<Double>
 
 
-public struct ZColor<T: BinaryFloatingPoint>: Codable {
+public struct ZColor<T: BinaryFloatingPoint> {
 	enum CodingError: Error {
 		case unexpectedFormat
 	}
@@ -150,6 +151,7 @@ public struct ZColor<T: BinaryFloatingPoint>: Codable {
 		}
 	}
 	enum TypeKeys: String { case rgba, hsba }
+	/*
 	public init(from decoder: Decoder) throws {
 		var container = try decoder.unkeyedContainer()
 		guard let type = TypeKeys(rawValue: try container.decode(String.self)) else { throw ZError("unexpected format") }
@@ -174,6 +176,7 @@ public struct ZColor<T: BinaryFloatingPoint>: Codable {
 			try container.encode(hsba.archive())
 		}
 	}
+	*/
 }
 
 @available(iOS 14, *)

@@ -34,7 +34,7 @@ infix operator •
 infix operator ×
 
 
-public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible, ZArchivable {
+public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
 	
 	public var x: T
 	public var y: T
@@ -132,7 +132,7 @@ public typealias Point32 = Point<Float>
 public typealias Point16 = Point<Float16>
 
 
-public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible, ZArchivable {
+public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 	public var width: T
 	public var height: T
@@ -158,7 +158,7 @@ public typealias Size32 = Size<Float>
 public typealias Size16 = Size<Float16>
 
 
-public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible, ZArchivable {
+public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 	public var origin: Point<T>
 	public var size: Size<T>
@@ -224,7 +224,7 @@ public typealias Rect32 = Rect<Float>
 @available(iOS 14, *)
 public typealias Rect16 = Rect<Float16>
 
-public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, Equatable, ZArchivable {
+public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, Equatable {
 
 	var a: T
 	var b: T
