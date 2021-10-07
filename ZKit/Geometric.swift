@@ -406,8 +406,8 @@ public extension CGPath {
 			switch $0 {
 			case .moveTo(let p0): return Element.moveTo(Point<T>(p0))
 			case .lineTo(let p1): return Element.lineTo(Point(p1))
-			case .quadCurveTo(let p1, let p2): return Element.quadCurveTo(Point(p1), Point(p2))
-			case .curveTo(let p1, let p2, let p3): return Element.curveTo(Point(p3), Point(p1), Point(p2))
+			case .quadCurveTo(let p1, let c1): return Element.quadCurveTo(Point(p1), Point(c1))
+			case .curveTo(let p1, let c1, let c2): return Element.curveTo(Point(p1), Point(c1), Point(c2))
 			case .closeSubpath: return Element.closeSubpath
 			}
 		}
@@ -420,8 +420,8 @@ public extension CGPath {
 			switch element {
 			case .moveTo(let p0): bezierPath.move(to: CGPoint(p0))
 			case .lineTo(let p1): bezierPath.addLine(to: CGPoint(p1))
-			case .quadCurveTo(let p1, let p2): bezierPath.addQuadCurve(to: CGPoint(p2), control: CGPoint(p1))
-			case .curveTo(let p1, let p2, let p3): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(p2), control2: CGPoint(p3))
+			case .quadCurveTo(let p1, let c1): bezierPath.addQuadCurve(to: CGPoint(p1), control: CGPoint(c1))
+			case .curveTo(let p1, let c1, let c2): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(c1), control2: CGPoint(c2))
 			case .closeSubpath: bezierPath.closeSubpath()
 			}
 		}
@@ -457,13 +457,13 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 				return Self.lineTo(p1)
 			case .quadcurve:
 				let p1 = try $0.readBytes(as: Point<T>.self)
-				let p2 = try $0.readBytes(as: Point<T>.self)
-				return Self.quadCurveTo(p1, p2)
+				let c1 = try $0.readBytes(as: Point<T>.self)
+				return Self.quadCurveTo(p1, c1)
 			case .curve:
 				let p1 = try $0.readBytes(as: Point<T>.self)
-				let p2 = try $0.readBytes(as: Point<T>.self)
-				let p3 = try $0.readBytes(as: Point<T>.self)
-				return Self.curveTo(p1, p2, p3)
+				let c1 = try $0.readBytes(as: Point<T>.self)
+				let c2 = try $0.readBytes(as: Point<T>.self)
+				return Self.curveTo(p1, c1, c2)
 			case .close:
 				return Self.closeSubpath
 			default:
@@ -476,21 +476,20 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 		return try! Serializer.serialize() {
 			switch self {
 			case .moveTo(let p0):
-				print(">> moveto", p0)
 				try $0.write(Self.TypeKey.move.rawValue)
 				try $0.writeBytes(p0)
 			case .lineTo(let p1):
 				try $0.write(Self.TypeKey.line.rawValue)
 				try $0.writeBytes(p1)
-			case .quadCurveTo(let p1, let p2):
+			case .quadCurveTo(let p1, let c1):
 				try $0.write(Self.TypeKey.quadcurve.rawValue)
 				try $0.writeBytes(p1)
-				try $0.writeBytes(p2)
-			case .curveTo(let p1, let p2, let p3):
+				try $0.writeBytes(c1)
+			case .curveTo(let p1, let c1, let c2):
 				try $0.write(Self.TypeKey.curve.rawValue)
 				try $0.writeBytes(p1)
-				try $0.writeBytes(p2)
-				try $0.writeBytes(p3)
+				try $0.writeBytes(c1)
+				try $0.writeBytes(c2)
 			case .closeSubpath:
 				try $0.write(Self.TypeKey.close.rawValue)
 			}
@@ -501,8 +500,8 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 		switch pathElement {
 		case .moveTo(let p0): self = Self.moveTo(Point<T>(p0))
 		case .lineTo(let p1): self = Self.lineTo(Point<T>(p1))
-		case .quadCurveTo(let p1, let p2): self = Self.quadCurveTo(Point<T>(p1), Point<T>(p2))
-		case .curveTo(let p1, let p2, let p3): self = Self.curveTo(Point(p1), Point(p2), Point(p3))
+		case .quadCurveTo(let p1, let c1): self = Self.quadCurveTo(Point<T>(p1), Point<T>(c1))
+		case .curveTo(let p1, let c1, let c2): self = Self.curveTo(Point(p1), Point(c1), Point(c2))
 		case .closeSubpath: self = Self.closeSubpath
 		}
 	}

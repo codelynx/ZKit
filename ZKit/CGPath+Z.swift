@@ -69,20 +69,20 @@ public extension CGPath {
 			guard let infoPointer = UnsafeMutablePointer<Elements>(OpaquePointer(info)) else { return }
 			switch element.pointee.type {
 			case .moveToPoint:
-				let pt = element.pointee.points[0]
-				infoPointer.pointee.pathElements.append(.moveTo(pt))
+				let p0 = element.pointee.points[0]
+				infoPointer.pointee.pathElements.append(.moveTo(p0))
 			case .addLineToPoint:
-				let pt = element.pointee.points[0]
-				infoPointer.pointee.pathElements.append(.lineTo(pt))
+				let p1 = element.pointee.points[0]
+				infoPointer.pointee.pathElements.append(.lineTo(p1))
 			case .addQuadCurveToPoint:
-				let pt1 = element.pointee.points[0]
-				let pt2 = element.pointee.points[1]
-				infoPointer.pointee.pathElements.append(.quadCurveTo(pt1, pt2))
+				let c1 = element.pointee.points[0]
+				let p1 = element.pointee.points[1]
+				infoPointer.pointee.pathElements.append(.quadCurveTo(p1, c1))
 			case .addCurveToPoint:
-				let pt1 = element.pointee.points[0]
-				let pt2 = element.pointee.points[1]
-				let pt3 = element.pointee.points[2]
-				infoPointer.pointee.pathElements.append(.curveTo(pt1, pt2, pt3))
+				let c1 = element.pointee.points[0]
+				let c2 = element.pointee.points[1]
+				let p1 = element.pointee.points[2]
+				infoPointer.pointee.pathElements.append(.curveTo(p1, c1, c2))
 			case .closeSubpath:
 				infoPointer.pointee.pathElements.append(.closeSubpath)
 			@unknown default:
@@ -98,12 +98,12 @@ public extension CGPath {
 
 public extension CGPath {
 	
-	static func quadraticCurveLength(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint) -> CGFloat {
+	static func quadraticCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ p1: CGPoint) -> CGFloat {
 		
 		// cf. http://www.malczak.linuxpl.com/blog/quadratic-bezier-curve-length/
 		
-		let a = CGPoint(x: p0.x - 2 * p1.x + p2.x, y: p0.y - 2 * p1.y + p2.y)
-		let b = CGPoint(x: 2 * p1.x - 2 * p0.x, y: 2 * p1.y - 2 * p0.y)
+		let a = CGPoint(x: p0.x - 2 * c1.x + p1.x, y: p0.y - 2 * c1.y + p1.y)
+		let b = CGPoint(x: 2 * c1.x - 2 * p0.x, y: 2 * c1.y - 2 * p0.y)
 		let A = 4 * (a.x * a.x + a.y * a.y)
 		let B = 4 * (a.x * b.x + a.y * b.y)
 		let C = b.x * b.x + b.y * b.y
@@ -116,16 +116,16 @@ public extension CGPath {
 		return L.isNaN ? 0 : L
 	}
 	
-	static func approximateCubicCurveLength(_ p0: CGPoint, _ p1: CGPoint, _ p2: CGPoint, _ p3: CGPoint) -> CGFloat {
+	static func approximateCubicCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ c2: CGPoint, _ p1: CGPoint) -> CGFloat {
 		let n = 16
 		var length: CGFloat = 0
 		var point: CGPoint? = nil
 		for i in 0 ..< n {
 			let t = CGFloat(i) / CGFloat(n)
 			
-			let q1 = p0 + (p1 - p0) * t
-			let q2 = p1 + (p2 - p1) * t
-			let q3 = p2 + (p3 - p2) * t
+			let q1 = p0 + (c1 - p0) * t
+			let q2 = c1 + (c2 - c1) * t
+			let q3 = c2 + (p1 - c2) * t
 			
 			let r1 = q1 + (q2 - q1) * t
 			let r2 = q2 + (q3 - q2) * t
