@@ -123,13 +123,70 @@ public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
 		let point = CGPoint(x: CGFloat(self.x), y: CGFloat(self.y)).applying(transform)
 		return Point(x: T(point.x), y: T(point.y))
 	}
-
+	
+	public init(_ point: CPoint<T>) {
+		self.x = point.x
+		self.y = point.y
+	}
 }
 
 public typealias Point64 = Point<Double>
 public typealias Point32 = Point<Float>
 @available(iOS 14, *)
 public typealias Point16 = Point<Float16>
+
+
+public class CPoint<T: BinaryFloatingPoint>: Equatable {
+	public var x: T
+	public var y: T
+	public init(x: T, y: T) {
+		(self.x, self.y) = (x, y)
+	}
+	public init(_ point: CGPoint) {
+		(self.x, self.y) = (T(point.x), T(point.y))
+	}
+	public init<U: BinaryFloatingPoint>(_ point: Point<U>) {
+		(self.x, self.y) = (T(point.x), T(point.y))
+	}
+	public init<U: BinaryFloatingPoint>(_ point: CPoint<U>) {
+		(self.x, self.y) = (T(point.x), T(point.y))
+	}
+	public static func - (lhs: CPoint, rhs: CPoint) -> CPoint {
+		return CPoint<T>(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+	}
+	public static func + (lhs: CPoint, rhs: CPoint) -> CPoint {
+		return CPoint<T>(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+	}
+	public static func * (lhs: CPoint, rhs: T) -> CPoint {
+		return CPoint(x: lhs.x * rhs, y: lhs.y * rhs)
+	}
+	public static func / (lhs: CPoint, rhs: T) -> CPoint {
+		return CPoint(x: lhs.x / rhs, y: lhs.y / rhs)
+	}
+	public static func • (lhs: CPoint, rhs: CPoint) -> T { // dot product
+		return lhs.x * rhs.x + lhs.y * rhs.y
+	}
+	public static func × (lhs: CPoint, rhs: CPoint) -> T { // cross product
+		return lhs.x * rhs.y - lhs.y * rhs.x
+	}
+	public static func == (lhs: CPoint, rhs: CPoint) -> Bool {
+		return lhs.x == rhs.x && lhs.y == rhs.y
+	}
+	var point: Point<T> {
+		return Point<T>(x: self.x, y: self.y)
+	}
+}
+
+public extension CGPoint {
+	init<T: BinaryFloatingPoint>(_ point: CPoint<T>) {
+		self = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))
+	}
+}
+
+public typealias CPoint64 = CPoint<Double>
+public typealias CPoint32 = CPoint<Float>
+@available(iOS 14, *)
+public typealias CPoint16 = CPoint<Float16>
 
 
 public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible {
@@ -404,10 +461,10 @@ public extension CGPath {
 		typealias Element = BezierPathElement<T>
 		let elements: [Element] = self.pathElements.map {
 			switch $0 {
-			case .moveTo(let p0): return Element.moveTo(Point<T>(p0))
-			case .lineTo(let p1): return Element.lineTo(Point(p1))
-			case .quadCurveTo(let p1, let c1): return Element.quadCurveTo(Point(p1), Point(c1))
-			case .curveTo(let p1, let c1, let c2): return Element.curveTo(Point(p1), Point(c1), Point(c2))
+			case .moveTo(let p0): return Element.moveTo(CPoint<T>(p0))
+			case .lineTo(let p1): return Element.lineTo(CPoint(p1))
+			case .quadCurveTo(let p1, let c1): return Element.quadCurveTo(CPoint(p1), CPoint(c1))
+			case .curveTo(let p1, let c1, let c2): return Element.curveTo(CPoint(p1), CPoint(c1), CPoint(c2))
 			case .closeSubpath: return Element.closeSubpath
 			}
 		}
@@ -436,10 +493,10 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 	enum CodingKeys: String, CodingKey { case type, values }
 	enum ElementType: Int, CodingKey { case move, line, quad, curve, close }
 
-	case moveTo(Point<T>)
-	case lineTo(Point<T>)
-	case quadCurveTo(Point<T>, Point<T>)
-	case curveTo(Point<T>, Point<T>, Point<T>)
+	case moveTo(CPoint<T>)
+	case lineTo(CPoint<T>)
+	case quadCurveTo(CPoint<T>, CPoint<T>)
+	case curveTo(CPoint<T>, CPoint<T>, CPoint<T>)
 	case closeSubpath
 
 	private enum TypeKey: UInt16 { case none, move, line, quadcurve, curve, close }
@@ -451,19 +508,19 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 			switch type {
 			case .move:
 				let p0 = try $0.readBytes(as: Point<T>.self)
-				return Self.moveTo(p0)
+				return Self.moveTo(CPoint(p0))
 			case .line:
 				let p1 = try $0.readBytes(as: Point<T>.self)
-				return Self.lineTo(p1)
+				return Self.lineTo(CPoint(p1))
 			case .quadcurve:
 				let p1 = try $0.readBytes(as: Point<T>.self)
 				let c1 = try $0.readBytes(as: Point<T>.self)
-				return Self.quadCurveTo(p1, c1)
+				return Self.quadCurveTo(CPoint(p1), CPoint(c1))
 			case .curve:
 				let p1 = try $0.readBytes(as: Point<T>.self)
 				let c1 = try $0.readBytes(as: Point<T>.self)
 				let c2 = try $0.readBytes(as: Point<T>.self)
-				return Self.curveTo(p1, c1, c2)
+				return Self.curveTo(CPoint(p1), CPoint(c1), CPoint(c2))
 			case .close:
 				return Self.closeSubpath
 			default:
@@ -498,10 +555,10 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 
 	public init<U: BinaryFloatingPoint>(_ pathElement: BezierPathElement<U>) {
 		switch pathElement {
-		case .moveTo(let p0): self = Self.moveTo(Point<T>(p0))
-		case .lineTo(let p1): self = Self.lineTo(Point<T>(p1))
-		case .quadCurveTo(let p1, let c1): self = Self.quadCurveTo(Point<T>(p1), Point<T>(c1))
-		case .curveTo(let p1, let c1, let c2): self = Self.curveTo(Point(p1), Point(c1), Point(c2))
+		case .moveTo(let p0): self = Self.moveTo(CPoint<T>(p0))
+		case .lineTo(let p1): self = Self.lineTo(CPoint<T>(p1))
+		case .quadCurveTo(let p1, let c1): self = Self.quadCurveTo(CPoint<T>(p1), CPoint<T>(c1))
+		case .curveTo(let p1, let c1, let c2): self = Self.curveTo(CPoint(p1), CPoint(c1), CPoint(c2))
 		case .closeSubpath: self = Self.closeSubpath
 		}
 	}
@@ -565,16 +622,16 @@ public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 		CGPath.makePath(elements: self.pathElements)
 	}
 	public func move(to point: Point<T>) {
-		self.pathElements.append(BezierPathElement.moveTo(point))
+		self.pathElements.append(BezierPathElement.moveTo(CPoint(point)))
 	}
 	public func addLine(to point: Point<T>) {
-		self.pathElements.append(BezierPathElement.lineTo(point))
+		self.pathElements.append(BezierPathElement.lineTo(CPoint(point)))
 	}
 	public func addQuadCurve(to point: Point<T>, controlPoint: Point<T>) {
-		self.pathElements.append(BezierPathElement.quadCurveTo(controlPoint, point))
+		self.pathElements.append(BezierPathElement.quadCurveTo(CPoint(controlPoint), CPoint(point)))
 	}
 	public func addCurve(to point: Point<T>, controlPoint1: Point<T>, controlPoint2: Point<T>) {
-		self.pathElements.append(BezierPathElement.curveTo(point, controlPoint1, controlPoint2))
+		self.pathElements.append(BezierPathElement.curveTo(CPoint(point), CPoint(controlPoint1), CPoint(controlPoint2)))
 	}
 	public func closeSubpath() {
 		self.pathElements.append(BezierPathElement.closeSubpath)
