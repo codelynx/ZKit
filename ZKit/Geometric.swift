@@ -92,7 +92,7 @@ public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
 		hasher.combine(self.y)
 	}
 	public var description: String {
-		return "(x:\(x), y:\(y))"
+		return "(\(x), \(y))"
 	}
 	public static var zero: Point { return Point(x: T.zero, y: T.zero) }
 	public static var nan: Point { return Point(x: T.nan, y: T.nan) }
@@ -185,17 +185,14 @@ public class CPoint<T: BinaryFloatingPoint>: Equatable, CustomStringConvertible 
 	public static func += <U: BinaryFloatingPoint>(lhs: inout CPoint<T>, rhs: Point<U>) {
 		lhs.x += T(rhs.x)
 		lhs.y += T(rhs.y)
-		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
 	}
 	public static func += <U: BinaryFloatingPoint>(lhs: inout CPoint<T>, rhs: CPoint<U>) {
 		lhs.x += T(rhs.x)
 		lhs.y += T(rhs.y)
-		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
 	}
 	public static func += (lhs: inout CPoint<T>, rhs: CGPoint) {
 		lhs.x += T(rhs.x)
 		lhs.y += T(rhs.y)
-		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
 	}
 	public var description: String {
 		return "(\(self.x), \(self.y))"
@@ -459,7 +456,7 @@ public extension CGPath {
 		typealias Element = BezierPathElement<T>
 		let elements: [Element] = self.pathElements.map {
 			switch $0 {
-			case .moveTo(let p0): return Element.moveTo(CPoint<T>(p0))
+			case .moveTo(let p0): return Element.moveTo(CPoint(p0))
 			case .lineTo(let p1): return Element.lineTo(CPoint(p1))
 			case .quadCurveTo(let p1, let c1): return Element.quadCurveTo(CPoint(p1), CPoint(c1))
 			case .curveTo(let p1, let c1, let c2): return Element.curveTo(CPoint(p1), CPoint(c1), CPoint(c2))
@@ -477,7 +474,6 @@ public extension CGPath {
 			case .lineTo(let p1): bezierPath.addLine(to: CGPoint(p1))
 			case .quadCurveTo(let p1, let c1): bezierPath.addQuadCurve(to: CGPoint(p1), control: CGPoint(c1))
 			case .curveTo(let p1, let c1, let c2): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(c1), control2: CGPoint(c2))
-				print(Self.self, #function, "p1=\(p1), c1=\(c1), c2=\(c2)")
 			case .closeSubpath: bezierPath.closeSubpath()
 			}
 		}
