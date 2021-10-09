@@ -35,98 +35,97 @@ infix operator ×
 
 
 public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
-	
 	public var x: T
 	public var y: T
 	
 	public static func - (lhs: Self, rhs: Self) -> Self {
 		return Point<T>(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 	}
-	
 	public static func + (lhs: Self, rhs: Self) -> Point {
 		return Point<T>(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
-	
 	public static func * (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x * rhs, y: lhs.y * rhs)
 	}
-	
 	public static func / (lhs: Point, rhs: T) -> Point {
 		return Point(x: lhs.x / rhs, y: lhs.y / rhs)
 	}
-	
 	public static func • (lhs: Point, rhs: Point) -> T { // dot product
 		return lhs.x * rhs.x + lhs.y * rhs.y
 	}
-	
 	public static func × (lhs: Point, rhs: Point) -> T { // cross product
 		return lhs.x * rhs.y - lhs.y * rhs.x
 	}
-	
 	public init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
 		self.x = T(x)
 		self.y = T(y)
 	}
-
 	public init<U: BinaryFloatingPoint>(_ point: Point<U>) {
 		self.x = T(point.x)
 		self.y = T(point.y)
 	}
-
 	public init(_ point: CGPoint) {
 		self.x = T(point.x)
 		self.y = T(point.y)
 	}
-	
 	public var length²: T {
 		return (x * x) + (y * y)
 	}
-	
 	public var length: T {
 		return sqrt(self.length²)
 	}
-	
 	public var normalized: Point {
 		let length = self.length
 		return Point(x: x/length, y: y/length)
 	}
-	
 	public func angle(to: Point) -> T {
 		return T(CoreGraphics.atan2(CGFloat(to.y) - CGFloat(self.y), CGFloat(to.x) - CGFloat(self.x)))
 	}
-	
 	public func angle(from: Point) -> T {
 		return T(CoreGraphics.atan2(CGFloat(self.y) - CGFloat(from.y), CGFloat(self.x) - CGFloat(from.x)))
 	}
-	
 	public static func == (lhs: Point, rhs: Point) -> Bool {
 		return lhs.x == rhs.y && lhs.y == rhs.y
 	}
-
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(self.x)
 		hasher.combine(self.y)
 	}
-
 	public var description: String {
 		return "(x:\(x), y:\(y))"
 	}
-	
 	public static var zero: Point { return Point(x: T.zero, y: T.zero) }
 	public static var nan: Point { return Point(x: T.nan, y: T.nan) }
-	
 	public func offsetBy(x: T, y: T) -> Point<T> {
 		return Point<T>(x: self.x + x, y: self.y + y)
 	}
-
 	func applying(_ transform: CGAffineTransform) -> Point<T> {
 		let point = CGPoint(x: CGFloat(self.x), y: CGFloat(self.y)).applying(transform)
 		return Point(x: T(point.x), y: T(point.y))
 	}
-	
 	public init(_ point: CPoint<T>) {
 		self.x = point.x
 		self.y = point.y
+	}
+	public mutating func set<U: BinaryFloatingPoint>(_ point: Point<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
+	}
+	public mutating func set<U: BinaryFloatingPoint>(_ point: CPoint<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
+	}
+	public static func += <U: BinaryFloatingPoint>(lhs: inout Self, rhs: Point<U>) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
+	}
+	public static func += <U: BinaryFloatingPoint>(lhs: inout Self, rhs: CPoint<U>) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
+	}
+	public static func += (lhs: inout Point<T>, rhs: CGPoint) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
 	}
 }
 
@@ -136,7 +135,7 @@ public typealias Point32 = Point<Float>
 public typealias Point16 = Point<Float16>
 
 
-public class CPoint<T: BinaryFloatingPoint>: Equatable {
+public class CPoint<T: BinaryFloatingPoint>: Equatable, CustomStringConvertible {
 	public var x: T
 	public var y: T
 	public init(x: T, y: T) {
@@ -172,8 +171,34 @@ public class CPoint<T: BinaryFloatingPoint>: Equatable {
 	public static func == (lhs: CPoint, rhs: CPoint) -> Bool {
 		return lhs.x == rhs.x && lhs.y == rhs.y
 	}
-	var point: Point<T> {
+	public var point: Point<T> {
 		return Point<T>(x: self.x, y: self.y)
+	}
+	public func set<U: BinaryFloatingPoint>(_ point: Point<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
+	}
+	public func set<U: BinaryFloatingPoint>(_ point: CPoint<U>) {
+		self.x = T(point.x)
+		self.y = T(point.y)
+	}
+	public static func += <U: BinaryFloatingPoint>(lhs: inout CPoint<T>, rhs: Point<U>) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
+		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
+	}
+	public static func += <U: BinaryFloatingPoint>(lhs: inout CPoint<T>, rhs: CPoint<U>) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
+		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
+	}
+	public static func += (lhs: inout CPoint<T>, rhs: CGPoint) {
+		lhs.x += T(rhs.x)
+		lhs.y += T(rhs.y)
+		print(#line, "id=", ObjectIdentifier(self), "x=", lhs.x, "y=", lhs.y)
+	}
+	public var description: String {
+		return "(\(self.x), \(self.y))"
 	}
 }
 
@@ -190,14 +215,12 @@ public typealias CPoint16 = CPoint<Float16>
 
 
 public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible {
-
 	public var width: T
 	public var height: T
 	
 	public init<W: BinaryFloatingPoint, H: BinaryFloatingPoint>(width: W, height: H) {
 		(self.width, self.height) = (T(width), T(height))
 	}
-	
 	public init(_ size: CGSize) {
 		self.width = T(size.width)
 		self.height = T(size.height)
@@ -264,15 +287,12 @@ public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 	public func offsetBy(x: T, y: T) -> Rect<T> {
 		return Rect<T>(origin: self.origin.offsetBy(x: x, y: y), size: self.size)
 	}
-	
 	public func offsetBy(point: Point<T>) -> Rect<T> {
 		return Rect(origin: self.origin + point, size: self.size)
 	}
-	
 	public func insetBy(dx: T, dy: T) -> Rect<T> {
 		return Rect(CGRect(self).insetBy(dx: CGFloat(dx), dy: CGFloat(dy)))
 	}
-
 }
 
 
@@ -358,10 +378,11 @@ public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, 
 
 }
 
-public typealias AffineTransform64 = AffineTransform<Double>
-public typealias AffineTransform32 = AffineTransform<Float>
 @available(iOS 14, *)
 public typealias AffineTransform16 = AffineTransform<Float16>
+public typealias AffineTransform32 = AffineTransform<Float>
+public typealias AffineTransform64 = AffineTransform<Double>
+
 
 public extension CGAffineTransform {
 	init<T: BinaryFloatingPoint>(_ transform: AffineTransform<T>) {
@@ -369,84 +390,61 @@ public extension CGAffineTransform {
 	}
 }
 
-
-
 public extension CGPoint {
-
 	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
 		self = CGPoint(x: CGFloat(point.x), y: CGFloat(point.y))
 	}
-
 }
 
-
 public extension CGSize {
-
 	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
 		self.init(width: CGFloat(size.width), height: CGFloat(size.height))
 	}
-
 }
 
 
 public extension CGRect {
-
 	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self.init(origin: CGPoint(rect.origin), size: CGSize(rect.size))
 	}
-
 }
 
-
 public extension Point32 {
-
 	init<X: BinaryFloatingPoint, Y: BinaryFloatingPoint>(x: X, y: Y) {
 		self.x = Float(x)
 		self.y = Float(y)
 	}
-
 	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
 		self = Point32(x: Float(point.x), y: Float(point.y))
 	}
-
 }
 
-
 public extension Size32 {
-
 	init<T: BinaryFloatingPoint>(width: T, height: T) {
 		self.width = Float(width)
 		self.height = Float(height)
 	}
-
 	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
 		self = Size32(width: Float(size.width), height: Float(size.height))
 	}
-
 }
 
-
 public extension Rect32 {
-
 	init<T: BinaryFloatingPoint>(origin: Point<T>, size: Size<T>) {
 		self = Rect32(origin: Point32(origin), size: Size32(size))
 	}
-
 	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
 		self = Rect32(origin: Point32(rect.origin), size: Size32(rect.size))
 	}
-
 }
 
 
 public extension float4x4 {
-
 	static let identity = matrix_identity_float4x4
 
 	init<T: BinaryFloatingPoint>(_ transform: AffineTransform<T>) {
 		self = float4x4(transform.affineTransform)
 	}
-
 }
 
 // MARK: -
@@ -479,6 +477,7 @@ public extension CGPath {
 			case .lineTo(let p1): bezierPath.addLine(to: CGPoint(p1))
 			case .quadCurveTo(let p1, let c1): bezierPath.addQuadCurve(to: CGPoint(p1), control: CGPoint(c1))
 			case .curveTo(let p1, let c1, let c2): bezierPath.addCurve(to: CGPoint(p1), control1: CGPoint(c1), control2: CGPoint(c2))
+				print(Self.self, #function, "p1=\(p1), c1=\(c1), c2=\(c2)")
 			case .closeSubpath: bezierPath.closeSubpath()
 			}
 		}
@@ -489,6 +488,8 @@ public extension CGPath {
 
 
 public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
+
+	// Note: in order to make things easier to change/update their location of control points, we use CPoint class/object based type.
 
 	enum CodingKeys: String, CodingKey { case type, values }
 	enum ElementType: Int, CodingKey { case move, line, quad, curve, close }
@@ -581,6 +582,11 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 
 }
 
+@available(iOS 14, *)
+public typealias BezierPathElement16 = BezierPathElement<Float16>
+public typealias BezierPathElement32 = BezierPathElement<Float>
+public typealias BezierPathElement64 = BezierPathElement<Double>
+
 
 public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 	
@@ -650,8 +656,8 @@ public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 
 @available(iOS 14, *)
 public typealias BezierPath16 = BezierPath<Float16>
-public typealias BezierPath32 = BezierPath<Float32>
-
+public typealias BezierPath32 = BezierPath<Float>
+public typealias BezierPath64 = BezierPath<Double>
 
 
 public extension CGContext {

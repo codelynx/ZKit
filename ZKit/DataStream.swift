@@ -211,7 +211,7 @@ public class DataWriteStream {
 		try writeBytes(value: CFSwapInt64HostToBig(value))
 	}
 	
-	public func write(_ value: Float32) throws {
+	public func write(_ value: Float) throws {
 		try writeBytes(value: CFConvertFloatHostToSwapped(value))
 	}
 
