@@ -483,7 +483,7 @@ public extension CGPath {
 }
 
 
-public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
+public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, CustomStringConvertible {
 
 	// Note: in order to make things easier to change/update their location of control points, we use CPoint class/object based type.
 
@@ -560,6 +560,16 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable {
 		}
 	}
 
+	public var description: String {
+		switch self {
+		case .moveTo(let p0): return ".move(to:\(p0)"
+		case .lineTo(let p1): return ".line(to:\(p1)"
+		case .quadCurveTo(let p1, let c1): return ".quadCurve(to:\(p1), c1:\(c1)"
+		case .curveTo(let p1, let c1, let c2): return ".curve(to:\(p1), c1:\(c1), c2:\(c2))"
+		case .closeSubpath: return "closeSubpath"
+		}
+	}
+
 	public static func ==(lhs: BezierPathElement, rhs: BezierPathElement) -> Bool {
 		switch (lhs, rhs) {
 		case let (.moveTo(l), .moveTo(r)),
@@ -584,7 +594,7 @@ public typealias BezierPathElement32 = BezierPathElement<Float>
 public typealias BezierPathElement64 = BezierPathElement<Double>
 
 
-public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
+public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable, CustomStringConvertible {
 	
 	private (set) public var pathElements: [BezierPathElement<T>]
 
@@ -640,6 +650,9 @@ public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable {
 	}
 	public func removeAlllPoints() {
 		self.pathElements.removeAll()
+	}
+	public var description: String {
+		return "{\(Self.self):\r" + self.pathElements.map { $0.description }.joined(separator: ",\r") + "\r}"
 	}
 	public static func + (lhs: BezierPath<T>, rhs: BezierPath<T>) -> BezierPath {
 		return BezierPath(pathElements: lhs.pathElements + rhs.pathElements)
