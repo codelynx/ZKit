@@ -530,16 +530,23 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, CustomStringCo
 		return try! Serializer.serialize() {
 			switch self {
 			case .moveTo(let p0):
+				let p0 = Point<T>(p0) // `CPoint<T>` may not save data properly
 				try $0.write(Self.TypeKey.move.rawValue)
 				try $0.writeBytes(p0)
 			case .lineTo(let p1):
+				let p1 = Point<T>(p1)
 				try $0.write(Self.TypeKey.line.rawValue)
 				try $0.writeBytes(p1)
 			case .quadCurveTo(let p1, let c1):
+				let p1 = Point<T>(p1)
+				let c1 = Point<T>(c1)
 				try $0.write(Self.TypeKey.quadcurve.rawValue)
 				try $0.writeBytes(p1)
 				try $0.writeBytes(c1)
 			case .curveTo(let p1, let c1, let c2):
+				let p1 = Point<T>(p1)
+				let c1 = Point<T>(c1)
+				let c2 = Point<T>(c2)
 				try $0.write(Self.TypeKey.curve.rawValue)
 				try $0.writeBytes(p1)
 				try $0.writeBytes(c1)
