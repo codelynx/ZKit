@@ -32,6 +32,8 @@
 		CC4B12F926E88EC20089EC67 /* UIColor+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4B12F826E88EC20089EC67 /* UIColor+Z.swift */; };
 		CC4B12FA26E88EC20089EC67 /* UIColor+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4B12F826E88EC20089EC67 /* UIColor+Z.swift */; };
 		CC68289225FAFA1100019378 /* UIGestureRecognizer+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */; };
+		CC7E88A4271963AB001BF0B8 /* UINavigationItem+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7E88A3271963AB001BF0B8 /* UINavigationItem+Z.swift */; };
+		CC7E88A62719656B001BF0B8 /* UIToolbar+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7E88A52719656B001BF0B8 /* UIToolbar+Z.swift */; };
 		CC88EF432716BA47001F7E30 /* simd+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC88EF422716BA47001F7E30 /* simd+Z.swift */; };
 		CC88EF442716BA47001F7E30 /* simd+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC88EF422716BA47001F7E30 /* simd+Z.swift */; };
 		CC940CAB26D62739009A06F5 /* Half.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC940CAA26D62739009A06F5 /* Half.swift */; };
@@ -145,6 +147,8 @@
 		CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Z.swift"; sourceTree = "<group>"; };
 		CC4B12F826E88EC20089EC67 /* UIColor+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Z.swift"; sourceTree = "<group>"; };
 		CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Z.swift"; sourceTree = "<group>"; };
+		CC7E88A3271963AB001BF0B8 /* UINavigationItem+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Z.swift"; sourceTree = "<group>"; };
+		CC7E88A52719656B001BF0B8 /* UIToolbar+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIToolbar+Z.swift"; sourceTree = "<group>"; };
 		CC88EF422716BA47001F7E30 /* simd+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "simd+Z.swift"; sourceTree = "<group>"; };
 		CC940CAA26D62739009A06F5 /* Half.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Half.swift; sourceTree = "<group>"; };
 		CC940CAE26D65B12009A06F5 /* CGPath+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPath+Z.swift"; sourceTree = "<group>"; };
@@ -250,15 +254,17 @@
 				CCAB035225E2EF9900E7D217 /* Info.plist */,
 				CCAB037B25E2EFD500E7D217 /* UIAlertController.swift */,
 				CC2B824526E0A4ED00FF6B39 /* UIBezierPath+Z.swift */,
-				CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */,
 				CCAB036B25E2EFD500E7D217 /* UIDevice+Z.swift */,
+				CC68289025FAFA1100019378 /* UIGestureRecognizer+Z.swift */,
 				CCAB037D25E2EFD500E7D217 /* UIImage+Z.swift */,
 				CCAB036625E2EFD500E7D217 /* UINavigationController+Z.swift */,
+				CC7E88A3271963AB001BF0B8 /* UINavigationItem+Z.swift */,
 				CCAB036C25E2EFD500E7D217 /* UIView+configurable.swift */,
 				CCAB036825E2EFD500E7D217 /* UIView+Z.swift */,
 				CCAB036E25E2EFD500E7D217 /* UIViewContrller+Z.swift */,
 				CCAB035D25E2EFD500E7D217 /* ZFramedButton.swift */,
 				CCAB036925E2EFD500E7D217 /* ZGlossButton.swift */,
+				CC7E88A52719656B001BF0B8 /* UIToolbar+Z.swift */,
 			);
 			path = "ZKit-ios";
 			sourceTree = "<group>";
@@ -490,8 +496,10 @@
 				CCAB03AE25E2EFE900E7D217 /* Array+Z.swift in Sources */,
 				CCAB040E25E3164600E7D217 /* XBezierPath.swift in Sources */,
 				CCAB03A825E2EFE900E7D217 /* String+Z.swift in Sources */,
+				CC7E88A62719656B001BF0B8 /* UIToolbar+Z.swift in Sources */,
 				CC940CAC26D62739009A06F5 /* Half.swift in Sources */,
 				CCAB03B925E2EFE900E7D217 /* Runtime.swift in Sources */,
+				CC7E88A4271963AB001BF0B8 /* UINavigationItem+Z.swift in Sources */,
 				CCAB03B425E2EFE900E7D217 /* UIAlertController.swift in Sources */,
 				CC88EF442716BA47001F7E30 /* simd+Z.swift in Sources */,
 				CCAB03B825E2EFE900E7D217 /* ZCalendarDate.swift in Sources */,
