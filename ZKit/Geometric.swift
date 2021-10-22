@@ -290,6 +290,13 @@ public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 	public func insetBy(dx: T, dy: T) -> Rect<T> {
 		return Rect(CGRect(self).insetBy(dx: CGFloat(dx), dy: CGFloat(dy)))
 	}
+	public func contains<U: BinaryFloatingPoint>(point: Point<U>) -> Bool {
+		let point = Point<T>(point)
+		return (self.minX ..< self.maxX) ~= point.x && (self.minY ..< self.maxY) ~= point.y
+	}
+	public func contains(point: CGPoint) -> Bool {
+		return self.contains(point: Point<T>(point))
+	}
 }
 
 
