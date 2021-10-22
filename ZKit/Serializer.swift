@@ -133,6 +133,13 @@ open class Unserializer {
 		return string
 	}
 
+	public func read(count: Int) throws -> Data? {
+		guard self.location + count <= self.data.count else { throw ZError("\(Self.self): buffer overrun") }
+		let subdata = data.subdata(in: location ..< location + count)
+		defer { self.location += count }
+		return Data(subdata)
+	}
+
 	public func read<T: DataRepresentable>(of: T.Type) throws -> T {
 		let typeString = try self.read() as String
 		let subdata = try self.read() as Data
