@@ -133,6 +133,14 @@ public extension CGRect {
 		return t
 	}
 
+	func corners() -> [CGPoint] {
+		return [
+			self.minXminY, self.midXminY, self.maxXminY,
+			self.minXmidY, self.midXmidY, self.maxXmidY,
+			self.minXmaxY, self.midXmaxY, self.maxXmaxY
+		]
+	}
+
 	static func + (lhs: CGRect, rhs: CGPoint) -> CGRect {
 		return CGRect(origin: lhs.origin + rhs, size: lhs.size)
 	}

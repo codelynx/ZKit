@@ -297,6 +297,13 @@ public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 	public func contains(point: CGPoint) -> Bool {
 		return self.contains(point: Point<T>(point))
 	}
+	public func corners() -> [Point<T>] {
+		return [
+			self.minXminY, self.midXminY, self.maxXminY,
+			self.minXmidY, self.midXmidY, self.maxXmidY,
+			self.minXmaxY, self.midXmaxY, self.maxXmaxY
+		]
+	}
 }
 
 
