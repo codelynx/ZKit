@@ -70,4 +70,20 @@ public extension UIView {
 		}
 		return nil
 	}
+
+	func setNeedsLayoutRecursively() {
+		self.setNeedsLayout()
+		for subview in self.subviews {
+			subview.setNeedsLayoutRecursively()
+		}
+	}
+
+	func setNeedsDisplayRecursively() {
+		self.setNeedsDisplay()
+		for subview in self.subviews {
+			subview.setNeedsDisplayRecursively()
+		}
+		
+	}
+
 }
