@@ -51,15 +51,21 @@ public extension CGContext {
 
 
 public extension CGRect {
-
+	
+	/// Make `CGRect` from `CGSize` by assuming `origin` is `(0, 0)`
+	/// - Parameter size: size
 	init(size: CGSize) {
 		self.init(origin: .zero, size: size)
 	}
 	
+	/// Utility computed property to make `CGPath` from `CGRect`
 	var cgPath: CGPath {
 		return CGPath(rect: self, transform: nil)
 	}
 	
+	/// Utility function to make `CGPath` from `CGRect` with givin corner radius.
+	/// - Parameter cornerRadius: corner radius by point
+	/// - Returns: `CGPath`
 	func cgPath(cornerRadius: CGFloat) -> CGPath {
 		
 		//	+7-------------6+
@@ -95,6 +101,9 @@ public extension CGRect {
 	var midXmaxY: CGPoint { return CGPoint(x: midX, y: maxY) }
 	var maxXmaxY: CGPoint { return CGPoint(x: maxX, y: maxY) }
 	
+	/// Utility function to compute `CGRect` that fills of this rect.
+	/// - Parameter size: <#size description#>
+	/// - Returns: <#description#>
 	func aspectFill(_ size: CGSize) -> CGRect {
 		let result: CGRect
 		let margin: CGFloat
@@ -132,7 +141,9 @@ public extension CGRect {
 		t = t.scaledBy(x: rect.width, y: rect.height)
 		return t
 	}
-
+	
+	/// returns an array of the four corners in `CGPoint` of the rect
+	/// - Returns: array of four geometric corners 
 	func corners() -> [CGPoint] {
 		return [
 			self.minXminY, self.midXminY, self.maxXminY,

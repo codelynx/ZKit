@@ -62,6 +62,7 @@ public extension CGPath {
 		var pathElements = [CGPathElement]()
 	}
 	
+	/// retuning an array of `CGPathElement` that represents of this CGPath
 	var pathElements: [CGPathElement] {
 		var elements = Elements()
 		
@@ -98,6 +99,12 @@ public extension CGPath {
 
 public extension CGPath {
 	
+	/// Computes the length of quadratic segmented line
+	/// - Parameters:
+	///   - p0: point 0
+	///   - c1: curve point
+	///   - p1: point 1
+	/// - Returns: return the length of quadratic segmented line
 	static func quadraticCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ p1: CGPoint) -> CGFloat {
 		
 		// cf. http://www.malczak.linuxpl.com/blog/quadratic-bezier-curve-length/
@@ -116,6 +123,7 @@ public extension CGPath {
 		return L.isNaN ? 0 : L
 	}
 	
+	/// Compute the length of cubic curve segmented line, since there is no mathmatical formular, this only returns its approximate.
 	static func approximateCubicCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ c2: CGPoint, _ p1: CGPoint) -> CGFloat {
 		let n = 16
 		var length: CGFloat = 0
@@ -144,6 +152,7 @@ public extension CGPath {
 
 
 public extension CGPoint {
+	/// represent `nan` for `CGPoint`
 	static let nan = CGPoint(x: CGFloat.nan, y: CGFloat.nan)
 }
 
