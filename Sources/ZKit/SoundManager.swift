@@ -45,7 +45,7 @@ public class SoundManager: NSObject {
 	
 	private var queue = [PlayableItem]()
 	
-	private (set) static var shared = SoundManager()
+	static let shared = SoundManager()
 	
 	public lazy var speechSynthesizer: AVSpeechSynthesizer = {
 		let speechSynthesizer = AVSpeechSynthesizer()
