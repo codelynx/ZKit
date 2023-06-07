@@ -50,17 +50,17 @@ private let _secondsADay = 60.0 * 60.0 * 24.0
 //	ZCalendarType
 //
 
-protocol ZCalendarType: Comparable, CustomStringConvertible {
+public protocol ZCalendarType: Comparable, CustomStringConvertible {
 	var integerValue: Int { get }
 }
 
-protocol ZCalendarYearType: ZCalendarType {
+public protocol ZCalendarYearType: ZCalendarType {
 	var year: Int { get }
 	var firstCalendarMonthOfYear: ZCalendarMonth { get }
 	var lastCalendarMonthOfYear: ZCalendarMonth { get }
 }
 
-protocol ZCalendarMonthType: ZCalendarYearType {
+public protocol ZCalendarMonthType: ZCalendarYearType {
 	var month: Int { get }
 	var firstCalendarDateOfMonth: ZCalendarDate { get }
 	var lastCalendarDateOfMonth: ZCalendarDate { get }
@@ -70,7 +70,7 @@ protocol ZCalendarMonthType: ZCalendarYearType {
 	var nextCalendarMonth: ZCalendarMonth { get }
 }
 
-protocol ZCalendarDateType: ZCalendarMonthType {
+public protocol ZCalendarDateType: ZCalendarMonthType {
 	var day: Int { get }
 	var calendarDayOfWeek: ZCalendarDayOfWeek { get }
 	var firstCalendarDayOfYear: ZCalendarDate { get }

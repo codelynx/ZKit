@@ -30,8 +30,8 @@ import UIKit
 
 @IBDesignable public class ZFramedButton: UIButton {
 	
-	@IBInspectable var borderWidth: CGFloat = 0
-	@IBInspectable var borderColor: UIColor? = nil
+	@IBInspectable public var borderWidth: CGFloat = 0
+	@IBInspectable public var borderColor: UIColor? = nil
 
 	override public func awakeFromNib() {
 		super.awakeFromNib()

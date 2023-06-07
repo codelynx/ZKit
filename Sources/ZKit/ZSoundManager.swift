@@ -29,7 +29,7 @@ import Foundation
 import AVFoundation
 
 
-public class SoundManager: NSObject {
+public class ZSoundManager: NSObject {
 	
 	public enum StatePlayed {
 		case finished
@@ -45,7 +45,7 @@ public class SoundManager: NSObject {
 	
 	private var queue = [PlayableItem]()
 	
-	static let shared = SoundManager()
+	static public let shared = ZSoundManager()
 	
 	public lazy var speechSynthesizer: AVSpeechSynthesizer = {
 		let speechSynthesizer = AVSpeechSynthesizer()
@@ -55,7 +55,7 @@ public class SoundManager: NSObject {
 	
 	public lazy var queuePlayer: AVQueuePlayer = {
 		let player = AVQueuePlayer()
-		NotificationCenter.default.addObserver(self, selector: #selector(SoundManager.playerItemDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(ZSoundManager.playerItemDidFinishPlaying(_:)), name: .AVPlayerItemDidPlayToEndTime, object: nil)
 		return player
 	}()
 	
@@ -204,7 +204,7 @@ public class SoundManager: NSObject {
 	
 }
 
-extension SoundManager: AVSpeechSynthesizerDelegate {
+extension ZSoundManager: AVSpeechSynthesizerDelegate {
 	
 	public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
 	}

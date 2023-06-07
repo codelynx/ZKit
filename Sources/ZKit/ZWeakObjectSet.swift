@@ -29,17 +29,17 @@ import Foundation
 
 public class ZWeakObject<T: AnyObject>: Equatable, Hashable {
 	weak var object: T?
-	private let hashKey: Int
-	init(_ object: T) {
+	private let hashedValue: Int
+	public init(_ object: T) {
 		self.object = object
-		self.hashKey = ObjectIdentifier(object).hashValue
+		self.hashedValue = ObjectIdentifier(object).hashValue
 	}
 	public static func == (lhs: ZWeakObject<T>, rhs: ZWeakObject<T>) -> Bool {
 		if lhs.object == nil || rhs.object == nil { return false }
 		return lhs.object === rhs.object
 	}
 	public func hash(into hasher: inout Hasher) {
-		hasher.combine(hashKey)
+		hasher.combine(hashedValue)
 	}
 }
 

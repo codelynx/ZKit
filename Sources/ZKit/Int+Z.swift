@@ -44,7 +44,7 @@ import Foundation
 
 public extension Int {
 
-	init?(any: Any?) {
+	public init?(any: Any?) {
 		switch any {
 		case let value as Int: self.init(value)
 		case let value as NSNumber: self.init(value.intValue)
