@@ -38,7 +38,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 	
 	var rawValue: UInt16
 	
-	static func float_to_half(value: Float) -> Half {
+	static public func float_to_half(value: Float) -> Half {
 		var input: [Float] = [value]
 		var output: [UInt16] = [0]
 		var sourceBuffer = input.withUnsafeMutableBytes { (bufferPointer) -> vImage_Buffer in
@@ -51,7 +51,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 		return Half(rawValue: output[0])
 	}
 	
-	static func half_to_float(value: Half) -> Float {
+	static public func half_to_float(value: Half) -> Float {
 		var input: [UInt16] = [value.rawValue]
 		var output: [Float] = [0]
 		var sourceBuffer = input.withUnsafeMutableBytes { (bufferPointer) -> vImage_Buffer in
@@ -64,7 +64,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 		return output[0]
 	}
 	
-	static func floats_to_halves(values: [Float]) -> [Half] {
+	static public func floats_to_halves(values: [Float]) -> [Half] {
 		var inputs = values
 		var outputs = Array<UInt16>(repeating: 0, count: values.count)
 		let width = vImagePixelCount(values.count)
@@ -78,7 +78,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 		return outputs.map { Half(rawValue: $0) }
 	}
 	
-	static func halves_to_floats(values: [Half]) -> [Float] {
+	static public func halves_to_floats(values: [Half]) -> [Float] {
 		var inputs: [UInt16] = values.map { $0.rawValue }
 		var outputs: [Float] = Array<Float>(repeating: 0, count: values.count)
 		let width = vImagePixelCount(values.count)
@@ -302,25 +302,25 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 }
 
 public extension Array where Element == Half {
-	init(_ values: [Float]) {
+	public init(_ values: [Float]) {
 		self = Half.floats_to_halves(values: values)
 	}
 }
 
 public extension Float {
-	init(_ value: Half) {
+	public init(_ value: Half) {
 		self = Half.half_to_float(value: value)
 	}
 }
 
 public extension Double {
-	init(_ value: Half) {
+	public init(_ value: Half) {
 		self = Double(Half.half_to_float(value: value))
 	}
 }
 
 public extension CGFloat {
-	init(_ value: Half) {
+	public init(_ value: Half) {
 		self = CGFloat(Half.half_to_float(value: value))
 	}
 }

@@ -41,36 +41,36 @@ import Foundation
 //	buffer[3] = 0
 //	print(array) // [3, 1, 2, 0]
 
-class ZBuffer<T> {
+public class ZBuffer<T> {
 
-	var bufferPointer: UnsafeBufferPointer<T>
-	let count: Int
+	public var bufferPointer: UnsafeBufferPointer<T>
+	public let count: Int
 
-	init(bufferPointer: UnsafeBufferPointer<T>, bytes: Int) {
+	public init(bufferPointer: UnsafeBufferPointer<T>, bytes: Int) {
 		self.bufferPointer = bufferPointer
 		self.count = bytes / MemoryLayout<T>.stride
 	}
-	init(rawPointer: UnsafeRawPointer, bytes: Int) {
+	public init(rawPointer: UnsafeRawPointer, bytes: Int) {
 		self.bufferPointer = UnsafeBufferPointer(start: rawPointer.assumingMemoryBound(to: T.self), count: bytes)
 		self.count = bytes / MemoryLayout<T>.stride
 	}
-	init(array: Array<T>) {
+	public init(array: Array<T>) {
 		self.bufferPointer = array.withUnsafeBufferPointer { $0 }
 		self.count = array.count
 	}
-	init(opaquePointer: OpaquePointer, count: Int) {
+	public init(opaquePointer: OpaquePointer, count: Int) {
 		self.bufferPointer = UnsafeBufferPointer(start: UnsafeRawPointer(opaquePointer).assumingMemoryBound(to: T.self), count: count)
 		self.count = count
 	}
-	init(opaquePointer: OpaquePointer, bytes: Int) {
+	public init(opaquePointer: OpaquePointer, bytes: Int) {
 		let count = bytes / MemoryLayout<T>.stride
 		self.bufferPointer = UnsafeBufferPointer(start: UnsafeRawPointer(opaquePointer).assumingMemoryBound(to: T.self), count: count)
 		self.count = count
 	}
-	var mutableBufferPointer: UnsafeMutableBufferPointer<T> {
+	public var mutableBufferPointer: UnsafeMutableBufferPointer<T> {
 		return UnsafeMutableBufferPointer(mutating: bufferPointer)
 	}
-	subscript(index: Int) -> T {
+	public subscript(index: Int) -> T {
 		get {
 			assert(index < self.count)
 			return self.bufferPointer[index]

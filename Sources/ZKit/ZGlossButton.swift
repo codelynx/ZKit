@@ -31,8 +31,8 @@ import UIKit
 
 @IBDesignable open class ZGlossButton: UIButton {
 	
-	@IBInspectable var buttonColor: UIColor = UIColor.blue
-	@IBInspectable var gloss: CGFloat = 0.5
+	@IBInspectable public var buttonColor: UIColor = UIColor.blue
+	@IBInspectable public var gloss: CGFloat = 0.5
 	
 	override public var isHighlighted: Bool {
 		didSet {
