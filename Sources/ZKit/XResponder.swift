@@ -38,14 +38,27 @@ public typealias XResponder = NSResponder
 
 public extension XResponder {
 	
-	func findResponder<T>(of: T.Type) -> T? {
-		for responder in self {
-			if let responder = responder as? T {
-				return responder
-			}
+	#if os(macOS)
+	func findResponder<T>(of type: T.Type) -> T? {
+		if let responder = self as? T {
+			return responder
 		}
-		return nil
+		else {
+			return self.nextResponder?.findResponder(of: type)
+		}
 	}
+	#endif
+	
+	#if os(iOS)
+	func findResponder<T>(of type: T.Type) -> T? {
+		if let responder = self as? T {
+			return responder
+		}
+		else {
+			return self.next?.findResponder(of: type)
+		}
+	}
+	#endif
 
 	#if os(macOS)
 	var next: XResponder? {

@@ -28,7 +28,7 @@
 #if os(iOS)
 import UIKit
 
-@IBDesignable public class ZFramedButton: UIButton {
+@IBDesignable open class ZFramedButton: UIButton {
 	
 	@IBInspectable var borderWidth: CGFloat = 0
 	@IBInspectable var borderColor: UIColor? = nil
