@@ -124,7 +124,7 @@ open class DataReadStream {
 		return CFConvertFloat64SwappedToHost(value)
 	}
 
-	@available(iOS 14, *)
+	@available(iOS 14, macOS 11, *)
 	public func read() throws -> Float16  {
 		let value = try self.readBytes(as: Float16.self)
 		return value
@@ -219,7 +219,7 @@ public class DataWriteStream {
 		try writeBytes(value: CFConvertFloat64HostToSwapped(value))
 	}
 	
-	@available(iOS 14, *)
+	@available(iOS 14, macOS 11, *)
 	public func write(_ value: Float16) throws {
 		try writeBytes(value: value)
 	}

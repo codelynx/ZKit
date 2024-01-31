@@ -131,7 +131,7 @@ public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
 
 public typealias Point64 = Point<Double>
 public typealias Point32 = Point<Float>
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias Point16 = Point<Float16>
 
 
@@ -207,7 +207,7 @@ public extension CGPoint {
 
 public typealias CPoint64 = CPoint<Double>
 public typealias CPoint32 = CPoint<Float>
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias CPoint16 = CPoint<Float16>
 
 
@@ -231,7 +231,7 @@ public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 public typealias Size64 = Size<Double>
 public typealias Size32 = Size<Float>
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias Size16 = Size<Float16>
 
 
@@ -309,7 +309,7 @@ public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 public typealias Rect64 = Rect<Double>
 public typealias Rect32 = Rect<Float>
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias Rect16 = Rect<Float16>
 
 public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, Equatable {
@@ -351,7 +351,7 @@ public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, 
 		lhs = Self(lhs.affineTransform * rhs.affineTransform)
 	}
 
-	public func translate<T: BinaryFloatingPoint>(point: Point<T>) -> Self {
+	public func translate<U: BinaryFloatingPoint>(point: Point<U>) -> Self {
 		return Self(self.affineTransform.translatedBy(x: CGFloat(point.x), y: CGFloat(point.y)))
 	}
 
@@ -389,7 +389,7 @@ public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, 
 
 }
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias AffineTransform16 = AffineTransform<Float16>
 public typealias AffineTransform32 = AffineTransform<Float>
 public typealias AffineTransform64 = AffineTransform<Double>
@@ -425,26 +425,26 @@ public extension Point32 {
 		self.x = Float(x)
 		self.y = Float(y)
 	}
-	init<T: BinaryFloatingPoint>(_ point: Point<T>) {
+	init<U: BinaryFloatingPoint>(_ point: Point<U>) {
 		self = Point32(x: Float(point.x), y: Float(point.y))
 	}
 }
 
 public extension Size32 {
-	init<T: BinaryFloatingPoint>(width: T, height: T) {
+	init<U: BinaryFloatingPoint>(width: U, height: U) {
 		self.width = Float(width)
 		self.height = Float(height)
 	}
-	init<T: BinaryFloatingPoint>(_ size: Size<T>) {
+	init<U: BinaryFloatingPoint>(_ size: Size<U>) {
 		self = Size32(width: Float(size.width), height: Float(size.height))
 	}
 }
 
 public extension Rect32 {
-	init<T: BinaryFloatingPoint>(origin: Point<T>, size: Size<T>) {
+	init<U: BinaryFloatingPoint>(origin: Point<U>, size: Size<U>) {
 		self = Rect32(origin: Point32(origin), size: Size32(size))
 	}
-	init<T: BinaryFloatingPoint>(_ rect: Rect<T>) {
+	init<U: BinaryFloatingPoint>(_ rect: Rect<U>) {
 		self = Rect32(origin: Point32(rect.origin), size: Size32(rect.size))
 	}
 }
@@ -609,7 +609,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, CustomStringCo
 
 }
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias BezierPathElement16 = BezierPathElement<Float16>
 public typealias BezierPathElement32 = BezierPathElement<Float>
 public typealias BezierPathElement64 = BezierPathElement<Double>
@@ -684,7 +684,7 @@ public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable, CustomString
 }
 
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias BezierPath16 = BezierPath<Float16>
 public typealias BezierPath32 = BezierPath<Float>
 public typealias BezierPath64 = BezierPath<Double>

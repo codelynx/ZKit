@@ -302,25 +302,25 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 }
 
 public extension Array where Element == Half {
-	public init(_ values: [Float]) {
+	init(_ values: [Float]) {
 		self = Half.floats_to_halves(values: values)
 	}
 }
 
 public extension Float {
-	public init(_ value: Half) {
+	init(_ value: Half) {
 		self = Half.half_to_float(value: value)
 	}
 }
 
 public extension Double {
-	public init(_ value: Half) {
+	init(_ value: Half) {
 		self = Double(Half.half_to_float(value: value))
 	}
 }
 
 public extension CGFloat {
-	public init(_ value: Half) {
+	init(_ value: Half) {
 		self = CGFloat(Half.half_to_float(value: value))
 	}
 }

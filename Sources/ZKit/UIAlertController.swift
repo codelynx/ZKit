@@ -25,8 +25,8 @@
 //	THE SOFTWARE.
 //
 
+#if os(iOS)
 import UIKit
-
 
 public extension UIAlertController {
 	
@@ -42,4 +42,4 @@ public extension UIAlertController {
 //	NOTE:
 //
 //	https://www.questarter.com/q/uialertcontroller-supportedinterfaceorientations-was-invoked-recursively-27_31406820.html
-
+#endif
