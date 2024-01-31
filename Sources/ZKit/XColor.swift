@@ -134,6 +134,13 @@ public extension XColor {
 	}
 	#endif
 
+	func with(hue: CGFloat? = nil, saturation: CGFloat? = nil, brightness: CGFloat? = nil, alpha: CGFloat? = nil) -> XColor {
+		self.withAlphaComponent(0.5)
+		var (h, s, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+		self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+		return XColor(hue: hue ?? h, saturation: saturation ?? s, brightness: brightness ?? b, alpha: alpha ?? a)
+	}
+
 }
 
 
