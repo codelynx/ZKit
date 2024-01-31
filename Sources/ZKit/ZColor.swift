@@ -5,7 +5,13 @@
 //  Created by Kaz Yoshikawa on 9/29/21.
 //
 
+#if os(iOS)
 import UIKit
+#endif
+
+#if os(macOS)
+import AppKit
+#endif
 
 public struct ZRGBA<T: BinaryFloatingPoint>: Equatable {
 	public var r: T
@@ -15,13 +21,13 @@ public struct ZRGBA<T: BinaryFloatingPoint>: Equatable {
 	public init<R: BinaryFloatingPoint, G: BinaryFloatingPoint, B: BinaryFloatingPoint, A: BinaryFloatingPoint>(r: R, g: G, b: B, a: A) {
 		(self.r, self.g, self.b, self.a) = (T(r), T(g), T(b), T(a))
 	}
-	public init(_ color: UIColor) {
+	public init(_ color: XColor) {
 		var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
 		color.getRed(&r, green: &g, blue: &b, alpha: &a)
 		(self.r, self.g, self.b, self.a) = (T(r), T(g), T(b), T(a))
 	}
-	public var color: UIColor {
-		return UIColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: CGFloat(self.a))
+	public var color: XColor {
+		return XColor(red: CGFloat(self.r), green: CGFloat(self.g), blue: CGFloat(self.b), alpha: CGFloat(self.a))
 	}
 	public var red: T { return self.r }
 	public var green: T { return self.g }
@@ -30,10 +36,10 @@ public struct ZRGBA<T: BinaryFloatingPoint>: Equatable {
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a
 	}
-	public static var black: Self { return Self(UIColor.black) }
+	public static var black: Self { return Self(XColor.black) }
 }
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias ZRGBA16 = ZRGBA<Float16>
 public typealias ZRGBA32 = ZRGBA<Float>
 public typealias ZRGBA64 = ZRGBA<Double>
@@ -47,13 +53,13 @@ public struct ZHSBA<T: BinaryFloatingPoint>: Equatable {
 	public init<H: BinaryFloatingPoint, S: BinaryFloatingPoint, B: BinaryFloatingPoint, A: BinaryFloatingPoint>(h: H, s: S, b: B, a: A) {
 		(self.h, self.s, self.b, self.a) = (T(h), T(s), T(b), T(a))
 	}
-	public init(_ color: UIColor) {
+	public init(_ color: XColor) {
 		var (h, s, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
 		color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
 		(self.h, self.s, self.b, self.a) = (T(h), T(s), T(b), T(a))
 	}
-	public var color: UIColor {
-		return UIColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: CGFloat(self.a))
+	public var color: XColor {
+		return XColor(hue: CGFloat(self.h), saturation: CGFloat(self.s), brightness: CGFloat(self.b), alpha: CGFloat(self.a))
 	}
 	public var hue: T { return self.h }
 	public var saturation: T { return self.s }
@@ -64,7 +70,7 @@ public struct ZHSBA<T: BinaryFloatingPoint>: Equatable {
 	}
 }
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias ZHSBA16 = ZHSBA<Float16>
 public typealias ZHSBA32 = ZHSBA<Float>
 public typealias ZHSBA64 = ZHSBA<Double>
@@ -85,7 +91,7 @@ public struct ZColor<T: BinaryFloatingPoint> {
 	init(hsba: ZHSBA<T>) {
 		self.value = ColorModel.hsba(hsba)
 	}
-	var color: UIColor {
+	var color: XColor {
 		switch value {
 		case .rgba(let rgba): return rgba.color
 		case .hsba(let hsba): return hsba.color
@@ -120,7 +126,7 @@ public struct ZColor<T: BinaryFloatingPoint> {
 	*/
 }
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 public typealias ZColor16 = ZColor<Float16>
 public typealias ZColor32 = ZColor<Float>
 public typealias ZColor64 = ZColor<Double>

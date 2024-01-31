@@ -5,7 +5,13 @@
 //	Created by Kaz Yoshikawa on 10/1/21.
 //
 
+#if os(iOS)
 import UIKit
+#endif
+
+#if os(macOS)
+import AppKit
+#endif
 
 public protocol DataRepresentable: AnyObject {
 	init(data: Data) throws
@@ -13,9 +19,9 @@ public protocol DataRepresentable: AnyObject {
 }
 
 
-private let markerHeader = FourCharCode("ZDR1")!
-private let markerBody = FourCharCode("ZDR2")!
-private let markerFooter = FourCharCode("ZDR3")!
+private let markerHeader = FourCharCode("ZdrH")!
+private let markerBody = FourCharCode("ZdrB")!
+private let markerFooter = FourCharCode("ZdrF")!
 
 public extension Data {
 
