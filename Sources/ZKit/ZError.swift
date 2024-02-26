@@ -31,8 +31,8 @@ public class ZError: Error, CustomStringConvertible {
 	public let messgae: String
 	public let file: String
 	public let line: UInt
-	public init(_ messgae: String, _ file: String = #file, _ line: UInt = #line) {
-		self.messgae = messgae
+	public init(_ items: Any..., file: String = #file, line: UInt = #line) {
+		self.messgae = items.map { String(describing: $0) }.joined(separator: ", ")
 		self.file = file.lastPathComponent
 		self.line = line
 	}
