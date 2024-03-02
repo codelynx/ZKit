@@ -69,6 +69,19 @@ public extension Array {
 		return array
 	}
 	
+	/// insert array of items into an array
+	/// - elements: array of items to insert
+	/// - index: index to insert items
+	mutating func insert(_ elements: [Element], at index: Int) {
+		// Ensure the index is within bounds
+		assert(index >= 0 && index <= count)
+
+		// Insert each element at the specified index
+		for (offset, element) in elements.enumerated() {
+			insert(element, at: index + offset)
+		}
+	}
+	
 }
 
 
@@ -93,7 +106,7 @@ public extension Array where Element: Equatable {
 	func removing(_ elements: [Element]) -> Self {
 		return self.filter { !elements.contains($0) }
 	}
-
+	
 	/// removing some items from the array
 	mutating func remove(_ elements: [Element]) {
 		self = self.removing(elements)
