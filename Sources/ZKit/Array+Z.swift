@@ -81,7 +81,15 @@ public extension Array {
 			insert(element, at: index + offset)
 		}
 	}
-	
+
+	/// break an array into chunks
+	/// - size: number of items of a chunk
+	func chunked(into size: Int) -> [[Element]] {
+		return stride(from: 0, to: count, by: size).map {
+			Array(self[$0 ..< Swift.min($0 + size, count)])
+		}
+	}
+
 }
 
 
