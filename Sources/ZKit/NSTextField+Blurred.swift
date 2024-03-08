@@ -52,7 +52,7 @@
 #if os(macOS)
 import AppKit
 
-extension NSTextField {
+public extension NSTextField {
 	var isBlurred: Bool {
 		get { return self.getBlurred() }
 		set { self.setBlurred(newValue) }
