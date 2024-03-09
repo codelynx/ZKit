@@ -27,7 +27,7 @@
 
 import Foundation
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 #elseif os(macOS)
 import AppKit
@@ -42,7 +42,7 @@ public extension NSMutableParagraphStyle {
 	}
 
 	static func makeParagraphStyle() -> NSMutableParagraphStyle {
-		#if os(iOS)
+		#if os(iOS) || os(visionOS)
 		return NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
 		#elseif os(macOS)
 		return NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle

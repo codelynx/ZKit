@@ -4,7 +4,7 @@
 //
 //	Created by Kaz Yoshikawa on 4/4/21.
 //
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 
 extension UserDefaults {

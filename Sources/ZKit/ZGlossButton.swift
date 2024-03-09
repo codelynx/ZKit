@@ -25,7 +25,7 @@
 //	THE SOFTWARE.
 //
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 
 

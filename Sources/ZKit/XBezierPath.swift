@@ -27,7 +27,7 @@
 
 import Foundation
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 public typealias XBezierPath = UIBezierPath
 #elseif os(macOS)

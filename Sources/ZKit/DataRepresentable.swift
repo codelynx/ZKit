@@ -5,7 +5,7 @@
 //	Created by Kaz Yoshikawa on 10/1/21.
 //
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 #endif
 
