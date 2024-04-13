@@ -28,7 +28,7 @@
 import Foundation
 
 
-extension PropertyListSerialization {
+public extension PropertyListSerialization {
 
 	class func propertyList(url: URL, options opt: PropertyListSerialization.ReadOptions = [], format: UnsafeMutablePointer<PropertyListSerialization.PropertyListFormat>?) throws -> Any {
 		let data = try Data(contentsOf: url)
