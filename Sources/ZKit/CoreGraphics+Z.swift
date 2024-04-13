@@ -173,7 +173,7 @@ public extension CGRect {
 
 public extension CGSize {
 	
-	func aspectFit(_ size: CGSize) -> CGSize {
+	func aspectFit(to size: CGSize) -> CGSize {
 		let widthRatio = self.width / size.width
 		let heightRatio = self.height / size.height
 		let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
@@ -204,6 +204,16 @@ public extension CGSize {
 
 	static func / (lhs: CGSize, rhs: CGSize) -> CGSize {
 		return CGSize(width: lhs.width / rhs.width , height: lhs.height / rhs.height)
+	}
+
+	func aspectResize(width: CGFloat) -> CGSize {
+		let ratio = width / self.width
+		return CGSize(width: width, height: self.height * ratio)
+	}
+	
+	func aspectResize(height: CGFloat) -> CGSize {
+		let ratio = height / self.height
+		return CGSize(width: self.width * ratio, height: height)
 	}
 
 }
