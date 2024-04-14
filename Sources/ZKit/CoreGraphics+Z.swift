@@ -122,7 +122,7 @@ public extension CGRect {
 		return result
 	}
 	
-	func aspectFit(_ size: CGSize) -> CGRect {
+	func aspectFit(to size: CGSize) -> CGRect {
 		let widthRatio = self.size.width / size.width
 		let heightRatio = self.size.height / size.height
 		let ratio = min(widthRatio, heightRatio)
@@ -133,6 +133,14 @@ public extension CGRect {
 		return CGRect(x: minX + xmargin, y: minY + ymargin, width: width, height: height)
 	}
 	
+	func with(origin: CGPoint) -> CGRect {
+		return CGRect(origin: origin, size: self.size)
+	}
+
+	func with(size: CGSize) -> CGRect {
+		return CGRect(origin: self.origin, size: size)
+	}
+
 	func transform(to rect: CGRect) -> CGAffineTransform {
 		var t = CGAffineTransform.identity
 		t = t.translatedBy(x: -self.minX, y: -self.minY)
