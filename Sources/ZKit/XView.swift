@@ -40,7 +40,7 @@ public extension XView {
 
 	#if os(macOS)
 	@objc func setNeedsLayout() {
-		self.layout()
+		self.needsLayout = true
 	}
 	#endif
 	
