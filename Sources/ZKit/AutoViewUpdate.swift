@@ -51,6 +51,7 @@ public class ZSet<T: Hashable> {
 	}
 }
 
+@available(macOS 10.5, iOS 13.0, macCatalyst 13.0, visionOS 1.0, *)
 public extension XViewController {
 	static private let cancellableMapTable = NSMapTable<XViewController, ZSet<AnyCancellable>>.weakToStrongObjects()
 	
@@ -75,6 +76,7 @@ public extension XViewController {
 	}
 }
 
+@available(macOS 10.5, *)
 public extension XView {
 	static private let cancellableMapTable = NSMapTable<XView, ZSet<AnyCancellable>>.weakToStrongObjects()
 	
