@@ -64,7 +64,7 @@ public extension UIImage {
 	func resizing(to _size: CGSize) -> UIImage? {
 		let widthRatio = _size.width / size.width
 		let heightRatio = _size.height / size.height
-		let ratio = widthRatio < heightRatio ? widthRatio : heightRatio
+		let ratio = min(widthRatio, heightRatio)
 		let resizedSize = CGSize(width: size.width * ratio, height: size.height * ratio)
 		UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
 		draw(in: CGRect(origin: .zero, size: resizedSize))
