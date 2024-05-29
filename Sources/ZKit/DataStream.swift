@@ -218,8 +218,7 @@ public class DataWriteStream {
 		try writeBytes(value: CFConvertFloat64HostToSwapped(value))
 	}
 	
-	@available(iOS 14, macOS 11, *)
-	public func write(_ value: Float16) throws {
+	public func write(_ value: Half) throws {
 		try writeBytes(value: value)
 	}
 
