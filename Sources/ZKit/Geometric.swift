@@ -131,7 +131,7 @@ public struct Point<T: BinaryFloatingPoint>: Hashable, CustomStringConvertible {
 
 public typealias Point64 = Point<Double>
 public typealias Point32 = Point<Float>
-@available(iOS 14, macOS 11, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias Point16 = Point<Float16>
 
 
@@ -207,7 +207,7 @@ public extension CGPoint {
 
 public typealias CPoint64 = CPoint<Double>
 public typealias CPoint32 = CPoint<Float>
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias CPoint16 = CPoint<Float16>
 
 
@@ -231,7 +231,7 @@ public struct Size<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 public typealias Size64 = Size<Double>
 public typealias Size32 = Size<Float>
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias Size16 = Size<Float16>
 
 
@@ -309,7 +309,7 @@ public struct Rect<T: BinaryFloatingPoint>: CustomStringConvertible {
 
 public typealias Rect64 = Rect<Double>
 public typealias Rect32 = Rect<Float>
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias Rect16 = Rect<Float16>
 
 public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, Equatable {
@@ -389,7 +389,7 @@ public struct AffineTransform<T: BinaryFloatingPoint>: CustomStringConvertible, 
 
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias AffineTransform16 = AffineTransform<Float16>
 public typealias AffineTransform32 = AffineTransform<Float>
 public typealias AffineTransform64 = AffineTransform<Double>
@@ -609,7 +609,7 @@ public enum BezierPathElement<T: BinaryFloatingPoint>: Equatable, CustomStringCo
 
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias BezierPathElement16 = BezierPathElement<Float16>
 public typealias BezierPathElement32 = BezierPathElement<Float>
 public typealias BezierPathElement64 = BezierPathElement<Double>
@@ -684,7 +684,7 @@ public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable, CustomString
 }
 
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias BezierPath16 = BezierPath<Float16>
 public typealias BezierPath32 = BezierPath<Float>
 public typealias BezierPath64 = BezierPath<Double>
