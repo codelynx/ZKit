@@ -39,8 +39,10 @@ public struct ZRGBA<T: BinaryFloatingPoint>: Equatable {
 	public static var black: Self { return Self(XColor.black) }
 }
 
+#if FLOAT16_GRAPHICS
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias ZRGBA16 = ZRGBA<Float16>
+#endif
 public typealias ZRGBA32 = ZRGBA<Float>
 public typealias ZRGBA64 = ZRGBA<Double>
 
@@ -70,8 +72,10 @@ public struct ZHSBA<T: BinaryFloatingPoint>: Equatable {
 	}
 }
 
+#if FLOAT16_GRAPHICS
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias ZHSBA16 = ZHSBA<Float16>
+#endif
 public typealias ZHSBA32 = ZHSBA<Float>
 public typealias ZHSBA64 = ZHSBA<Double>
 
@@ -126,7 +130,9 @@ public struct ZColor<T: BinaryFloatingPoint> {
 	*/
 }
 
+#if FLOAT16_GRAPHICS
 @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, macCatalyst 14.0, visionOS 1.0, *)
 public typealias ZColor16 = ZColor<Float16>
+#endif
 public typealias ZColor32 = ZColor<Float>
 public typealias ZColor64 = ZColor<Double>
