@@ -124,7 +124,7 @@ open class DataReadStream {
 		return CFConvertFloat64SwappedToHost(value)
 	}
 
-	@available(iOS 14, macOS 11, *)
+	@available(iOS 14, macOS 11, macCatalyst 14, *)
 	public func read() throws -> Float16  {
 		let value = try self.readBytes(as: Float16.self)
 		return value
