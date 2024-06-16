@@ -120,7 +120,7 @@ public struct ZCalendarYear: ZCalendarYearType, Hashable {
 //
 
 public struct ZCalendarMonth: ZCalendarMonthType, Hashable {
-	fileprivate let calendarYear: ZCalendarYear
+	public let calendarYear: ZCalendarYear
 	public let month: Int
 	public var year: Int { return calendarYear.year }
 	public init(year: Int, month: Int) {
