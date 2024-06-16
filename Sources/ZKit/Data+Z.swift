@@ -24,7 +24,7 @@ public extension Data {
 
 }
 
-extension String {
+public extension String {
 	var hexadecimalData: Data? {
 		return Data(hexadecimalString: self)
 	}
