@@ -30,23 +30,22 @@ import Foundation
 import CoreGraphics
 import simd
 
-
-public enum CGPathElement: Equatable {
+public enum PathElement: Equatable {
 	case moveTo(CGPoint)
 	case lineTo(CGPoint)
-	case quadCurveTo(CGPoint, CGPoint)
-	case curveTo(CGPoint, CGPoint, CGPoint)
+	case quadCurveTo(controlPoint: CGPoint, endPoint: CGPoint)
+	case curveTo(controlPoint1: CGPoint, controlPoint2: CGPoint, endPoint: CGPoint)
 	case closeSubpath
 	
-	public static func ==(lhs: CGPathElement, rhs: CGPathElement) -> Bool {
+	public static func ==(lhs: PathElement, rhs: PathElement) -> Bool {
 		switch (lhs, rhs) {
 		case let (.moveTo(l), .moveTo(r)),
-			 let (.lineTo(l), .lineTo(r)):
+			let (.lineTo(l), .lineTo(r)):
 			return l == r
-		case let (.quadCurveTo(l1, l2), .quadCurveTo(r1, r2)):
-			return l1 == r1 && l2 == r2
-		case let (.curveTo(l1, l2, l3), .curveTo(r1, r2, r3)):
-			return l1 == r1 && l2 == r2 && l3 == r3
+		case let (.quadCurveTo(lc, le), .quadCurveTo(rc, re)):
+			return lc == rc && le == re
+		case let (.curveTo(lc1, lc2, le), .curveTo(rc1, rc2, re)):
+			return lc1 == rc1 && lc2 == rc2 && le == re
 		case (.closeSubpath, .closeSubpath):
 			return true
 		default:
@@ -55,60 +54,51 @@ public enum CGPathElement: Equatable {
 	}
 }
 
-
 public extension CGPath {
-	
-	private class Elements {
-		var pathElements = [CGPathElement]()
-	}
-	
-	/// retuning an array of `CGPathElement` that represents of this CGPath
-	var pathElements: [CGPathElement] {
-		var elements = Elements()
+	/// Returning an array of `PathElement` that represents this CGPath
+	var pathElements: [PathElement] {
+		var elements = [PathElement]()
 		
-		self.apply(info: &elements) { (info, element) -> () in
-			guard let infoPointer = UnsafeMutablePointer<Elements>(OpaquePointer(info)) else { return }
-			switch element.pointee.type {
+		self.applyWithBlock { element in
+			let type = element.pointee.type
+			let points = element.pointee.points
+			
+			switch type {
 			case .moveToPoint:
-				let p0 = element.pointee.points[0]
-				infoPointer.pointee.pathElements.append(.moveTo(p0))
+				let p0 = points[0]
+				elements.append(.moveTo(p0))
 			case .addLineToPoint:
-				let p1 = element.pointee.points[0]
-				infoPointer.pointee.pathElements.append(.lineTo(p1))
+				let p1 = points[0]
+				elements.append(.lineTo(p1))
 			case .addQuadCurveToPoint:
-				let c1 = element.pointee.points[0]
-				let p1 = element.pointee.points[1]
-				infoPointer.pointee.pathElements.append(.quadCurveTo(p1, c1))
+				let controlPoint = points[0]
+				let endPoint = points[1]
+				elements.append(.quadCurveTo(controlPoint: controlPoint, endPoint: endPoint))
 			case .addCurveToPoint:
-				let c1 = element.pointee.points[0]
-				let c2 = element.pointee.points[1]
-				let p1 = element.pointee.points[2]
-				infoPointer.pointee.pathElements.append(.curveTo(p1, c1, c2))
+				let controlPoint1 = points[0]
+				let controlPoint2 = points[1]
+				let endPoint = points[2]
+				elements.append(.curveTo(controlPoint1: controlPoint1, controlPoint2: controlPoint2, endPoint: endPoint))
 			case .closeSubpath:
-				infoPointer.pointee.pathElements.append(.closeSubpath)
+				elements.append(.closeSubpath)
 			@unknown default:
 				break
 			}
 		}
 		
-		let pathelements = elements.pathElements
-		return pathelements
+		return elements
 	}
 }
 
-
 public extension CGPath {
-	
-	/// Computes the length of quadratic segmented line
+	/// Computes the length of a quadratic Bezier curve segment.
 	/// - Parameters:
-	///   - p0: point 0
-	///   - c1: curve point
-	///   - p1: point 1
-	/// - Returns: return the length of quadratic segmented line
+	///   - p0: Start point
+	///   - c1: Control point
+	///   - p1: End point
+	/// - Returns: The length of the quadratic Bezier curve segment.
 	static func quadraticCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ p1: CGPoint) -> CGFloat {
-		
 		// cf. http://www.malczak.linuxpl.com/blog/quadratic-bezier-curve-length/
-		
 		let a = CGPoint(x: p0.x - 2 * c1.x + p1.x, y: p0.y - 2 * c1.y + p1.y)
 		let b = CGPoint(x: 2 * c1.x - 2 * p0.x, y: 2 * c1.y - 2 * p0.y)
 		let A = 4 * (a.x * a.x + a.y * a.y)
@@ -123,38 +113,49 @@ public extension CGPath {
 		return L.isNaN ? 0 : L
 	}
 	
-	/// Compute the length of cubic curve segmented line, since there is no mathmatical formular, this only returns its approximate.
-	static func approximateCubicCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ c2: CGPoint, _ p1: CGPoint) -> CGFloat {
-		let n = 16
+	/// Computes the approximate length of a cubic Bezier curve segment.
+	/// - Parameters:
+	///   - p0: Start point
+	///   - c1: First control point
+	///   - c2: Second control point
+	///   - p1: End point
+	///   - subdivisions: Number of subdivisions for approximation
+	/// - Returns: The approximate length of the cubic Bezier curve segment.
+	static func approximateCubicCurveLength(_ p0: CGPoint, _ c1: CGPoint, _ c2: CGPoint, _ p1: CGPoint, subdivisions n: Int = 16) -> CGFloat {
 		var length: CGFloat = 0
-		var point: CGPoint? = nil
-		for i in 0 ..< n {
+		var previousPoint: CGPoint? = nil
+		for i in 0 ... n {
 			let t = CGFloat(i) / CGFloat(n)
 			
-			let q1 = p0 + (c1 - p0) * t
-			let q2 = c1 + (c2 - c1) * t
-			let q3 = c2 + (p1 - c2) * t
+			let point = cubicBezierPoint(t: t, p0: p0, c1: c1, c2: c2, p1: p1)
 			
-			let r1 = q1 + (q2 - q1) * t
-			let r2 = q2 + (q3 - q2) * t
-			
-			let s = r1 + (r2 - r1) * t
-			
-			if let point = point {
-				length += (point - s).length
+			if let previousPoint = previousPoint {
+				length += (point - previousPoint).length
 			}
-			point = s
+			previousPoint = point
 		}
 		return length
 	}
 	
+	/// Computes a point on a cubic Bezier curve at parameter t.
+	private static func cubicBezierPoint(t: CGFloat, p0: CGPoint, c1: CGPoint, c2: CGPoint, p1: CGPoint) -> CGPoint {
+		let oneMinusT = 1 - t
+		
+		// Compute coefficients
+		let coefficient1 = oneMinusT * oneMinusT * oneMinusT
+		let coefficient2 = 3 * oneMinusT * oneMinusT * t
+		let coefficient3 = 3 * oneMinusT * t * t
+		let coefficient4 = t * t * t
+		
+		// Compute each term
+		let term1 = p0 * coefficient1
+		let term2 = c1 * coefficient2
+		let term3 = c2 * coefficient3
+		let term4 = p1 * coefficient4
+		
+		// Sum the terms to get the final point
+		let point = term1 + term2 + term3 + term4
+		return point
+	}
+
 }
-
-
-public extension CGPoint {
-	/// represent `nan` for `CGPoint`
-	static let nan = CGPoint(x: CGFloat.nan, y: CGFloat.nan)
-}
-
-
-

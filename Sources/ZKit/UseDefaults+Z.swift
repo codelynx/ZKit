@@ -9,7 +9,7 @@ import UIKit
 
 extension UserDefaults {
 
-	@available (iOS 11, *)
+	@available(iOS 11, *)
 	subscript(key: String) -> UIColor? {
 		get {
 			if let data = self.data(forKey: key) {

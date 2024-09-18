@@ -27,7 +27,7 @@ import Foundation
 
 open class Serializer {
 
-	private (set) public var data: Data
+	private(set) public var data: Data
 
 	public init() {
 		self.data = Data()
@@ -86,7 +86,7 @@ open class Serializer {
 open class Unserializer {
 
 	let data: Data
-	private (set) var location: Int
+	private(set) var location: Int
 
 	public init(data: Data) {
 		self.data = data

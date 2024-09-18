@@ -32,8 +32,8 @@ import AppKit
 #endif
 
 
-fileprivate var viewNameMap = NSMapTable<XView, NSString>.weakToStrongObjects()
-fileprivate var viewDictionaryMap = NSMapTable<XView, NSDictionary>.weakToStrongObjects()
+@MainActor fileprivate var viewNameMap = NSMapTable<XView, NSString>.weakToStrongObjects()
+@MainActor fileprivate var viewDictionaryMap = NSMapTable<XView, NSDictionary>.weakToStrongObjects()
 
 
 public extension XView {

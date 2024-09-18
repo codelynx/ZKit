@@ -126,8 +126,11 @@ public func opaquePointer<T>(_ pointer: UnsafeMutableBufferPointer<T>) -> Opaque
 
 // OpaquePointer
 
-public func opaquePointer<T>(_ array: [T]) -> OpaquePointer {
-	return OpaquePointer(array)
+public func opaquePointer<T>(_ array: [T]) -> OpaquePointer? {
+	return array.withUnsafeBufferPointer { bufferPointer -> OpaquePointer? in
+		guard let baseAddress = bufferPointer.baseAddress else { return nil }
+		return OpaquePointer(baseAddress)
+	}
 }
 public func unsafeRawPointer(_ pointer: OpaquePointer) -> UnsafeRawPointer {
 	return UnsafeRawPointer(pointer)

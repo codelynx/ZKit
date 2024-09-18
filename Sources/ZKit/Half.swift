@@ -30,7 +30,7 @@ import Accelerate
 import CoreGraphics
 
 
-public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
+public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, Sendable {
 	public typealias Exponent = Int
 	public typealias Stride = Half
 	public typealias Magnitude = Half
@@ -298,7 +298,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable {
 		return Self(Float(lhs) / Float(rhs))
 	}
 	
-	public static var nan: Half = Half(Float.nan)
+	public static let nan: Half = Half(Float.nan)
 }
 
 public extension Array where Element == Half {

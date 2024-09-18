@@ -27,7 +27,7 @@
 
 import Foundation
 
-public class ZError: Error, CustomStringConvertible {
+public final class ZError: Error, CustomStringConvertible {
 	public let messgae: String
 	public let file: String
 	public let line: UInt

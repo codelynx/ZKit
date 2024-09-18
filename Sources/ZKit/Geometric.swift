@@ -626,7 +626,7 @@ public typealias BezierPathElement64 = BezierPathElement<Double>
 
 public class BezierPath<T: BinaryFloatingPoint>: DataRepresentable, CustomStringConvertible {
 	
-	private (set) public var pathElements: [BezierPathElement<T>]
+	private(set) public var pathElements: [BezierPathElement<T>]
 
 	public required init(data: Data) throws {
 		self.pathElements = try Unserializer.unserialize(data: data) {

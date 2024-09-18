@@ -27,27 +27,25 @@
 
 import Foundation
 
+infix operator ** : MultiplicationPrecedence
 
-extension NSDecimalNumber: Comparable {
-
+extension NSDecimalNumber: @retroactive Comparable {
+	
 	public static func < (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> Bool {
 		return lhs.compare(rhs) == .orderedAscending
 	}
 	
-
 	public static func == (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> Bool {
 		return lhs.compare(rhs) == .orderedSame
 	}
-	
 }
-
 
 public extension NSDecimalNumber {
 	
 	// MARK: - Arithmetic Operators
 	
 	static prefix func - (value: NSDecimalNumber) -> NSDecimalNumber {
-		return value.multiplying(by: NSDecimalNumber(mantissa: 1, exponent: 0, isNegative: true))
+		return value.multiplying(by: NSDecimalNumber(value: -1))
 	}
 	
 	static func + (lhs: NSDecimalNumber, rhs: NSDecimalNumber) -> NSDecimalNumber {
@@ -66,17 +64,18 @@ public extension NSDecimalNumber {
 		return lhs.dividing(by: rhs)
 	}
 	
-	static func ^ (lhs: NSDecimalNumber, rhs: Int) -> NSDecimalNumber {
+	static func ** (lhs: NSDecimalNumber, rhs: Int) -> NSDecimalNumber {
 		return lhs.raising(toPower: rhs)
 	}
-
+	
+	// Convenience initializer
 	convenience init?(_ number: NSNumber?) {
 		guard let number = number else { return nil }
 		self.init(decimal: number.decimalValue)
 	}
-
+	
+	// Computed property
 	var isNotANumber: Bool {
-		return self.isEqual(NSDecimalNumber.notANumber)
+		self == NSDecimalNumber.notANumber
 	}
-
 }

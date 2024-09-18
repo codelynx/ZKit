@@ -27,18 +27,15 @@
 
 import Foundation
 
-
-public extension Thread {
-
-	static func executeOnMain(_ closure: (()->())) {
+public extension OperationQueue {
+	
+	static func executeOnMain(_ closure: @Sendable @escaping () -> Void) {
 		if Thread.isMainThread {
 			closure()
-		}
-		else {
-			DispatchQueue.main.sync {
+		} else {
+			OperationQueue.main.addOperation {
 				closure()
 			}
 		}
 	}
-
 }

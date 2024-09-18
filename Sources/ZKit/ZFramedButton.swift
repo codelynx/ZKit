@@ -25,18 +25,21 @@
 //	THE SOFTWARE.
 //
 
-#if os(iOS) || os(visionOS)
+#if canImport(UIKit)
 import UIKit
 
-@IBDesignable open class ZFramedButton: UIButton {
+@MainActor
+@IBDesignable
+open class ZFramedButton: UIButton {
 	
-	@IBInspectable public var borderWidth: CGFloat = 0
-	@IBInspectable public var borderColor: UIColor? = nil
+	public var borderWidth: CGFloat {
+		get { return self.layer.borderWidth }
+		set { self.layer.borderWidth = newValue }
+	}
 
-	override public func awakeFromNib() {
-		super.awakeFromNib()
-		self.layer.borderWidth = self.borderWidth
-		self.layer.borderColor = self.borderColor?.cgColor
+	public var borderColor: UIColor? {
+		get { return  self.layer.borderColor.flatMap { UIColor(cgColor: $0) } }
+		set { self.layer.borderColor = newValue?.cgColor }
 	}
 
 }

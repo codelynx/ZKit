@@ -39,7 +39,7 @@ public typealias XResponder = NSResponder
 public extension XResponder {
 	
 	#if os(macOS)
-	func findResponder<T>(of type: T.Type) -> T? {
+	@MainActor func findResponder<T>(of type: T.Type) -> T? {
 		if let responder = self as? T {
 			return responder
 		}
@@ -50,7 +50,7 @@ public extension XResponder {
 	#endif
 	
 	#if os(iOS)
-	func findResponder<T>(of type: T.Type) -> T? {
+	@MainActor func findResponder<T>(of type: T.Type) -> T? {
 		if let responder = self as? T {
 			return responder
 		}
@@ -61,32 +61,32 @@ public extension XResponder {
 	#endif
 
 	#if os(macOS)
-	var next: XResponder? {
+	@MainActor var next: XResponder? {
 		return self.nextResponder
 	}
 	#endif
 
-	var responders: [XResponder] {
+	@MainActor var responders: [XResponder] {
 		return self.map { $0 }
 	}
 }
 
-extension XResponder: Sequence {
+extension XResponder: @preconcurrency @retroactive Sequence {
 
-	public func makeIterator() -> Iterator {
+	@MainActor public func makeIterator() -> Iterator {
 		return Iterator(responder: self)
 	}
 
-	public struct Iterator: IteratorProtocol {
+	public struct Iterator: @preconcurrency IteratorProtocol {
 
 		public typealias Element = XResponder
 		private var responder: XResponder?
 
-		init(responder: XResponder) {
+		@MainActor init(responder: XResponder) {
 			self.responder = responder
 		}
 
-		public mutating func next() -> XResponder? {
+		@MainActor public mutating func next() -> XResponder? {
 			let next = self.responder?.next
 			self.responder = next
 			return next
