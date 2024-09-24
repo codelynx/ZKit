@@ -194,31 +194,31 @@ public extension CustomStringConvertible {
 
 
 extension String {
-    /// Decomposes the string into a prefix if it matches, and the remaining part.
-    /// The sum of the prefix and remaining always equals the original string.
-    /// - Parameter prefix: The prefix to attempt to remove.
-    /// - Returns: A tuple where `prefix` is the removed prefix if found, otherwise nil,
-    ///   and `remaining` is the rest of the string or the whole string if the prefix is not found.
-    func decomposeWithPrefix(_ prefix: String) -> (prefix: String?, remaining: String) {
-        if self.hasPrefix(prefix) {
-            let remainingPart = String(self.dropFirst(prefix.count))
-            return (prefix: prefix, remaining: remainingPart)
-        } else {
-            return (prefix: nil, remaining: self)
-        }
-    }
-
-    /// Decomposes the string into a suffix if it matches, and the remaining part.
-    /// The sum of the remaining and the suffix always equals the original string.
-    /// - Parameter suffix: The suffix to attempt to remove.
-    /// - Returns: A tuple where `suffix` is the removed suffix if found, otherwise nil,
-    ///   and `remaining` is the rest of the string or the whole string if the suffix is not found.
-    func decomposeWithSuffix(_ suffix: String) -> (remaining: String, suffix: String?) {
-        if self.hasSuffix(suffix) {
-            let remainingPart = String(self.dropLast(suffix.count))
-            return (remaining: remainingPart, suffix: suffix)
-        } else {
-            return (remaining: self, suffix: nil)
-        }
-    }
+	/// Decomposes the string into a prefix if it matches, and the remaining part.
+	/// The sum of the prefix and remaining always equals the original string.
+	/// - Parameter prefix: The prefix to attempt to remove.
+	/// - Returns: A tuple where `prefix` is the removed prefix if found, otherwise nil,
+	///   and `remaining` is the rest of the string or the whole string if the prefix is not found.
+	func decomposeWithPrefix(_ prefix: String) -> (prefix: String?, remaining: String) {
+		if self.hasPrefix(prefix) {
+			let remainingPart = String(self.dropFirst(prefix.count))
+			return (prefix: prefix, remaining: remainingPart)
+		} else {
+			return (prefix: nil, remaining: self)
+		}
+	}
+	
+	/// Decomposes the string into a suffix if it matches, and the remaining part.
+	/// The sum of the remaining and the suffix always equals the original string.
+	/// - Parameter suffix: The suffix to attempt to remove.
+	/// - Returns: A tuple where `suffix` is the removed suffix if found, otherwise nil,
+	///   and `remaining` is the rest of the string or the whole string if the suffix is not found.
+	func decomposeWithSuffix(_ suffix: String) -> (remaining: String, suffix: String?) {
+		if self.hasSuffix(suffix) {
+			let remainingPart = String(self.dropLast(suffix.count))
+			return (remaining: remainingPart, suffix: suffix)
+		} else {
+			return (remaining: self, suffix: nil)
+		}
+	}
 }

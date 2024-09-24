@@ -44,7 +44,13 @@ public extension NSSet {
 		}
 		return objects
 	}
-	
+
+	static func * (lhs: NSSet, rhs: NSSet) -> NSSet {
+		let objects = NSMutableSet(set: lhs)
+		objects.intersect(rhs as! Set<AnyHashable>)
+		return objects
+	}
+
 	func removing(_ object: Any) -> NSSet {
 		let objects = NSMutableSet(set: self)
 		objects.remove(object)
