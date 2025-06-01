@@ -150,3 +150,19 @@ public extension Array where Element: Equatable {
 	}
 	
 }
+
+public extension Array where Element: Hashable {
+	
+	/// Remove duplicated items from the array (optimized for Hashable elements)
+	/// - Returns: an array by removing duplicated items
+	func removingDuplicates() -> Self {
+		var seen = Set<Element>()
+		return filter { seen.insert($0).inserted }
+	}
+	
+	/// remove duplicated items from the array (optimized for Hashable elements)
+	mutating func removeDuplicates() {
+		self = self.removingDuplicates()
+	}
+	
+}

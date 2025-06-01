@@ -90,7 +90,7 @@ public class Runtime {
 		let classes = self.allClasses().filter { `class` in
 			var subject: AnyClass? = `class`
 			while let `class` = subject {
-				if class_conformsToProtocol(`class`, `protocol`) { print(String(describing: `class`)); return true }
+				if class_conformsToProtocol(`class`, `protocol`) { return true }
 				subject = class_getSuperclass(`class`)
 			}
 			return false

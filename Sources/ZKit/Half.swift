@@ -91,15 +91,15 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 		vImageConvert_Planar16FtoPlanarF(&sourceBuffer, &destinationBuffer, 0)
 		return outputs
 	}
-
+	
 	public init(integerLiteral value: Int) {
 		self.init(Float(value))
 	}
-
+	
 	public init(rawValue: UInt16) {
 		self.rawValue = rawValue
 	}
-
+	
 	public init(_ value: Float) {
 		self = Half.float_to_half(value: value)
 	}
@@ -111,7 +111,7 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 	public init(_ value: CGFloat) {
 		self = Half(Float(value))
 	}
-
+	
 	public init(sign: FloatingPointSign, exponent: Int, significand: Half) {
 		self = Half(Float(sign: sign, exponent: exponent, significand: Float(significand)))
 	}
@@ -137,15 +137,18 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 	}
 	
 	public static var signalingNaN: Half {
-		return Half(Float.signalingNaN)
+		// Exponent all ones (0x1F), fraction with MSB=0 and next bit=1 (0x100)
+		return Half(rawValue: 0x7D00)
 	}
 	
 	public static var infinity: Half {
-		return Half(Float.infinity)
+		// Exponent all ones (0x1F), fraction bits zero => positive infinity (0x7C00)
+		return Half(rawValue: 0x7C00)
 	}
 	
 	public static var greatestFiniteMagnitude: Half {
-		return Half(Float.greatestFiniteMagnitude)
+		// Max finite half: exponent=0x1E, fraction all ones (0x3FF) => 0x7BFF
+		return Half(rawValue: 0x7BFF)
 	}
 	
 	public static var pi: Half {
@@ -153,15 +156,19 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 	}
 	
 	public var ulp: Half {
-		return Half(Float(self).ulp)
+		// ULP is the difference between this value and the next representable value
+		let next = self.nextUp
+		return next - self
 	}
 	
 	public static var leastNormalMagnitude: Half {
-		return Half(Float.leastNormalMagnitude)
+		// Smallest positive normalized half: exponent bits = 1, fraction bits = 0
+		return Half(rawValue: 0x0400)
 	}
 	
 	public static var leastNonzeroMagnitude: Half {
-		return Half(Float.leastNonzeroMagnitude)
+		// Smallest positive subnormal half: exponent bits = 0, fraction bits = 1
+		return Half(rawValue: 0x0001)
 	}
 	
 	public var sign: FloatingPointSign {
@@ -169,11 +176,54 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 	}
 	
 	public var exponent: Int {
-		return 5 // sure?
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		
+		// Special case: infinity
+		if expBits == 0x1F && fracBits == 0 {
+			return Int.max
+		}
+		
+		// Special case: zero
+		if expBits == 0 && fracBits == 0 {
+			return Int.min
+		}
+		
+		if expBits == 0 {
+			// Subnormal: unbiased exponent is 1 - bias (bias = 15)
+			return 1 - 15
+		}
+		
+		// Normalized: subtract bias (15)
+		return Int(expBits) - 15
 	}
 	
 	public var significand: Half {
-		return Half(Float(self).significand) // not sure
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		if expBits == 0 {
+			// Subnormal or zero
+			if fracBits == 0 {
+				// Zero
+				return Half(rawValue: 0)
+			}
+			// Subnormal: fraction / 2^10
+			let m = Float(fracBits) / 1024.0
+			return Half(m)
+		}
+		if expBits == 0x1F {
+			// Infinity or NaN
+			if fracBits == 0 {
+				// Infinity
+				return Half.infinity
+			} else {
+				// NaN
+				return Half.nan
+			}
+		}
+		// Normalized: 1.fraction
+		let m = 1.0 + Float(fracBits) / 1024.0
+		return Half(m)
 	}
 	
 	public static func *= (lhs: inout Half, rhs: Half) {
@@ -209,75 +259,170 @@ public struct Half: FloatingPoint, CustomStringConvertible, Codable, Hashable, S
 	}
 	
 	public var nextUp: Half {
-		return Half(Float(self).nextUp)
+		// Handle NaN: return self
+		if isNaN {
+			return self
+		}
+		// Negative zero -> smallest positive subnormal
+		if rawValue == 0x8000 {
+			return Half(rawValue: 0x0001)
+		}
+		// Extract sign bit
+		let signBit = rawValue & 0x8000
+		if signBit == 0 {
+			// Positive or +0: increment raw bits
+			if rawValue == 0x7C00 {
+				// +infinity stays +infinity
+				return self
+			}
+			return Half(rawValue: rawValue + 1)
+		} else {
+			// Negative: decrement raw bits towards zero
+			return Half(rawValue: rawValue - 1)
+		}
 	}
 	
 	public func isEqual(to other: Half) -> Bool {
-		return Float(self).isEqual(to: Float(other))
+		// Standard FloatingPoint behavior: NaN is not equal to anything, including itself
+		if isNaN || other.isNaN {
+			return false
+		}
+		// Otherwise only equal if raw bits exactly match
+		return rawValue == other.rawValue
 	}
 	
 	public func isLess(than other: Half) -> Bool {
-		return Float(self).isLess(than: Float(other))
+		// If either is NaN, return false
+		if isNaN || other.isNaN {
+			return false
+		}
+		let a = rawValue
+		let b = other.rawValue
+		let signA = a & 0x8000
+		let signB = b & 0x8000
+		// If signs differ
+		if signA != signB {
+			// Negative < Positive
+			return signA != 0
+		}
+		// Same sign
+		if signA == 0 {
+			// Both positive: compare raw directly
+			return a < b
+		} else {
+			// Both negative: more negative means larger raw; invert comparison
+			return a > b
+		}
 	}
 	
 	public func isLessThanOrEqualTo(_ other: Half) -> Bool {
-		return Float(self).isLessThanOrEqualTo(Float(other))
+		// True if equal or less-than
+		return isEqual(to: other) || isLess(than: other)
 	}
 	
 	public func isTotallyOrdered(belowOrEqualTo other: Half) -> Bool {
-		return Float(self).isTotallyOrdered(belowOrEqualTo: Float(other))
+		// Total ordering per IEEE 754-2019
+		// -NaN < -Infinity < -finite < -0 < +0 < +finite < +Infinity < +NaN
+		let a = rawValue
+		let b = other.rawValue
+		
+		// Extract sign bits
+		let signA = (a & 0x8000) != 0
+		let signB = (b & 0x8000) != 0
+		
+		// For total ordering, we need to handle negative values specially
+		if signA && !signB {
+			// Negative is less than positive
+			return true
+		} else if !signA && signB {
+			// Positive is not less than negative
+			return false
+		} else if signA && signB {
+			// Both negative: flip comparison (larger magnitude is smaller)
+			return a >= b
+		} else {
+			// Both positive: normal comparison
+			return a <= b
+		}
 	}
 	
 	public var isNormal: Bool {
-		return Float(self).isNormal
+		let expBits = (rawValue >> 10) & 0x1F
+		// Normal: exponent not zero or all ones
+		return expBits != 0 && expBits != 0x1F
 	}
 	
 	public var isFinite: Bool {
-		return Float(self).isFinite
+		let expBits = (rawValue >> 10) & 0x1F
+		// Finite if exponent not all ones
+		return expBits != 0x1F
 	}
 	
 	public var isZero: Bool {
-		return Float(self).isZero
+		// Zero if exponent and fraction bits are all zero (sign bit ignored)
+		return (rawValue & 0x7FFF) == 0
 	}
 	
 	public var isSubnormal: Bool {
-		return Float(self).isSubnormal
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		// Subnormal if exponent zero but fraction non-zero
+		return expBits == 0 && fracBits != 0
 	}
 	
 	public var isInfinite: Bool {
-		return Float(self).isInfinite
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		// Infinite if exponent all ones and fraction zero
+		return expBits == 0x1F && fracBits == 0
 	}
 	
 	public var isNaN: Bool {
-		return Float(self).isNaN
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		// NaN if exponent all ones and fraction non-zero
+		return expBits == 0x1F && fracBits != 0
 	}
 	
 	public var isSignalingNaN: Bool {
-		return Float(self).isSignalingNaN
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		// Signaling NaN if exponent all ones, MSB of fraction zero, and fraction non-zero
+		return expBits == 0x1F && (fracBits & 0x200) == 0 && fracBits != 0
 	}
 	
 	public var isCanonical: Bool {
-		return Float(self).isCanonical
+		let expBits = (rawValue >> 10) & 0x1F
+		let fracBits = rawValue & 0x3FF
+		// If NaN, only canonical when fraction exactly MSB=1 and other bits zero (0x200)
+		if expBits == 0x1F && fracBits != 0 {
+			return fracBits == 0x200
+		}
+		// All non-NaN values are canonical
+		return true
 	}
 	
 	public func distance(to other: Half) -> Half {
-		return Half(Float(self).distance(to: Float(other)))
+		// Distance from self to other is simply (other - self)
+		return other - self
 	}
 	
 	public func advanced(by n: Half) -> Half {
-		return Half(Float(self).advanced(by: Float(n)))
+		// Advancing by n is equivalent to adding n
+		return self + n
 	}
 	
 	public var magnitude: Half {
-		return Half(Float(self).magnitude)
+		// Absolute value: clear the sign bit
+		return Half(rawValue: rawValue & 0x7FFF)
 	}
-
+	
 	public mutating func round(_ rule: FloatingPointRoundingRule) {
 		var value = Float(self)
 		value.round(rule)
 		self = Half(value)
 	}
-
+	
 	public var description: String {
 		return Float(self).description
 	}

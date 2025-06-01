@@ -28,18 +28,18 @@
 import Foundation
 
 public final class ZError: Error, CustomStringConvertible, Sendable {
-	public let messgae: String
+	public let message: String
 	public let file: String
 	public let line: UInt
 	public init(_ items: Any..., file: String = #file, line: UInt = #line) {
-		self.messgae = items.map { String(describing: $0) }.joined(separator: ", ")
+		self.message = items.map { String(describing: $0) }.joined(separator: ", ")
 		self.file = file.lastPathComponent
 		self.line = line
 	}
 	public var description: String {
-		return messgae
+		return message
 	}
 	public var debugDescription: String {
-		return "\(self.messgae), at: \(self.file):\(self.line)"
+		return "\(self.message), at: \(self.file):\(self.line)"
 	}
 }
