@@ -25,11 +25,7 @@
 //	THE SOFTWARE.
 //
 
-#if os(iOS) || os(visionOS)
-import UIKit
-#elseif os(macOS)
-import AppKit
-#endif
+import Foundation
 
 //
 //	String
@@ -123,32 +119,6 @@ public extension String {
 	}
 
 	// MARK: -
-	
-	func draw(at point: CGPoint, withAttributes: [NSAttributedString.Key : Any]? = nil) {
-		(self as NSString).draw(at: point, withAttributes: withAttributes)
-	}
-	
-	func draw(in rect: CGRect, withAttributes: [NSAttributedString.Key : Any]? = nil) {
-		(self as NSString).draw(in: rect, withAttributes: withAttributes)
-	}
-	
-	#if os(macOS)
-	func draw(with rect: CGRect, options: NSString.DrawingOptions = [], attributes: [NSAttributedString.Key : Any]? = nil, context: NSStringDrawingContext?) {
-		(self as NSString).draw(with: rect, options: options, attributes: attributes, context: context)
-	}
-	#endif
-	
-	#if os(macOS)
-	func boundingRect(with size: CGSize, options: NSString.DrawingOptions = [], attributes: [NSAttributedString.Key : Any]? = nil, context: NSStringDrawingContext?) -> CGRect {
-		return (self as NSString).boundingRect(with: size, options: options, attributes: attributes, context: context)
-	}
-	#endif
-	
-	func size(withAttributes: [NSAttributedString.Key : Any]? = nil) -> CGSize {
-		return (self as NSString).size(withAttributes: withAttributes)
-	}
-
-	// MARK: -
 
 	subscript (i: Int) -> Character {
 		return self[index(startIndex, offsetBy: i)]
@@ -183,6 +153,25 @@ public extension String {
 
 	var number: NSNumber? {
 		return NumberFormatter().number(from: self)
+	}
+
+	// MARK: -
+
+	func deleting(prefix: String) -> String {
+		if self.hasPrefix(prefix) { return String(self.dropFirst(prefix.count)) }
+		else { return self }
+	}
+	func deleting(suffix: String) -> String {
+		if self.hasSuffix(suffix) { return String(self.dropLast(suffix.count)) }
+		else { return self }
+	}
+	func ensuring(prefix: String) -> String {
+		if self.hasPrefix(prefix) { return self }
+		else { return prefix + self }
+	}
+	func ensuring(suffix: String) -> String {
+		if self.hasSuffix(suffix) { return self }
+		else { return self + suffix }
 	}
 
 }
